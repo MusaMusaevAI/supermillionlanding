@@ -1,5 +1,10 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
-<title>Цель — миллион</title>
+<!doctype html>
+<html lang="ru" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Персональный план накопления 1 000 000 ₽ в программе долгосрочных сбережений — НПФ ГАЗФОНД пенсионные накопления">
+<title>Цель — миллион | НПФ ГАЗФОНД пенсионные накопления</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Golos+Text:wght@400;500;600;700&display=swap">
 <style>
 /* ============================================================
@@ -1090,7 +1095,38 @@ html.cur-down .cursor-ring .coin{transform:scale(.85)}
 .calc .panel:first-child{justify-content:space-between}
 .calc .panel:first-child .copy-btn{margin-top:0}
 
+/* ============================================================
+   v13 — мобильная раскладка симулятора + защита от двойного тапа
+   ============================================================ */
+.pay,.auto-btn,#contBtn,.sim{touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
+.sim{overflow:clip}
+@media (max-width:960px){
+  .sim{display:flex;flex-direction:column;align-items:stretch;gap:14px;padding:18px 16px 20px}
+  .jar-wrap,.ledger,.pay,.auto-btn,.sim-done,.sim-month,.sim-how,.achievements{width:100%}
+  .sim-left,.sim-right{display:contents}
+  .sim-how{order:1;gap:6px}
+  .sim-how li{font-size:12.5px;line-height:1.35}
+  .jar-wrap{order:2;height:330px;padding-top:70px;gap:12px}
+  .piggy,.piggy.race{width:46%;max-width:200px}
+  .piggy .jar-head{padding:6px 4px;left:-4px;right:-4px;bottom:calc(100% + 6px)}
+  .piggy .jar-head b{font-size:14px}
+  .piggy .jar-head span{font-size:10px}
+  .achievements{order:3;margin-top:6px;gap:6px}
+  .achievements span{padding:6px 9px;font-size:11px}
+  .sim-month{order:4}
+  .pay{order:5;position:sticky;bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:40;box-shadow:0 18px 40px -10px rgba(0,47,232,.7),0 0 0 6px var(--bg-card)}
+  .auto-btn{order:6}
+  .sim-done{order:7}
+  .ledger{order:8}
+  .link-btn{order:9;align-self:center}
+  .big-win{top:70px}
+}
+@media (max-width:420px){.jar-wrap{height:300px}.piggy .jar-ticks{display:none}}
+@media (max-width:520px){.piggy .jar-head span{display:none}.piggy .jar-head{bottom:calc(100% + 4px)}}
+
 </style>
+</head>
+<body>
 <div class="scrollbar" aria-hidden="true"><i></i></div>
 <div class="cursor" aria-hidden="true"><div class="cursor-dot"></div></div>
 <div class="cursor-ring" aria-hidden="true"><i class="coin">₽</i><span>смотреть</span></div>
@@ -1479,7 +1515,7 @@ html.cur-down .cursor-ring .coin{transform:scale(.85)}
     <div class="go-card reveal">
       <div class="go-left">
         <span class="eyebrow accent"><i></i>Ваш план готов</span>
-        <h2>Оформить договор — <span class="serif grad-text">2–3 минуты</span></h2>
+        <h2>Оформить договор <span class="serif grad-text">за 2–3 минуты</span></h2>
         <div class="go-plan num" id="goPlan">
           <div class="gp-row"><span>В месяц</span><b id="gpMonthly">10 000 ₽</b></div>
           <div class="gp-row"><span>Миллион через</span><b id="gpTerm">≈ 5 лет</b></div>
@@ -1521,7 +1557,6 @@ html.cur-down .cursor-ring .coin{transform:scale(.85)}
     <div class="faq">
       <div class="side">
         <h2 class="reveal"><span class="idx">05</span>Частые <span class="serif grad-text">вопросы</span></h2>
-        <a class="btn btn-ghost reveal" data-delay="2" href="tel:88007007550" data-cursor="hover"><svg><use href="#i-phone"/></svg>8 800 700 75 50</a>
       </div>
       <div class="faq-list">
         <details class="reveal" data-cursor="hover">
@@ -2062,7 +2097,10 @@ if (typeof module !== "undefined" && module.exports) module.exports = CALC;
     function finish() { S.done = true; stopAuto(); stopHold(); payBtn.disabled = true; el.autoBtn.hidden = true; if (el.cont) el.cont.hidden = true; el.done.hidden = false; var h = hAt(S.m); el.doneB.textContent = "Миллион в копилке — только через " + termRound(S.m); el.doneT.textContent = "В ПДС к этому моменту уже " + rub(h.value) + " — на " + rub(h.value - CALC.TARGET) + " больше при тех же взносах"; burst(120, true); }
     function stopAuto() { if (S.timer) { clearInterval(S.timer); S.timer = null; } payBtn.disabled = S.done; }
     /* tap */
-    payBtn.addEventListener("click", function () { if (S.mode === "hold" || S.timer) return; step(); });
+    var lastTouch = 0;
+    payBtn.addEventListener("pointerup", function (e) { if (e.pointerType !== "touch") return; if (S.mode === "hold" || S.timer) return; e.preventDefault(); lastTouch = Date.now(); step(); });
+    payBtn.addEventListener("click", function () { if (S.mode === "hold" || S.timer) return; if (Date.now() - lastTouch < 700) return; step(); });
+    payBtn.addEventListener("touchend", function (e) { e.preventDefault(); }, { passive: false });
     payBtn.addEventListener("mousemove", function (e) { var r = payBtn.getBoundingClientRect(); payBtn.style.setProperty("--px", (e.clientX - r.left) + "px"); payBtn.style.setProperty("--py", (e.clientY - r.top) + "px"); });
     /* hold: ускоряющееся время */
     var holdT0 = 0, holdRaf = 0, holdAcc = 0;
@@ -2197,5 +2235,5 @@ if (typeof module !== "undefined" && module.exports) module.exports = CALC;
 })();
 
 </script>
-
-</body></html>
+</body>
+</html>
