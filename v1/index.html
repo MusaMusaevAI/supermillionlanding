@@ -1,0 +1,2485 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Цель — миллион | НПФ ГАЗФОНД пенсионные накопления</title>
+<!-- Шрифты лежат в assets/fonts (без внешних запросов к Google Fonts).
+     Golos Text — SIL OFL 1.1; Material Symbols Rounded — Apache 2.0; лицензии рядом с файлами.
+     Иконочный шрифт урезан до используемых значков: новый значок → пересобрать файл (см. DEPLOY.md). -->
+<link rel="preload" href="assets/fonts/golos-text-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/golos-text-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/material-symbols-rounded.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ============ шрифты (локальные) ============ */
+@font-face{font-family:"Golos Text";font-style:normal;font-weight:400;font-display:swap;src:url("assets/fonts/golos-text-400.woff2") format("woff2")}
+@font-face{font-family:"Golos Text";font-style:normal;font-weight:500;font-display:swap;src:url("assets/fonts/golos-text-500.woff2") format("woff2")}
+@font-face{font-family:"Golos Text";font-style:normal;font-weight:600;font-display:swap;src:url("assets/fonts/golos-text-600.woff2") format("woff2")}
+@font-face{font-family:"Golos Text";font-style:normal;font-weight:700;font-display:swap;src:url("assets/fonts/golos-text-700.woff2") format("woff2")}
+@font-face{font-family:"Golos Text";font-style:normal;font-weight:800;font-display:swap;src:url("assets/fonts/golos-text-800.woff2") format("woff2")}
+@font-face{font-family:"Material Symbols Rounded";font-style:normal;font-weight:400;font-display:block;src:url("assets/fonts/material-symbols-rounded.woff2") format("woff2")}
+
+/* ============ foundations (токены дизайн-системы ГАЗФОНД ПН) ============ */
+:root{
+  --blue-50:#F4F5FF;--blue-100:#E8EBFF;--blue-200:#B9CEFF;--blue-300:#6BABFF;
+  --blue-400:#3F85F2;--blue-500:#0064FF;--blue-600:#0051FF;--blue-700:#0042DD;
+  --blue-800:#01358A;--blue-vivid:#002FE8;--sky-400:#1E8FFA;--sky-500:#4189FD;
+  --navy-900:#283069;--navy-500:#8E92B4;
+  --orange-500:#FF7D4A;--orange-400:#FF9F78;--orange-200:#FFCBB8;
+  --teal-400:#36DFDD;--periwinkle-400:#9A9FFB;
+  --white:#FFFFFF;--grey-100:#EDEDF2;--grey-300:#CECECE;--grey-500:#7D7D7D;
+  --success-500:#14A570;--danger-500:#FF7641;
+
+  --surface-page:var(--blue-50);--surface-card:var(--white);
+  --text-heading:var(--navy-900);--text-body:var(--navy-900);
+  --text-secondary:var(--grey-500);--text-muted:var(--navy-500);
+  --text-on-dark:#fff;--text-on-dark-muted:rgba(255,255,255,.78);
+  --border-subtle:rgba(40,48,105,.10);--border-on-dark:rgba(255,255,255,.55);
+
+  --gradient-hero:linear-gradient(105deg,var(--sky-400) 0%,var(--blue-vivid) 42%,#2B6ECF 72%,#E9B49B 100%);
+  --gradient-section:linear-gradient(100deg,var(--sky-400) 0%,var(--blue-vivid) 45%,#4E7ACC 74%,#F3A879 100%);
+  --gradient-banner:linear-gradient(90deg,#0C52D1 0%,var(--blue-400) 60%,#F0A177 100%);
+  --gradient-footer:linear-gradient(90deg,var(--sky-500) 0%,#215FC3 50%,var(--blue-800) 100%);
+
+  --font-core:"Golos Text","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --fs-hero:48px;--fs-h2:36px;--fs-h3:24px;--fs-h4:20px;--fs-lead:18px;
+  --fs-body:16px;--fs-caption:14px;--fs-micro:13px;--fs-eyebrow:12px;
+
+  --radius-sm:10px;--radius-md:12px;--radius-xl:20px;--radius-2xl:24px;--radius-3xl:32px;--radius-full:999px;
+  --gutter:24px;--container-max:1360px;--container-pad:32px;--section-y:96px;
+  --control-h:52px;--control-h-sm:44px;
+  --shadow-card:0 1px 2px rgba(40,48,105,.04);
+  --shadow-raised:0 8px 24px rgba(40,48,105,.08);
+  --shadow-focus:0 0 0 3px rgba(0,100,255,.24);
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;font:400 var(--fs-body)/1.45 var(--font-core);color:var(--text-body);background:var(--surface-page);-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{margin:0;color:var(--text-heading);letter-spacing:-0.01em}
+h1{font:700 var(--fs-hero)/1.08 var(--font-core);letter-spacing:-0.015em}
+h2{font:700 var(--fs-h2)/1.15 var(--font-core)}
+h3{font:700 var(--fs-h3)/1.25 var(--font-core)}
+p{margin:0;text-wrap:pretty}
+a{color:var(--blue-500);text-decoration:none}
+a:hover{color:var(--blue-600);text-decoration:underline}
+:focus-visible{outline:none;box-shadow:var(--shadow-focus)}
+.gz-icon{font-family:"Material Symbols Rounded";font-weight:400;font-style:normal;line-height:1;display:inline-block;font-variation-settings:"FILL" 1,"wght" 400,"GRAD" 0,"opsz" 24;letter-spacing:normal;white-space:nowrap;direction:ltr;-webkit-font-feature-settings:"liga";font-feature-settings:"liga"}
+.container{max-width:var(--container-max);margin:0 auto;padding:0 var(--container-pad)}
+.section{padding:var(--section-y) 0}
+
+/* ============ primitives ============ */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid transparent;white-space:nowrap;font-family:var(--font-core);font-weight:700;font-size:var(--fs-caption);border-radius:var(--radius-sm);text-decoration:none;cursor:pointer;height:var(--control-h);padding:0 28px;transition:background .15s ease,color .15s ease}
+.btn:hover{text-decoration:none}
+.btn-sm{height:var(--control-h-sm);padding:0 20px}
+.btn-primary{background:var(--blue-500);color:#fff}.btn-primary:hover{background:var(--blue-600);color:#fff}
+.btn-accent{background:var(--orange-500);color:#fff}.btn-accent:hover{background:#FF6B31;color:#fff}
+.btn-ondark{background:#fff;color:var(--blue-500)}.btn-ondark:hover{background:#EDF1FF;color:var(--blue-500)}
+.btn-ghost{background:transparent;color:#fff;border-color:var(--border-on-dark)}.btn-ghost:hover{background:rgba(255,255,255,.12);color:#fff}
+.btn-quiet{background:transparent;color:var(--navy-900);border-color:var(--border-subtle)}.btn-quiet:hover{background:var(--blue-50)}
+.badge{display:inline-flex;align-items:center;height:38px;padding:0 20px;border-radius:var(--radius-full);font-size:var(--fs-eyebrow);font-weight:700;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--border-on-dark);color:#fff}
+.card{background:var(--surface-card);border-radius:var(--radius-2xl);box-shadow:var(--shadow-card)}
+.legal{font:400 var(--fs-micro)/1.5 var(--font-core);color:var(--text-muted)}
+/* ============ переносы (единые правила проекта) ============
+   Абзацы — с переносами по словарю русского языка; заголовки, кнопки и числа — без переносов.
+   Неразрывные пробелы внутри чисел, перед ₽ и после предлогов ставит скрипт typoFix(). */
+p,.sub,.legal,.hero-sub,.r-sub,.q-why,.faq-a,.step-body,.plan-diff,.sec-cta-note,.plan-hint,.s-what,.d-sub,.cmp-stat .c,.footer-legal,.share-total,.utp-sub,.stat-caption,.leg-row small{
+  -webkit-hyphens:auto;hyphens:auto;-webkit-hyphenate-limit-chars:6 3 3;hyphenate-limit-chars:6 3 3;overflow-wrap:anywhere}
+h1,h2,h3,.btn,.btn-tool,.r-opt,.chip,.plan-tag,.utp-eyebrow,.badge,.plan-name{-webkit-hyphens:manual;hyphens:manual}
+.stat-value,.plan-pay,.plan-term,.utp-fact b,.cmp-stat .v,.s-sum,.leg-row b,.donut-total,.rbar-total,.r-head b,.deduct-line b,.footer-phone,.header-phone,.stickybar-phone{white-space:nowrap}
+.r-opt small{white-space:normal}
+.link-more{background:none;border:none;padding:0;margin:0;font:inherit;color:inherit;cursor:pointer;text-decoration:underline;text-underline-offset:2px;opacity:.85}
+.link-more:hover{opacity:1}
+.fn-ref{background:none;border:none;padding:0 1px;margin:0;font:inherit;color:inherit;cursor:pointer;text-decoration:underline dotted;text-underline-offset:2px}
+#fn-pop{position:absolute;z-index:60;max-width:360px;background:#fff;color:var(--navy-900);border:1px solid #d5def5;border-radius:10px;box-shadow:0 8px 24px rgba(20,30,80,.14);padding:12px 14px;font:400 var(--fs-micro)/1.5 var(--font-core);display:none}
+.fn-print{display:none}
+@media print{.fn-print{display:block!important}.legal-rest[hidden]{display:inline!important}#flegal-body[hidden]{display:block!important}.link-more,#fn-pop{display:none!important}}
+
+/* ============ фиксированная плашка при прокрутке ============ */
+.stickybar{position:fixed;top:0;left:0;right:0;z-index:70;background:rgba(9,42,150,.96);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  transform:translateY(-100%);transition:transform .28s ease;box-shadow:0 6px 24px rgba(10,20,80,.22)}
+.stickybar.on{transform:translateY(0)}
+.stickybar-in{max-width:var(--container-max);margin:0 auto;padding:10px var(--container-pad);display:flex;align-items:center;gap:16px}
+.stickybar-in img{height:34px;display:block}
+.stickybar-phone{margin-left:auto;display:flex;align-items:center;gap:8px;color:#fff;font:700 var(--fs-caption)/1 var(--font-core);white-space:nowrap}
+.stickybar-phone .gz-icon{font-size:20px}
+.stickybar .btn{height:40px;padding:0 18px}
+@media (max-width:767px){.stickybar-in{gap:10px}.stickybar-in img{height:28px}.stickybar-phone span:not(.gz-icon){display:none}.stickybar-phone{margin-left:auto}.stickybar .btn{padding:0 14px;font-size:14px}}
+
+/* ============ header / hero ============ */
+.hero{position:relative;background:var(--gradient-hero);padding-bottom:130px;overflow:hidden}
+.hero-petals{position:absolute;right:12px;bottom:-16px;width:44%;min-width:520px;pointer-events:none;
+  background:transparent;filter:none;box-shadow:none;outline:none;mix-blend-mode:normal;opacity:1}
+.hero-inner{position:relative;z-index:1}
+.site-header{display:flex;align-items:center;gap:28px;padding:18px var(--container-pad);max-width:var(--container-max);margin:0 auto}
+.site-header img{height:46px;display:block}
+.header-right{margin-left:auto;display:flex;align-items:center;gap:14px}
+.header-phone{display:flex;align-items:center;gap:9px;color:#fff;font:700 var(--fs-body)/1 var(--font-core);white-space:nowrap}
+.hero-content{max-width:var(--container-max);margin:0 auto;padding:110px var(--container-pad) 0}
+.hero-content h1{color:#fff;margin-top:34px;max-width:640px}
+.hero-sub{color:#fff;font:500 var(--fs-lead)/1.4 var(--font-core);margin-top:18px;max-width:560px}
+.hero-cta{display:flex;gap:18px;margin-top:44px;flex-wrap:wrap}
+.hero-legal{color:var(--text-on-dark-muted);margin-top:26px;max-width:640px}
+
+/* ============ stat cards ============ */
+.stats{max-width:var(--container-max);margin:-90px auto 0;padding:0 var(--container-pad);position:relative;z-index:2;display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gutter)}
+.stat-card{padding:28px;border-radius:var(--radius-xl)}
+.stat-card .gz-icon{font-size:32px;color:var(--blue-500)}
+.stat-value{font:700 var(--fs-h4)/1.2 var(--font-core);color:var(--navy-900);margin-top:22px}
+.stat-caption{font:400 var(--fs-caption)/1.45 var(--font-core);color:var(--text-secondary);margin-top:6px}
+
+/* ============ section heading ============ */
+.sec-head{margin-bottom:40px}
+.sec-head .sub{font:500 var(--fs-lead)/1.4 var(--font-core);color:var(--text-secondary);margin-top:12px;max-width:720px}
+.on-dark h2{color:#fff}
+.on-dark .sub{color:var(--text-on-dark-muted)}
+
+/* ============ feature cards ============ */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:var(--gutter)}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--gutter)}
+.feature{position:relative;overflow:hidden;padding:32px;min-height:280px;display:flex;flex-direction:column}
+.feature p{font:400 var(--fs-caption)/1.5 var(--font-core);color:var(--text-secondary);margin-top:10px;max-width:58%}
+/* иллюстрации квадратные (1:1): прижаты к правому краю с отступом и подняты к центру карточки */
+.feature img{position:absolute;right:24px;top:50%;transform:translateY(-46%);width:32%;max-width:186px;pointer-events:none}
+.feature .tag{display:inline-flex;align-self:flex-start;align-items:center;height:28px;padding:0 14px;border-radius:var(--radius-full);background:var(--blue-100);color:var(--blue-600);font:700 var(--fs-eyebrow)/1 var(--font-core);letter-spacing:.06em;text-transform:uppercase;margin-bottom:14px}
+
+/* ============ quiz ============ */
+/* Секция плана — во всю ширину экрана, без карточек и рамок */
+.quiz-band{background:var(--surface-page);padding:clamp(48px,6vw,88px) 0 clamp(56px,6vw,96px)}
+.quiz-wrap{max-width:1360px;margin:0 auto;padding:0 clamp(20px,3vw,32px)}
+.quiz-band .sec-head{margin-bottom:clamp(24px,3vw,36px)}
+
+/* УТП-блок: готовый план в один клик */
+.utp{background:linear-gradient(102deg,#0F2E7A 0%,var(--blue-vivid) 48%,#2E63D8 100%);
+  border-radius:var(--radius-3xl);color:#fff;padding:clamp(24px,3vw,40px);
+  display:grid;grid-template-columns:1fr auto;gap:clamp(20px,3vw,40px);align-items:center;
+  margin-bottom:clamp(28px,3.4vw,44px);position:relative;overflow:hidden}
+.utp::after{content:"";position:absolute;right:-80px;top:-120px;width:420px;height:420px;
+  background:radial-gradient(circle,rgba(255,125,74,.35) 0%,transparent 62%);pointer-events:none}
+.utp-main{position:relative;z-index:1;min-width:0}
+.utp-eyebrow{display:inline-flex;align-items:center;height:30px;padding:0 14px;border-radius:var(--radius-full);
+  background:var(--orange-500);color:#fff;font:700 var(--fs-eyebrow)/1 var(--font-core);letter-spacing:.06em;text-transform:uppercase}
+.utp-title{color:#fff;margin-top:14px;font:700 clamp(24px,3.1vw,38px)/1.12 var(--font-core);letter-spacing:-0.015em}
+.utp-sub{color:var(--text-on-dark-muted);margin-top:12px;font:400 var(--fs-body)/1.5 var(--font-core);max-width:640px}
+.utp-facts{display:flex;flex-wrap:wrap;gap:12px 30px;margin-top:20px}
+.utp-fact{display:flex;flex-direction:column;gap:2px}
+.utp-fact b{font:700 var(--fs-h4)/1.1 var(--font-core);color:#fff}
+.utp-fact span{font:400 var(--fs-micro)/1.3 var(--font-core);color:var(--text-on-dark-muted)}
+.utp-cta{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
+.utp-note{font:400 var(--fs-micro)/1.4 var(--font-core);color:var(--text-on-dark-muted);max-width:210px}
+
+/* Карточка квиза: без рамки и тени. Высота — по содержимому: на вопросах компактная,
+   на экране результата раскрывается. Смена высоты анимируется скриптом (morphHeight):
+   .quiz-body получает явную высоту на время перехода, затем снова auto */
+.quiz-card{padding:0;max-width:none;margin:0;background:transparent;box-shadow:none;border-radius:0;
+  min-height:0;display:flex;flex-direction:column}
+.quiz-steps{flex:none}
+.quiz-body{flex:none;min-height:0;display:flex;flex-direction:column;transition:height .3s ease}
+.quiz-body.is-resizing{overflow:hidden}
+/* Контент прижат к прогресс-линии сверху: вопросы не «прыгают» при смене шага */
+.q-inner{margin-top:0;width:100%;animation:q-fade .18s ease}
+@keyframes q-fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.qsteps{display:flex;gap:8px;align-items:center;margin-bottom:clamp(20px,2.4vw,30px)}
+.qstep-disc{width:28px;height:28px;flex:none;border-radius:var(--radius-full);display:flex;align-items:center;justify-content:center;font:700 13px/1 var(--font-core);background:var(--blue-100);color:var(--navy-500)}
+.qstep-disc.active{background:var(--blue-500);color:#fff}
+.qstep-disc.done{background:var(--success-500);color:#fff}
+.qstep-bar{flex:1;height:2px;background:var(--blue-100);border-radius:2px}
+.qstep-bar.done{background:var(--success-500)}
+.q-title{font:700 var(--fs-h3)/1.25 var(--font-core);color:var(--navy-900)}
+.q-why{font:400 var(--fs-caption)/1.45 var(--font-core);color:var(--text-secondary);margin-top:8px}
+.chips{display:grid;grid-template-columns:repeat(auto-fit,minmax(clamp(140px,17vw,210px),1fr));gap:12px;margin-top:clamp(16px,2vw,24px)}
+.chip{position:relative;border:1px solid var(--border-subtle);background:#fff;border-radius:var(--radius-md);padding:14px 18px;cursor:pointer;font:600 var(--fs-body)/1.2 var(--font-core);color:var(--navy-900);text-align:left;transition:border-color .15s,background .15s,box-shadow .15s}
+.chip:hover{border-color:var(--blue-500)}
+.chip.selected{border-color:var(--blue-500);background:var(--blue-50);box-shadow:inset 0 0 0 1px var(--blue-500)}
+.chip small{display:block;font:400 var(--fs-micro)/1.3 var(--font-core);color:var(--text-muted);margin-top:4px}
+/* акцентный («самый вкусный») вариант — глаз цепляется, но выбор остаётся свободным */
+.chip-accent{border-color:var(--orange-500);background:#FFF6F2;box-shadow:inset 0 0 0 1px var(--orange-500)}
+.chip-accent:hover{border-color:var(--action-accent-hover);background:#FFEFE8}
+.chip-tag{display:block;font:700 var(--fs-eyebrow)/1 var(--font-core);letter-spacing:.04em;text-transform:uppercase;color:var(--orange-500);margin-bottom:6px}
+.chip-wide{grid-column:1/-1}
+/* поле ручного ввода прямо в сетке вариантов */
+.chip-field{display:flex;align-items:center;gap:8px;padding:0 8px 0 16px;cursor:text}
+.chip-field:focus-within{border-color:var(--blue-500);box-shadow:inset 0 0 0 1px var(--blue-500)}
+.chip-input{flex:1;min-width:0;border:none;outline:none;background:transparent;height:50px;font:600 var(--fs-body)/1 var(--font-core);color:var(--navy-900)}
+.chip-input::placeholder{color:var(--text-muted);font-weight:500}
+.chip-go{flex:none;width:36px;height:36px;border:none;border-radius:var(--radius-sm);background:var(--blue-500);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.chip-go:hover{background:var(--blue-600)}
+.chip-go .gz-icon{font-size:20px}
+.q-nav{display:flex;align-items:center;gap:16px;margin-top:32px}
+.q-back{background:none;border:none;cursor:pointer;color:var(--text-muted);font:600 var(--fs-caption)/1 var(--font-core);display:inline-flex;align-items:center;gap:4px;padding:8px 0}
+.q-back:hover{color:var(--navy-900)}
+.q-error{display:none;color:var(--danger-500);font:400 var(--fs-caption)/1.4 var(--font-core);margin-top:12px}
+.q-error.show{display:block}
+.plate{display:flex;gap:10px;align-items:flex-start;background:var(--blue-50);border-radius:var(--radius-md);padding:14px 16px;font:400 var(--fs-caption)/1.45 var(--font-core);color:var(--navy-900);margin-top:20px}
+.plate .gz-icon{color:var(--blue-500);font-size:20px;flex:none}
+
+/* ============ result ============ */
+.r-head{font:700 clamp(21px,2.4vw,28px)/1.2 var(--font-core);color:var(--navy-900)}
+.r-sub{font:400 var(--fs-body)/1.5 var(--font-core);color:var(--text-secondary);margin-top:10px}
+.r-grid{display:grid;grid-template-columns:minmax(220px,300px) 1fr;gap:clamp(20px,3vw,40px);margin-top:clamp(20px,2.6vw,32px);align-items:start}
+.donut{width:clamp(180px,20vw,260px);aspect-ratio:1;border-radius:50%;position:relative;margin:0 auto}
+.donut::after{content:"";position:absolute;inset:17%;background:var(--surface-page);border-radius:50%}
+.donut-center{position:absolute;inset:17%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;z-index:1;padding:10px}
+.donut-total{font:700 22px/1.1 var(--font-core);color:var(--navy-900)}
+.donut-label{font:400 var(--fs-micro)/1.3 var(--font-core);color:var(--text-muted);margin-top:6px}
+/* мобильная замена кольца: сумма + полоса */
+.rbar-wrap{padding:4px 0 2px}
+.rbar-total{font:800 clamp(28px,8vw,36px)/1.1 var(--font-core);color:var(--navy-900);white-space:nowrap}
+.rbar-label{font:400 var(--fs-caption)/1.3 var(--font-core);color:var(--text-muted);margin-top:4px}
+.rbar{position:relative;height:22px;border-radius:11px;overflow:hidden;background:#E8ECF8;margin-top:14px}
+.rbar span{position:absolute;top:0;height:100%}
+.leg{display:flex;flex-direction:column;gap:12px}
+.leg-row{display:flex;align-items:center;gap:10px;font:400 var(--fs-caption)/1.3 var(--font-core);color:var(--navy-900)}
+.leg-dot{width:12px;height:12px;border-radius:4px;flex:none}
+.leg-row b{margin-left:auto;font-weight:700;white-space:nowrap}
+.r-options{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+.r-opt{border:1px solid var(--border-subtle);background:#fff;border-radius:var(--radius-md);padding:12px 18px;cursor:pointer;font:600 var(--fs-caption)/1.35 var(--font-core);color:var(--blue-600);text-align:left}
+.r-opt:hover{border-color:var(--blue-500);background:var(--blue-50)}
+.r-opt small{display:block;font-weight:400;color:var(--text-muted)}
+/* ветка «подберём реалистичный план»: варианты парят и светятся, чтобы их нельзя было не заметить */
+.r-options--glow .r-opt{position:relative;border-color:var(--orange-500);background:#fff;animation:optFloat 3.2s ease-in-out infinite;box-shadow:0 8px 22px rgba(255,125,74,.28),0 0 0 0 rgba(255,125,74,.45)}
+.r-options--glow .r-opt:nth-child(2){animation-delay:-1.1s}
+.r-options--glow .r-opt:nth-child(3){animation-delay:-2.2s}
+.r-options--glow .r-opt:hover{background:#FFF6F2;box-shadow:0 12px 28px rgba(255,125,74,.4)}
+@keyframes optFloat{0%,100%{transform:translateY(0);box-shadow:0 8px 22px rgba(255,125,74,.28),0 0 0 0 rgba(255,125,74,.45)}50%{transform:translateY(-5px);box-shadow:0 16px 30px rgba(255,125,74,.34),0 0 0 8px rgba(255,125,74,0)}}
+@media (prefers-reduced-motion:reduce){.r-options--glow .r-opt{animation:none}}
+.deduct{background:var(--blue-50);border-radius:var(--radius-md);margin-top:18px;padding:16px 18px}
+.deduct-line{display:flex;gap:10px;align-items:flex-start}
+.deduct-line .gz-icon{color:var(--orange-500);font-size:22px;flex:none}
+.deduct-line .d-sub{display:block;color:var(--text-secondary);font:400 var(--fs-caption)/1.4 var(--font-core);margin-top:3px}
+.checkbox{display:flex;gap:10px;align-items:flex-start;margin-top:12px;cursor:pointer;font:500 var(--fs-caption)/1.4 var(--font-core);color:var(--navy-900)}
+.checkbox input{width:18px;height:18px;margin:1px 0 0;accent-color:var(--blue-500);flex:none;cursor:pointer}
+.r-cta{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
+/* сохранение и отправка плана */
+.plan-tools{margin-top:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn-tool{display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 16px;border:1px solid var(--border-subtle);border-radius:var(--radius-md);background:#fff;color:var(--navy-900);font:600 var(--fs-caption)/1 var(--font-core);cursor:pointer;transition:border-color .15s,background .15s}
+.btn-tool:hover{border-color:var(--blue-500);background:var(--blue-50)}
+.btn-tool .gz-icon{font-size:19px;color:var(--blue-500)}
+.btn-tool-main{border-color:var(--blue-500);color:var(--blue-500)}
+.btn-tool-main .gz-icon{color:var(--blue-500)}
+.plan-hint{font:400 var(--fs-micro)/1.4 var(--font-core);color:var(--text-muted);flex-basis:100%;margin-top:2px}
+.plan-copied{color:var(--success-500);font-weight:600}
+@media (max-width:767px){.plan-tools{gap:8px}.btn-tool{height:44px}}
+.r-legal{margin-top:16px}
+.presets-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px}
+.r-restart{margin-top:20px}
+
+/* ============ CTA в разделах ============
+   Один класс на все секционные кнопки: единый ритм отступов и удобная точка
+   для аналитики (data-cta="<секция>"). */
+.sec-cta{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:clamp(24px,3vw,36px)}
+.sec-cta .sec-cta-note{font:400 var(--fs-caption)/1.4 var(--font-core);color:var(--text-secondary);max-width:420px}
+.band-gradient .sec-cta .sec-cta-note{color:var(--text-on-dark-muted)}
+@media (max-width:767px){.sec-cta{flex-direction:column;align-items:stretch}.sec-cta .btn{width:100%}}
+
+/* ============ три плана ============ */
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gutter);align-items:stretch}
+.plan{background:var(--blue-50);border-radius:var(--radius-2xl);padding:clamp(22px,2.4vw,32px);display:flex;flex-direction:column;position:relative}
+.plan-best{background:linear-gradient(102deg,#0F2E7A 0%,var(--blue-vivid) 55%,#2E63D8 100%);color:#fff}
+.plan-tag{position:absolute;top:-14px;left:24px;height:28px;padding:0 14px;border-radius:var(--radius-full);background:var(--orange-500);color:#fff;font:700 var(--fs-eyebrow)/28px var(--font-core);letter-spacing:.05em;text-transform:uppercase}
+.plan-name{font:700 var(--fs-h4)/1.2 var(--font-core);color:var(--navy-900)}
+.plan-best .plan-name{color:#fff}
+.plan-pay{font:700 clamp(24px,2.4vw,32px)/1.1 var(--font-core);color:var(--blue-600);margin-top:10px}
+.plan-best .plan-pay{color:#fff}
+.plan-pay small{font:500 var(--fs-caption)/1 var(--font-core);color:var(--text-muted)}
+.plan-best .plan-pay small{color:rgba(255,255,255,.75)}
+.plan-term{font:700 var(--fs-h3)/1.15 var(--font-core);color:var(--navy-900);margin-top:16px}
+.plan-best .plan-term{color:#fff}
+.plan-diff{font:600 var(--fs-caption)/1.35 var(--font-core);color:var(--text-secondary);margin-top:4px;min-height:20px}
+.plan-best .plan-diff{color:#9FE8C8}
+.plan-rows{margin-top:16px;border-top:1px solid rgba(40,48,105,.10);padding-top:14px;display:flex;flex-direction:column;gap:8px;flex:1}
+.plan-best .plan-rows{border-top-color:rgba(255,255,255,.22)}
+.plan-row{display:flex;justify-content:space-between;gap:10px;font:400 var(--fs-caption)/1.4 var(--font-core);color:var(--text-secondary)}
+.plan-best .plan-row{color:rgba(255,255,255,.78)}
+.plan-row b{color:var(--navy-900);font-weight:700;white-space:nowrap}
+.plan-best .plan-row b{color:#fff}
+.plan .btn{margin-top:18px;width:100%}
+@media (max-width:1119px){.plans{grid-template-columns:1fr 1fr}}
+@media (max-width:767px){
+  /* на телефоне планы листаются вбок: карточки одна за другой, соседняя выглядывает из-за края */
+  .plans{display:flex;grid-template-columns:none;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+    padding:18px calc(var(--container-pad) + 2px) 8px;margin:0 calc(-1 * var(--container-pad));scrollbar-width:none}
+  .plans::-webkit-scrollbar{display:none}
+  .plans .plan{flex:0 0 82%;scroll-snap-align:center;min-height:100%}
+  .plans-dots{display:flex;justify-content:center;gap:8px;margin-top:6px}
+  .plans-dots span{width:8px;height:8px;border-radius:50%;background:#C9D3F0;transition:background .2s,transform .2s}
+  .plans-dots span.on{background:var(--blue-500);transform:scale(1.25)}
+  .plans-hint{text-align:center;font:400 var(--fs-micro)/1.4 var(--font-core);color:var(--text-muted);margin-top:8px}
+}
+@media (min-width:768px){.plans-dots,.plans-hint{display:none}}
+
+/* ============ ритм секций ============
+   Чередуем белую и лавандовую полосы (--blue-50 из ДС), один блок — на фирменном градиенте.
+   Так секции визуально отделяются без лишних рамок и разделителей. */
+.band-page{background:var(--surface-page)}   /* лавандовая подложка страницы */
+.band-white{background:#fff}                  /* белая полоса-передышка */
+.band-gradient{background:var(--gradient-section)}
+.band-gradient .step-card{background:rgba(255,255,255,.12);box-shadow:none;backdrop-filter:blur(2px)}
+.band-gradient .step-card .step-title,.band-gradient .step-card .step-body{color:#fff}
+.band-gradient .step-card .step-num{background:#fff;color:var(--blue-600)}
+.band-gradient .step-card.active{background:#fff}
+.band-gradient .step-card.active .step-title,.band-gradient .step-card.active .step-body{color:var(--navy-900)}
+.band-gradient .step-card.active .step-num{background:var(--blue-500);color:#fff}
+/* на белой полосе карточки получают лавандовый тон (--surface-card-alt из ДС),
+   на лавандовой — остаются белыми: цвет, а не тень, отделяет карточку от фона */
+.band-white .card{background:var(--blue-50)}
+.band-white .share-total{background:var(--blue-50)}
+.band-page .card,.band-page .faq-item{background:#fff}
+/* внутри квиза на лавандовом фоне вспомогательные плашки становятся белыми */
+.quiz-band .plate{background:#fff}
+.quiz-band .deduct{background:#fff}
+
+/* ============ кто скидывается на ваш миллион ============ */
+.share-grid{display:grid;grid-template-columns:minmax(260px,420px) 1fr;gap:clamp(24px,4vw,56px);align-items:center}
+.share-art img{width:100%;height:auto;display:block}
+.coins{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:clamp(20px,2.6vw,28px)}
+.coin{width:clamp(38px,4.4vw,52px);aspect-ratio:1;border-radius:50%;position:relative}
+.coin-you{background:linear-gradient(150deg,#fff 0%,#EAF0FB 60%,#D3E0F3 100%);box-shadow:inset 0 -2px 0 rgba(40,48,105,.10),0 1px 2px rgba(40,48,105,.10)}
+/* добавленные монеты — один оттенок и одна текстура на все три источника */
+.coin-gov,.coin-tax,.coin-fund{background:linear-gradient(150deg,#FF9A6E 0%,#FF7D4A 62%,#F2652F 100%);
+  box-shadow:inset 0 -2px 0 rgba(150,50,10,.18),0 1px 2px rgba(40,48,105,.12)}
+.share-list{list-style:none;margin:0;padding:0}
+.share-list li{display:flex;align-items:flex-start;gap:12px;padding:15px 0;border-bottom:1px solid var(--border-subtle)}
+.share-list li:last-child{border-bottom:none}
+.share-list .s-dot{width:14px;height:14px;border-radius:50%;flex:none;margin-top:4px}
+.share-list .s-text{min-width:0}
+/* название и пояснение — разными строками, иначе слипаются */
+.share-list .s-who{display:block;font:700 var(--fs-body)/1.3 var(--font-core);color:var(--navy-900)}
+.share-list .s-what{display:block;font:400 var(--fs-caption)/1.45 var(--font-core);color:var(--text-secondary);margin-top:4px}
+.share-list .s-sum{margin-left:auto;font:700 var(--fs-body)/1.3 var(--font-core);color:var(--navy-900);white-space:nowrap;padding-left:16px}
+.share-total{background:var(--blue-50);border-radius:var(--radius-md);padding:18px 20px;margin-top:20px;
+  font:400 var(--fs-body)/1.5 var(--font-core);color:var(--navy-900)}
+.share-total b{font-weight:700}
+.share-legal{margin-top:14px}
+@media (max-width:1119px){.share-grid{grid-template-columns:1fr;gap:24px}
+  .share-art{max-width:340px;margin:0 auto}}
+
+/* ============ сравнение с ПДС / без ПДС ============ */
+.cmp-chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px}
+.cmp-chip{display:inline-flex;align-items:center;height:34px;padding:0 16px;border-radius:var(--radius-full);background:var(--blue-50);color:var(--navy-900);font:600 var(--fs-caption)/1 var(--font-core)}
+.cmp-modes{display:inline-flex;gap:4px;padding:4px;border-radius:var(--radius-full);background:var(--blue-50);margin-bottom:18px}
+.cmp-mode{border:none;background:transparent;cursor:pointer;height:36px;padding:0 18px;border-radius:var(--radius-full);
+  font:600 var(--fs-caption)/1 var(--font-core);color:var(--text-secondary);transition:background .15s,color .15s}
+.cmp-mode:hover{color:var(--navy-900)}
+.cmp-mode.is-active{background:#fff;color:var(--navy-900);box-shadow:var(--shadow-card)}
+.cmp-wrap{position:relative}
+.cmp-glow{opacity:.35;animation:cmpGlow 2.4s ease-in-out infinite}
+@keyframes cmpGlow{0%,100%{opacity:.25}50%{opacity:.75}}
+@media (prefers-reduced-motion:reduce){.cmp-glow{animation:none;opacity:.4}}
+.cmp-tip{position:absolute;display:none;pointer-events:none;background:#fff;border-radius:var(--radius-md);box-shadow:0 16px 44px rgba(23,29,71,.16);padding:14px 16px;font:400 var(--fs-caption)/1.5 var(--font-core);color:var(--navy-900);min-width:230px;z-index:3}
+.cmp-tip .t-date{font-weight:700;margin-bottom:6px}
+.cmp-tip .t-row{display:flex;gap:8px;align-items:baseline;justify-content:space-between}
+.cmp-tip .t-row b{white-space:nowrap}
+.cmp-tip .t-row{margin-top:2px}
+.cmp-tip .t-total{font-weight:700;padding-bottom:6px;margin-bottom:4px;border-bottom:1px solid var(--border-subtle)}
+.cmp-tip .t-total b{font-size:var(--fs-body)}
+.cmp-tip .leg-dot{width:9px;height:9px;border-radius:3px}
+.cmp-tip .t-sub{color:var(--text-muted);font-size:var(--fs-micro)}
+.cmp-tip .t-diff{margin-top:6px;padding-top:6px;border-top:1px solid var(--border-subtle);color:var(--success-500);font-weight:700}
+.cmp-legend{display:flex;gap:26px;flex-wrap:wrap;margin-top:18px}
+.cmp-legend .leg-row{align-items:flex-start}
+.cmp-legend .leg-dot{margin-top:3px}
+.cmp-legend small{display:block;color:var(--text-muted);font-size:var(--fs-micro);margin-top:2px}
+.leg-dash{width:16px;height:0;border-top:2.5px dashed #6E7899;flex:none;margin-top:9px}
+.leg-hatch{background-image:repeating-linear-gradient(45deg,#7E9AC9 0 2px,#E4ECF9 2px 5px)}
+.cmp-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gutter);margin-top:24px}
+.cmp-stat{background:var(--blue-50);border-radius:var(--radius-md);padding:18px 20px}
+.cmp-stat .v{font:700 22px/1.1 var(--font-core);color:var(--navy-900)}
+.cmp-stat .v.pos{color:var(--success-500)}
+.cmp-stat .c{font:400 var(--fs-caption)/1.4 var(--font-core);color:var(--text-secondary);margin-top:6px}
+.cmp-break{margin-top:24px;background:var(--blue-50);border-radius:var(--radius-md);padding:22px 24px}
+.cmp-break .b-head{font:700 var(--fs-body)/1.35 var(--font-core);color:var(--navy-900);margin-bottom:14px}
+.cmp-break .b-list{list-style:none;margin:0;padding:0;max-width:560px}
+.cmp-break .b-list li{display:flex;align-items:center;gap:10px;padding:7px 0;font:400 var(--fs-body)/1.4 var(--font-core);color:var(--navy-900);border-bottom:1px solid rgba(40,48,105,.07)}
+.cmp-break .b-list li:last-child{border-bottom:none}
+.cmp-break .b-list b{margin-left:auto;font-weight:700;white-space:nowrap}
+.cmp-break .b-dot{width:12px;height:12px;border-radius:4px;flex:none}
+.cmp-break .b-dot[data-hatch]{background-image:repeating-linear-gradient(45deg,#7E9AC9 0 2px,#E4ECF9 2px 5px)!important}
+.cmp-break .b-dash{width:14px;height:0;border-top:2.5px dashed #6E7899;flex:none}
+.cmp-break .b-total{border-top:1px solid rgba(40,48,105,.14);margin-top:4px;font-weight:700}
+.cmp-break .b-plain{color:var(--text-secondary)}
+@media (max-width:767px){
+  .cmp-stats{grid-template-columns:1fr}
+  /* на узком экране график не сжимаем до нечитаемого — даём горизонтальную прокрутку */
+  .cmp-wrap{overflow:visible}
+  #cmp-svg{min-width:0}
+}
+
+/* ============ steps / banner / faq / footer ============ */
+.step-card{padding:26px;border-radius:var(--radius-xl)}
+.step-num{width:32px;height:32px;border-radius:var(--radius-full);background:var(--blue-500);color:#fff;display:flex;align-items:center;justify-content:center;font:700 15px/1 var(--font-core)}
+.step-card.active{background:var(--blue-600)}
+.step-card.active .step-num{background:#fff;color:var(--blue-600)}
+.step-title{font:700 var(--fs-body)/1.3 var(--font-core);margin-top:18px;color:var(--navy-900)}
+.step-body{font:400 var(--fs-body)/1.35 var(--font-core);margin-top:4px;color:var(--navy-900)}
+.step-card.active .step-title,.step-card.active .step-body{color:#fff}
+/* isolation:isolate — картинка с z-index не выпадает из скругления при наложении секций */
+.banner{background:var(--gradient-banner);border-radius:var(--radius-3xl);padding:44px 48px;position:relative;overflow:hidden;isolation:isolate;display:flex;align-items:center;gap:24px;max-width:100%}
+.banner img{position:absolute;right:0;bottom:-20px;height:130%;max-width:42%;object-fit:cover;object-position:left;pointer-events:none;z-index:0}
+.banner > div{position:relative;z-index:1;min-width:0}
+.banner h3{color:#fff;font-size:28px}
+.banner p{color:var(--text-on-dark-muted);margin-top:8px;max-width:540px;position:relative;z-index:1}
+.banner .btn{position:relative;z-index:1;flex:none;margin-left:auto}
+.faq-item{border-radius:var(--radius-xl);background:#fff;box-shadow:var(--shadow-card);margin-bottom:12px;overflow:hidden}
+.faq-q{width:100%;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;text-align:left;padding:22px 28px;font:700 var(--fs-body)/1.35 var(--font-core);color:var(--navy-900)}
+.faq-q .gz-icon{color:var(--blue-500);transition:transform .2s;flex:none}
+.faq-item.open .faq-q .gz-icon{transform:rotate(180deg)}
+.faq-a{display:none;padding:0 28px 22px;font:400 var(--fs-body)/1.5 var(--font-core);color:var(--text-secondary);max-width:900px}
+.faq-item.open .faq-a{display:block}
+.site-footer{background:var(--gradient-footer);color:#fff;padding:40px 0 32px}
+.footer-inner{display:flex;gap:40px;align-items:flex-start}
+.footer-phone{font:700 22px/1 var(--font-core)}
+.footer-note{font:400 var(--fs-micro)/1.5 var(--font-core);opacity:.9;margin-top:12px;max-width:760px}
+.asv{height:84px;width:84px;flex:none;background:url("assets/guarantee-2.png") center/contain no-repeat}
+.footer-legal{max-width:var(--container-max);margin:22px auto 0;padding:0 var(--container-pad);font:400 var(--fs-micro)/1.5 var(--font-core);opacity:.82}
+
+/* ============ появление блоков при прокрутке ============
+   Анимируются только transform и opacity — их браузер считает на композиторе,
+   без пересчёта раскладки, поэтому прокрутка остаётся плавной.
+   Класс навешивается скриптом: без JS контент виден сразу. */
+.reveal.is-armed{opacity:0;transform:translateY(26px)}
+.reveal.is-in{opacity:1;transform:none;transition:opacity .55s cubic-bezier(.22,.61,.36,1),transform .55s cubic-bezier(.22,.61,.36,1)}
+.reveal-stagger.is-armed > *{opacity:0;transform:translateY(22px)}
+.reveal-stagger.is-in > *{opacity:1;transform:none;
+  transition:opacity .5s cubic-bezier(.22,.61,.36,1),transform .5s cubic-bezier(.22,.61,.36,1)}
+.reveal-stagger.is-in > *:nth-child(2){transition-delay:.07s}
+.reveal-stagger.is-in > *:nth-child(3){transition-delay:.14s}
+.reveal-stagger.is-in > *:nth-child(4){transition-delay:.21s}
+.reveal-stagger.is-in > *:nth-child(5){transition-delay:.28s}
+@media (prefers-reduced-motion:reduce){
+  .reveal.is-armed,.reveal-stagger.is-armed > *{opacity:1;transform:none}
+  .reveal.is-in,.reveal-stagger.is-in > *{transition:none}
+  .q-inner{animation:none}
+}
+
+/* ============ responsive ============ */
+@media (max-width:1119px){
+  .grid-2,.grid-3,.stats{grid-template-columns:1fr 1fr}
+  .r-grid{grid-template-columns:1fr}
+  .utp{grid-template-columns:1fr}
+  .utp-cta{align-items:flex-start}
+  .feature p{max-width:100%}
+  .feature img{display:none}
+}
+@media (max-width:767px){
+  :root{--fs-hero:34px;--fs-h2:28px;--container-pad:20px;--section-y:64px}
+  .grid-2,.grid-3,.stats,.presets-grid{grid-template-columns:1fr}
+  .header-phone,.header-ghost{display:none}
+  .hero-petals{display:none}
+  .stats{margin-top:-60px}
+  .hero{padding-bottom:90px}
+  .hero-content{padding-top:70px}
+  .quiz-card{min-height:0}
+  .utp{grid-template-columns:1fr;text-align:left}
+  .utp-cta{align-items:stretch}
+  .utp-cta .btn{width:100%}
+  .utp-note{max-width:none}
+  .chips{grid-template-columns:1fr 1fr}
+  .q-input{width:100%}
+  .q-custom{flex-direction:column;align-items:stretch}
+  .q-custom .btn{width:100%}
+  .banner{flex-direction:column;align-items:flex-start;padding:32px}
+  .banner .btn{margin-left:0}
+  .banner img{display:none}
+  .footer-inner{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<!-- ============================ ФИКСИРОВАННАЯ ПЛАШКА ============================
+     Появляется, когда шапка первого экрана ушла за верх окна: телефон и кнопка всегда под рукой -->
+<div class="stickybar" id="stickybar" aria-hidden="true">
+  <div class="stickybar-in">
+    <img src="assets/logo-gazfond-pn-white.png" alt="">
+    <a class="stickybar-phone" href="tel:88007007550" data-cta="sticky-call"><span class="gz-icon">call</span><span>8 800 700 75 50</span></a>
+    <a class="btn btn-accent btn-sm" href="#quiz" data-cta="sticky-plan">Составить план</a>
+  </div>
+</div>
+
+<!-- ============================ HERO ============================ -->
+<div class="hero">
+  <img class="hero-petals" src="assets/hero-goal-path-2.png" alt="">
+  <div class="hero-inner">
+    <header class="site-header">
+      <img src="assets/logo-gazfond-pn-white.png" alt="НПФ ГАЗФОНД пенсионные накопления">
+      <div class="header-right">
+        <a class="header-phone" href="tel:88007007550" data-cta="header-call"><span class="gz-icon">headset_mic</span>8 800 700 75 50</a>
+        <a class="btn btn-ghost btn-sm header-ghost" href="https://gazfond-pn.ru/" target="_blank" rel="noopener" data-cta="header-site">Сайт фонда</a>
+        <a class="btn btn-accent btn-sm" href="#quiz" data-cta="header-plan">Составить план</a>
+      </div>
+    </header>
+    <div class="hero-content">
+      <span class="badge">При финансовой поддержке государства</span>
+      <h1>Цель&nbsp;— миллион</h1>
+      <p class="hero-sub">Ответьте на 4&nbsp;вопроса — получите персональный план накопления 1&nbsp;000&nbsp;000&nbsp;₽ в&nbsp;программе долгосрочных сбережений</p>
+      <div class="hero-cta">
+        <a class="btn btn-accent" href="#quiz" data-cta="hero-plan">Составить план за 40 секунд</a>
+        <a class="btn btn-ondark" href="https://contract-pds.gazfond-pn.ru/?u=nakopimillion&utm_source=landing_million&utm_medium=button&utm_campaign=pds_million" target="_blank" rel="noopener" data-cta="hero-open">Начать копить</a>
+      </div>
+      <p class="legal hero-legal">Предварительный расчёт, не&nbsp;является гарантией дохода. <button type="button" class="link-more" aria-expanded="false" data-alt="Свернуть">Подробнее</button><span class="legal-rest" hidden> Возможно увеличение или уменьшение дохода от размещения пенсионных резервов. Результаты инвестирования в прошлом не определяют доходов в будущем. Государство не гарантирует доходности размещения пенсионных резервов. Государственная поддержка&nbsp;— при соблюдении условий, установленных Федеральным законом от 07.05.1998 № 75-ФЗ «О негосударственных пенсионных фондах».</span></p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================ STATS ============================
+     Три факта под hero — про план, а не про фонд: цель, срок и вклад государства.
+     Значения подставляются из движка (см. renderHeroStats), поэтому не разойдутся с расчётом. -->
+<div class="stats reveal reveal-stagger" id="hero-stats">
+  <div class="card stat-card">
+    <span class="gz-icon">flag</span>
+    <div class="stat-value">1 000 000 ₽</div>
+    <div class="stat-caption">цель на счёте программы долгосрочных сбережений</div>
+  </div>
+  <div class="card stat-card">
+    <span class="gz-icon">schedule</span>
+    <div class="stat-value" id="hero-term">5 лет</div>
+    <div class="stat-caption">при взносе 10 000 ₽ в месяц — с господдержкой<button type="button" class="fn-ref" data-fn="1" aria-label="Сноска 1" aria-expanded="false">¹</button>, инвестиционным доходом<button type="button" class="fn-ref" data-fn="2" aria-label="Сноска 2" aria-expanded="false">²</button> и при самостоятельном внесении на счёт полученного налогового вычета<button type="button" class="fn-ref" data-fn="3" aria-label="Сноска 3" aria-expanded="false">³</button></div>
+  </div>
+  <div class="card stat-card">
+    <span class="gz-icon">volunteer_activism</span>
+    <div class="stat-value">до 360 000 ₽</div>
+    <div class="stat-caption">может добавить государство за 10 лет уплаты взносов — до 36 000 ₽ в год<button type="button" class="fn-ref" data-fn="1" aria-label="Сноска 1" aria-expanded="false">¹</button></div>
+  </div>
+</div>
+<div class="container">
+  <p class="legal fn-print">
+    ¹ Государственная поддержка предоставляется при соблюдении условий, установленных Федеральным законом от 07.05.1998 № 75-ФЗ «О негосударственных пенсионных фондах»; размер определяется на основании данных ФНС России о вашем среднемесячном доходе.
+    ² Возможно увеличение или уменьшение дохода от размещения пенсионных резервов. Результаты инвестирования в прошлом не определяют доходов в будущем. Государство не гарантирует доходности размещения пенсионных резервов. В расчётах использована ставка 10% годовых исключительно для наглядности.
+    ³ Налоговый вычет предоставляется налоговым органом по вашему обращению; полученную сумму вы можете самостоятельно внести на счёт.
+  </p>
+</div>
+
+<!-- ============================ QUIZ (сразу после hero) ============================ -->
+<section class="quiz-band reveal" id="quiz">
+  <div class="quiz-wrap">
+    <div class="sec-head">
+      <h2>Составьте персональный план</h2>
+      <p class="sub">4&nbsp;вопроса, около 40&nbsp;секунд. Расчёт — сразу на&nbsp;экране</p>
+    </div>
+
+    <!-- УТП: готовый план в один клик -->
+    <div class="utp" id="utp">
+      <div class="utp-main">
+        <span class="utp-eyebrow">Наш лучший план</span>
+        <h3 class="utp-title">Миллион за&nbsp;5&nbsp;лет — по&nbsp;10&nbsp;000&nbsp;₽ в&nbsp;месяц*</h3>
+        <p class="utp-sub">Старт 10&nbsp;000&nbsp;₽, затем 10&nbsp;000&nbsp;₽ ежемесячно. Складываются ваши взносы, господдержка 1&nbsp;к&nbsp;4<button type="button" class="fn-ref" data-fn="1" aria-label="Сноска 1" aria-expanded="false">¹</button>, самостоятельно внесённый на&nbsp;счёт налоговый вычет<button type="button" class="fn-ref" data-fn="3" aria-label="Сноска 3" aria-expanded="false">³</button> и&nbsp;инвестиционный доход, начисленный фондом<button type="button" class="fn-ref" data-fn="2" aria-label="Сноска 2" aria-expanded="false">²</button>.</p>
+        <div class="utp-facts" id="utp-facts"></div>
+      </div>
+      <div class="utp-cta">
+        <button type="button" class="btn btn-accent" id="utp-go" data-cta="utp-plan">Показать этот план</button>
+        <span class="utp-note">или ответьте на&nbsp;вопросы ниже и&nbsp;соберите свой</span>
+        <span class="utp-note" style="margin-top:6px">*&nbsp;Предварительный расчёт, не&nbsp;является гарантией дохода</span>
+      </div>
+    </div>
+
+    <div class="quiz-card" id="quiz-card">
+      <div class="quiz-steps" id="quiz-steps"></div>
+      <div class="quiz-body" id="quiz-body"><!-- рендерится скриптом --></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ КТО СКИДЫВАЕТСЯ ============================
+     Простое объяснение ценности без единого термина: 10 монет, из которых 6 ваши.
+     Все суммы и доли считает движок — см. renderShare(). -->
+<section class="section share reveal band-white" id="share">
+  <div class="container">
+    <div class="sec-head">
+      <h2>Кто добавляет к вашему миллиону</h2>
+      <p class="sub" id="share-sub"></p>
+    </div>
+    <div class="share-grid">
+      <div class="share-art">
+        <img src="assets/coins-bowl.png" alt="">
+      </div>
+      <div class="share-main">
+        <div class="coins" id="share-coins"></div>
+        <ul class="share-list" id="share-list"></ul>
+        <div class="share-total" id="share-total"></div>
+        <div class="sec-cta">
+          <a class="btn btn-accent" href="https://contract-pds.gazfond-pn.ru/?u=nakopimillion&utm_source=landing_million&utm_medium=button&utm_campaign=pds_million" target="_blank" rel="noopener" data-cta="share-open">Начать копить</a>
+          <a class="btn btn-quiet" href="#quiz" data-cta="share-plan">Посчитать свой план</a>
+        </div>
+        <p class="legal share-legal" id="share-legal"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ СРАВНЕНИЕ: С ПДС / БЕЗ ПДС ============================ -->
+<section class="section reveal band-page" id="compare">
+  <div class="container">
+    <div class="sec-head">
+      <h2>С ПДС миллион ближе</h2>
+      <p class="sub">Одинаковые взносы — разный срок. Господдержка, налоговый вычет и&nbsp;инвестиционный доход сокращают путь к&nbsp;миллиону почти вдвое</p>
+    </div>
+    <div class="card" style="padding:40px">
+      <div class="cmp-chips">
+        <span class="cmp-chip">Первый взнос — 10&nbsp;000&nbsp;₽</span>
+        <span class="cmp-chip">Ежемесячно — 10&nbsp;000&nbsp;₽</span>
+        <span class="cmp-chip">Доход — свыше 150&nbsp;000&nbsp;₽ в&nbsp;месяц</span>
+        <span class="cmp-chip">Инвестиционный доход — 10% годовых</span>
+      </div>
+      <div class="cmp-modes" role="group" aria-label="Режим просмотра графика">
+        <button type="button" class="cmp-mode is-active" data-mode="simple">Простой</button>
+        <button type="button" class="cmp-mode" data-mode="detailed">Подробный</button>
+      </div>
+      <div class="cmp-wrap" id="cmp-wrap">
+        <svg id="cmp-svg" viewBox="0 0 960 400" style="width:100%;display:block"></svg>
+        <div class="cmp-tip" id="cmp-tip"></div>
+      </div>
+      <div class="cmp-legend" id="cmp-legend"><!-- рендерится по режиму --></div>
+      <div class="cmp-stats" id="cmp-stats"></div>
+      <div class="cmp-break" id="cmp-break"></div>
+      <div class="sec-cta">
+        <a class="btn btn-accent" href="https://contract-pds.gazfond-pn.ru/?u=nakopimillion&utm_source=landing_million&utm_medium=button&utm_campaign=pds_million" target="_blank" rel="noopener" data-cta="compare-open">Начать копить</a>
+        <span class="sec-cta-note">Договор — онлайн за 2–3 минуты. Взносы и их размер вы меняете в любой момент</span>
+      </div>
+      <p class="legal" style="margin-top:16px">Наведите курсор на график, чтобы посмотреть суммы на любой месяц. Предварительный расчёт, не является офертой и гарантией дохода. <button type="button" class="link-more" aria-expanded="false" data-alt="Свернуть">Подробнее</button><span class="legal-rest" hidden> Возможно увеличение или уменьшение дохода от размещения пенсионных резервов. Результаты инвестирования в прошлом не определяют доходов в будущем. Государство не гарантирует доходности размещения пенсионных резервов. Налоговый вычет предоставляется с суммы уплаченных взносов (не более 400 000 ₽ в год); в расчёте учтено, что полученный вычет вы самостоятельно вносите на счёт. Государственная поддержка — до 36 000 ₽ в год в течение первых 10 лет уплаты взносов; её размер определяется на основании данных ФНС России о вашем среднемесячном доходе, зачисление — в году, следующем за годом уплаты взносов. Условия установлены Федеральным законом от 07.05.1998 № 75-ФЗ «О негосударственных пенсионных фондах».</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ ТРИ ПЛАНА ============================
+     Раздел заменил «Из чего складывается миллион»: состав уже показан в «Кто скидывается»
+     и в подробном режиме графика — здесь сравниваем темпы. Цифры считает движок (renderPlans). -->
+<section class="section reveal band-white" id="how">
+  <div class="container">
+    <div class="sec-head">
+      <h2>Три плана — одна цель</h2>
+      <p class="sub">Выберите комфортный темп: миллион достижим и по 3&nbsp;000&nbsp;₽ в&nbsp;месяц — вопрос только во&nbsp;времени</p>
+    </div>
+    <div class="plans" id="plans"><!-- рендерится скриптом --></div>
+    <div class="plans-dots" id="plans-dots" aria-hidden="true"></div>
+    <div class="plans-hint">Листайте, чтобы сравнить планы</div>
+    <div class="sec-cta">
+      <a class="btn btn-accent" href="https://contract-pds.gazfond-pn.ru/?u=nakopimillion&utm_source=landing_million&utm_medium=button&utm_campaign=pds_million" target="_blank" rel="noopener" data-cta="plans-open">Начать копить</a>
+      <span class="sec-cta-note">Взнос можно изменить в любой момент — план не фиксируется договором</span>
+    </div>
+    <p class="legal" style="margin-top:18px">Во всех планах: стартовый взнос 10 000 ₽, доход свыше 150 000 ₽ в месяц; полученный налоговый вычет вы самостоятельно вносите на счёт. Предварительный расчёт, не является офертой и гарантией дохода. <button type="button" class="link-more" aria-expanded="false" data-alt="Свернуть">Подробнее</button><span class="legal-rest" hidden> Возможно увеличение или уменьшение дохода от размещения пенсионных резервов. Результаты инвестирования в прошлом не определяют доходов в будущем. Государство не гарантирует доходности размещения пенсионных резервов.</span></p>
+  </div>
+</section>
+
+<!-- ============================ STEPS ============================ -->
+<section class="section reveal band-gradient">
+  <div class="container">
+    <div class="sec-head on-dark"><h2>Начать копить — просто</h2></div>
+    <div class="grid-3 reveal-stagger">
+      <div class="card step-card">
+        <div class="step-num">1</div>
+        <div class="step-title">Составьте план</div>
+        <p class="step-body">Ответьте на 4 вопроса — мы рассчитаем срок и структуру вашего миллиона</p>
+      </div>
+      <div class="card step-card active">
+        <div class="step-num">2</div>
+        <div class="step-title">Заключите договор и сделайте первый взнос</div>
+        <p class="step-body">Онлайн за 2–3 минуты. Накопления начинаются с первого взноса</p>
+      </div>
+      <div class="card step-card">
+        <div class="step-num">3</div>
+        <div class="step-title">Подключите автоплатёж</div>
+        <p class="step-body">Ежемесячный автоплатёж СБП пополняет счёт, а мы присылаем отчёт о прогрессе каждый месяц</p>
+      </div>
+    </div>
+    <div class="sec-cta">
+      <a class="btn btn-ondark" href="https://contract-pds.gazfond-pn.ru/?u=nakopimillion&utm_source=landing_million&utm_medium=button&utm_campaign=pds_million" target="_blank" rel="noopener" data-cta="steps-open">Заключить договор</a>
+      <span class="sec-cta-note">Понадобится только паспорт и СНИЛС — вход через Госуслуги</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ BANNER ============================
+     Собственная секция с отступом сверху: баннер не прилипает к градиентной полосе выше -->
+<div class="container reveal" style="padding-top:64px;padding-bottom:96px">
+  <div class="banner">
+    <div>
+      <h3>Ваш миллион начинается сегодня</h3>
+      <p>Договор — онлайн за 2–3 минуты. Дальше — регулярные взносы удобным для вас способом, например автоплатежом</p>
+    </div>
+    <a class="btn btn-ondark" href="https://contract-pds.gazfond-pn.ru/?u=nakopimillion&utm_source=landing_million&utm_medium=button&utm_campaign=pds_million" target="_blank" rel="noopener" data-cta="banner-open">Начать копить</a>
+    <img src="assets/banner-petals.png" alt="">
+  </div>
+</div>
+
+<!-- ============================ FAQ ============================ -->
+<section class="section reveal band-page" style="padding-top:0">
+  <div class="container">
+    <div class="sec-head"><h2>Частые вопросы</h2></div>
+    <div id="faq"></div>
+    <div class="sec-cta">
+      <a class="btn btn-accent" href="https://contract-pds.gazfond-pn.ru/?u=nakopimillion&utm_source=landing_million&utm_medium=button&utm_campaign=pds_million" target="_blank" rel="noopener" data-cta="faq-open">Начать копить</a>
+      <a class="btn btn-quiet" href="tel:88007007550" data-cta="faq-call">Задать вопрос: 8 800 700 75 50</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ FOOTER ============================ -->
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div style="flex:1">
+      <div class="footer-phone">8 800 700 75 50</div>
+      <div class="footer-note" style="margin-top:6px">Звонок по России бесплатный</div>
+      <p class="footer-note"><span data-year></span>, АО «НПФ ГАЗФОНД пенсионные накопления». Лицензия Банка России № 430 от 30 апреля 2014 г., бессрочная. 123022, г. Москва, ул. Сергея Макеева, д. 13</p>
+    </div>
+    <span class="asv" role="img" aria-label="Долгосрочные сбережения гарантированы — АСВ"></span>
+  </div>
+  <div class="footer-legal">Информация носит справочный характер, не является офертой, индивидуальной инвестиционной рекомендацией или обещанием доходности. Все расчёты предварительные; ставка 10% годовых использована исключительно для наглядности примеров и не является прогнозом результатов инвестиционной деятельности фонда. <button type="button" class="link-more" id="flegal-btn" aria-expanded="false" aria-controls="flegal-body" data-alt="Свернуть">Полная правовая информация</button><div id="flegal-body" hidden style="margin-top:10px">Возможно увеличение или уменьшение дохода от размещения пенсионных резервов. Результаты инвестирования в прошлом не определяют доходов в будущем. Государство не гарантирует доходности размещения пенсионных резервов. Государственная поддержка формирования долгосрочных сбережений предоставляется при соблюдении условий, установленных Федеральным законом от 07.05.1998 № 75-ФЗ «О негосударственных пенсионных фондах»: при уплате сберегательных взносов от 2 000 ₽ в год, в течение первых 10 лет уплаты взносов; максимальный размер — 36 000 ₽ в год. Размер дополнительных стимулирующих взносов определяется администратором софинансирования на основании данных ФНС России о среднемесячном доходе вкладчика. Налоговый вычет предоставляется с суммы уплаченных сберегательных взносов (не более 400 000 ₽ в год) по применимой ставке НДФЛ; для получения вычета необходимо обратиться в налоговый орган. Выплаты по договору долгосрочных сбережений назначаются при наступлении оснований, установленных законодательством и договором: по общему правилу — через 15 лет действия договора либо по достижении возраста 55 лет (для женщин) и 60 лет (для мужчин), а также в особых жизненных ситуациях. При досрочном расторжении договора выплачивается выкупная сумма, размер которой определяется договором и может быть меньше суммы уплаченных взносов; также могут быть утрачены налоговые льготы и право на государственную поддержку. Средства застрахованы государством в лице Агентства по страхованию вкладов на сумму до 2,8 млн ₽. До заключения договора необходимо ознакомиться с уставом фонда, правилами формирования долгосрочных сбережений и ключевым информационным документом.</div></div>
+</footer>
+
+<script src="calc.js"></script>
+<script>
+/* ============================================================
+   Квиз и экран результата. Вся математика — в calc.js (CALC).
+   ============================================================ */
+(function () {
+  "use strict";
+
+  /* ---------- утилиты ---------- */
+  var now = new Date();
+  var START_YEAR = now.getFullYear();               // год отсчёта — всегда текущий
+  var START_MONTH = now.getMonth();                 // календарный месяц старта
+  /* всё, что печатает год на странице, берёт его отсюда — правки при смене года не нужны */
+  document.querySelectorAll("[data-year]").forEach(function (el) { el.textContent = START_YEAR; });
+  /* Суммы всегда с неразрывными пробелами: «1 100 004 ₽» не разрывается при переносе строки */
+  function rub(n) { return new Intl.NumberFormat("ru-RU").format(Math.round(n)).replace(/[\s\u00A0\u202F]/g, "\u00A0") + "\u00A0₽"; }
+  var MONTHS_DAT = ["январю","февралю","марту","апрелю","маю","июню","июлю","августу","сентябрю","октябрю","ноябрю","декабрю"];
+  function yearsN(months) {                          // срок целыми годами вверх: «11 лет», «4 года», «1 год»
+    var n = Math.max(1, Math.round(months / 12));
+    var w = n % 10 === 1 && n % 100 !== 11 ? "год"
+          : [2,3,4].indexOf(n % 10) >= 0 && [12,13,14].indexOf(n % 100) < 0 ? "года" : "лет";
+    return n + " " + w;
+  }
+  function timeDiffStr(m) {                          // «1 год и 3 месяца»
+    var y = Math.floor(m / 12), mm = m % 12, parts = [];
+    if (y) parts.push(y + " " + (y % 10 === 1 && y % 100 !== 11 ? "год" : [2,3,4].indexOf(y % 10) >= 0 && [12,13,14].indexOf(y % 100) < 0 ? "года" : "лет"));
+    if (mm) parts.push(mm + " " + (mm % 10 === 1 && mm % 100 !== 11 ? "месяц" : [2,3,4].indexOf(mm % 10) >= 0 && [12,13,14].indexOf(mm % 100) < 0 ? "месяца" : "месяцев"));
+    return parts.join(" и ");
+  }
+  function goalDateStr(months) {                    // «к марту 2031 года»
+    var d = new Date(START_YEAR, START_MONTH + (months - 1), 1);
+    return "к " + MONTHS_DAT[d.getMonth()] + " " + d.getFullYear() + " года";
+  }
+  function yearsWord(y) {
+    var r = Math.round(y * 2) / 2;
+    var i = Math.floor(r), frac = r - i;
+    var word = (function (n) {
+      if (n % 10 === 1 && n % 100 !== 11) return "год";
+      if ([2,3,4].indexOf(n % 10) >= 0 && [12,13,14].indexOf(n % 100) < 0) return "года";
+      return "лет";
+    })(frac ? Math.max(i,1) : i);
+    if (frac) word = i >= 5 || i === 0 ? "лет" : "года";
+    return (frac ? String(i) + ",5" : String(i)) + " " + (frac ? word : word);
+  }
+  function durStrIn(months) {  /* «в течение 5 лет» — родительный падеж */
+    var y = Math.floor(months / 12), m = months % 12, parts = [];
+    var gy = function (n) { return n % 10 === 1 && n % 100 !== 11 ? "года" : "лет"; };
+    var gm = function (n) { return n % 10 === 1 && n % 100 !== 11 ? "месяца" : "месяцев"; };
+    if (y) parts.push(y + " " + gy(y));
+    if (m) parts.push(m + " " + gm(m));
+    return "в течение " + parts.join(" и ");
+  }
+  function durStr(months) {
+    if (months < 12) return "за " + months + " " + (months === 1 ? "месяц" : months < 5 ? "месяца" : "месяцев");
+    return "за " + yearsWord(months / 12);
+  }
+  function roundUp100(n) { return Math.ceil(n / 100) * 100; }
+
+  var SIGNUP_URL = "https://contract-pds.gazfond-pn.ru/?u=nakopimillion&utm_source=landing_million&utm_medium=button&utm_campaign=pds_million";
+
+  /* ---------- состояние ---------- */
+  var S = { step: 0, first: null, monthly: null, k: null, kLabel: null, wantMonths: undefined, reinvest: true };
+  var card = document.getElementById("quiz-body");
+  var stepsBox = document.getElementById("quiz-steps");
+
+  /* Высота блока — по содержимому. Чтобы при смене шага и появлении результата
+     страница не дёргалась, перерисовка обёрнута в плавный переход высоты:
+     запомнили старую высоту → отрисовали новое → довели высоту до новой → отпустили в auto. */
+  var morphTimer = null;
+  function morphHeight(render) {
+    var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var h0 = card.offsetHeight;          // текущая высота, в том числе посреди незаконченного перехода
+    card.style.height = "";              // отпустить, чтобы измерить новое содержимое
+    render();
+    if (reduce || !h0) { card.classList.remove("is-resizing"); return; }
+    var h1 = card.offsetHeight;
+    if (Math.abs(h1 - h0) < 2) { card.classList.remove("is-resizing"); return; }
+    card.classList.add("is-resizing");
+    card.style.height = h0 + "px";
+    void card.offsetHeight;              // зафиксировать стартовую высоту до смены
+    card.style.height = h1 + "px";
+    clearTimeout(morphTimer);
+    morphTimer = setTimeout(function () { card.style.height = ""; card.classList.remove("is-resizing"); }, 320);
+  }
+
+  function params() {
+    return { first: S.first || 0, monthly: S.monthly || 0, k: S.k == null ? 0.25 : S.k, reinvest: S.reinvest, startMonth: START_MONTH };
+  }
+
+  /* подпись под пресетом взноса: «≈ миллион за N лет» (консервативно, k = 1:4) */
+  function presetCaption(monthly) {
+    var g = CALC.simulate({ first: S.first || 0, monthly: monthly, k: 0.25, reinvest: S.reinvest, startMonth: START_MONTH }).goalMonths;
+    if (!g) return "дольше 15 лет";
+    if (g > 180) return "≈ миллион дольше чем за 15 лет";
+    return "≈ миллион " + durStr(g);
+  }
+
+  /* ---------- шаги квиза ---------- */
+  var QUESTIONS = [
+    {
+      title: "С какой суммы начнём?",
+      why: "Стартовый взнос — необязательный, но он заметно ускоряет цель",
+      presets: [
+        { label: "10 000 ₽", value: 10000, accent: "Рекомендуем" },
+        { label: "50 000 ₽", value: 50000 },
+        { label: "100 000 ₽", value: 100000 },
+        { field: true, placeholder: "Своя сумма, ₽" }
+      ],
+      customMin: 0, customMax: 10000000,
+      get: function(){ return S.first; }, set: function (v) { S.first = v; }
+    },
+    {
+      title: "Сколько готовы откладывать ежемесячно?",
+      why: "Автоплатёж СБП будет пополнять счёт на эту сумму",
+      presets: function () {
+        return [
+          { label: "3 000 ₽", value: 3000, caption: presetCaption(3000) },
+          { label: "6 000 ₽", value: 6000, caption: presetCaption(6000) },
+          { label: "10 000 ₽", value: 10000, caption: presetCaption(10000), accent: "Рекомендуем" },
+          { label: "12 000 ₽", value: 12000, caption: presetCaption(12000) },
+          { field: true, placeholder: "Своя сумма, ₽" }
+        ];
+      },
+      customMin: 0, customMax: 1000000,
+      get: function(){ return S.monthly; }, set: function (v) { S.monthly = v; },
+      validate: function (v) {
+        if ((S.first || 0) === 0 && (v || 0) === 0) return "Чтобы копить, нужен стартовый или ежемесячный взнос — укажите хотя бы один";
+        return null;
+      }
+    },
+    {
+      title: "Ваш среднемесячный доход",
+      why: "Нужен для расчёта господдержки: от дохода зависит, сколько государство добавляет на ваши взносы",
+      presets: [
+        { label: "До 80 000 ₽", value: 1.0, caption: "государство добавляет 1 ₽ на 1 ₽ взносов" },
+        { label: "80 000 – 150 000 ₽", value: 0.5, caption: "от 80 000,01 до 150 000 ₽ — 1 ₽ на 2 ₽ взносов" },
+        { label: "Свыше 150 000 ₽", value: 0.25, caption: "от 150 000,01 ₽ — 1 ₽ на 4 ₽ взносов" },
+        { label: "Не хочу указывать", value: 0.25, caption: "посчитаем консервативно — 1 ₽ на 4 ₽" }
+      ],
+      plate: "Размер государственной поддержки определяется администратором софинансирования исходя из суммы уплаченных вами сберегательных взносов за истекший календарный год и данных ФНС России о вашем среднемесячном доходе.",
+      get: function(){ return S.k; },
+      set: function (v, label) { S.k = v; S.kLabel = label; }
+    },
+    {
+      title: "Когда хотите увидеть миллион?",
+      why: "Сверим желаемый срок с расчётом — и предложим лучший план",
+      presets: [
+        { label: "Через 5 лет", value: 60 }, { label: "Через 7 лет", value: 84 },
+        { label: "Через 10 лет", value: 120 },
+        { field: true, placeholder: "Свой срок, лет", years: true },
+        { label: "Мы посчитаем за вас", value: null, accent: "Подберём сами", wide: true }
+      ],
+      customMin: 1, customMax: 30, customYears: true,
+      get: function(){ return S.wantMonths; }, set: function (v) { S.wantMonths = v; }
+    }
+  ];
+
+  function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;"); }
+
+  function renderSteps() {
+    var h = '<div class="qsteps">';
+    for (var i = 0; i < 4; i++) {
+      var cls = i < S.step ? "done" : i === S.step ? "active" : "";
+      h += '<div class="qstep-disc ' + cls + '">' + (i < S.step ? '<span class="gz-icon" style="font-size:17px">check</span>' : i + 1) + "</div>";
+      if (i < 3) h += '<div class="qstep-bar ' + (i < S.step ? "done" : "") + '"></div>';
+    }
+    return h + "</div>";
+  }
+
+  function renderQuestion() { morphHeight(renderQuestionNow); }
+  function renderQuestionNow() {
+    var q = QUESTIONS[S.step];
+    var presets = typeof q.presets === "function" ? q.presets() : q.presets;
+    stepsBox.innerHTML = renderSteps();
+    var h = "";
+    h += '<div class="q-title">' + esc(q.title) + "</div>";
+    h += '<div class="q-why">' + esc(q.why) + "</div>";
+    h += '<div class="chips">';
+    presets.forEach(function (p, idx) {
+      if (p.field) {
+        h += '<div class="chip chip-field"><input class="chip-input" id="q-input" inputmode="numeric" placeholder="' + esc(p.placeholder) +
+             '" aria-label="' + esc(p.placeholder) + '"><button type="button" class="chip-go" id="q-next" aria-label="Далее">' +
+             '<span class="gz-icon">arrow_forward</span></button></div>';
+      } else {
+        h += '<button type="button" class="chip' + (p.accent ? " chip-accent" : "") + (p.wide ? " chip-wide" : "") + '" data-idx="' + idx + '">' +
+             (p.accent ? '<span class="chip-tag">' + esc(p.accent) + "</span>" : "") +
+             esc(p.label) + (p.caption ? "<small>" + esc(p.caption) + "</small>" : "") + "</button>";
+      }
+    });
+    h += "</div>";
+    h += '<div class="q-error" id="q-error"></div>';
+    if (q.plate) h += '<div class="plate"><span class="gz-icon">info</span><span>' + esc(q.plate) + "</span></div>";
+    h += '<div class="q-nav">' + (S.step > 0 ? '<button type="button" class="q-back" id="q-back"><span class="gz-icon" style="font-size:18px">arrow_back</span>Назад</button>' : "") + "</div>";
+    card.innerHTML = '<div class="q-inner">' + h + "</div>";
+    card.scrollTop = 0;
+
+    var input = document.getElementById("q-input");
+    var errBox = document.getElementById("q-error");
+
+    function fail(msg) { errBox.textContent = msg; errBox.classList.add("show"); }
+    function proceed(value, label) {
+      if (q.validate) { var e = q.validate(value); if (e) { fail(e); return; } }
+      q.set(value, label);
+      S.step++;
+      /* страницу не прокручиваем — карточка фиксированной высоты, экран остаётся на месте */
+      if (S.step >= QUESTIONS.length) renderResult(); else renderQuestion();
+    }
+
+    card.querySelectorAll("button.chip").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var p = presets[+btn.dataset.idx];
+        card.querySelectorAll(".chip").forEach(function (b) { b.classList.remove("selected"); });
+        btn.classList.add("selected");
+        errBox.classList.remove("show");
+        proceed(p.value, p.label);
+      });
+    });
+
+    if (input) {
+      document.getElementById("q-next").addEventListener("click", submitCustom);
+      input.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); submitCustom(); } });
+      input.addEventListener("input", function () { errBox.classList.remove("show"); });
+    }
+    function submitCustom() {
+      var raw = String(input.value).replace(/\D/g, "");
+      if (raw === "") { fail(q.customYears ? "Введите срок в годах" : "Введите сумму"); input.focus(); return; }
+      var v = +raw;
+      if (v < q.customMin || v > q.customMax) {
+        fail(q.customYears ? "Укажите срок от " + q.customMin + " до " + q.customMax + " лет"
+                           : "Укажите сумму от " + rub(q.customMin) + " до " + rub(q.customMax));
+        input.focus(); return;
+      }
+      proceed(q.customYears ? v * 12 : v, null);
+    }
+
+    var back = document.getElementById("q-back");
+    if (back) back.addEventListener("click", function () { S.step--; renderQuestion(); });
+  }
+
+  /* ---------- экран результата ---------- */
+  var SEG_COLORS = { contrib: "#0051FF", cofin: "#9A9FFB", id: "#36DFDD", dedRe: "#FF9F78" };
+
+  function structureAt(p, months) {
+    var r = CALC.simulate(Object.assign({}, p, { maxMonths: months }));
+    var h = r.hist[r.hist.length - 1];
+    return { value: h.value, contrib: h.contrib, cofin: h.cofin, dedRe: h.dedRe, id: Math.max(0, h.value - h.contrib - h.cofin - h.dedRe) };
+  }
+
+  function donutHtml(st, centerTitle, centerLabel) {
+    var total = st.value || 1;
+    var segs = [
+      ["contrib", "Ваши взносы", st.contrib],
+      ["cofin", "Софинансирование", st.cofin],
+      ["id", "Инвестиционный доход", st.id]
+    ];
+    if (st.dedRe > 0) segs.push(["dedRe", "Внесённый вычет", st.dedRe]);
+    var acc = 0, stops = [];
+    segs.forEach(function (s) {
+      var from = acc / total * 360; acc += s[2];
+      stops.push(SEG_COLORS[s[0]] + " " + from + "deg " + (acc / total * 360) + "deg");
+    });
+    var h;
+    if (isMobile()) {
+      /* на узком экране кольцо с числом внутри не читается — полоса и сумма над ней */
+      var acc2 = 0, segsHtml = "";
+      segs.forEach(function (s) {
+        var w = s[2] / total * 100;
+        segsHtml += '<span style="left:' + acc2.toFixed(2) + '%;width:' + w.toFixed(2) + '%;background:' + SEG_COLORS[s[0]] + '"></span>';
+        acc2 += w;
+      });
+      h = '<div class="rbar-wrap"><div class="rbar-total">' + centerTitle + '</div><div class="rbar-label">' + esc(centerLabel) + '</div>' +
+          '<div class="rbar">' + segsHtml + '</div></div>';
+    } else {
+      h = '<div><div class="donut" style="background:conic-gradient(' + stops.join(",") + ')">' +
+        '<div class="donut-center"><div class="donut-total">' + centerTitle + '</div><div class="donut-label">' + esc(centerLabel) + "</div></div></div></div>";
+    }
+    h += '<div><div class="leg">';
+    segs.forEach(function (s) {
+      h += '<div class="leg-row"><span class="leg-dot" style="background:' + SEG_COLORS[s[0]] + '"></span>' + esc(s[1]) + "<b>" + rub(s[2]) + "</b></div>";
+    });
+    h += "</div>";
+    return { open: h, close: "</div>" };
+  }
+
+  function optBtn(label, sub, act) {
+    return '<button type="button" class="r-opt" data-act="' + act + '">' + label + (sub ? "<small>" + sub + "</small>" : "") + "</button>";
+  }
+
+  var UTP_GOAL_CACHE = null;
+  function utpGoal() {   // срок классического плана «10 000 + 10 000», считается движком один раз
+    if (UTP_GOAL_CACHE === null)
+      UTP_GOAL_CACHE = CALC.simulate({ first: 10000, monthly: 10000, k: 0.25, reinvest: true, startMonth: START_MONTH }).goalMonths;
+    return UTP_GOAL_CACHE;
+  }
+
+  function renderResult(keepScroll) { morphHeight(function () { renderResultNow(keepScroll); }); }
+  function renderResultNow(keepScroll) {
+    var prevScroll = keepScroll ? card.scrollTop : 0;
+    var p = params();
+    /* Базовый план — без реинвеста вычета. Его срок задаёт ФИКСИРОВАННУЮ дату,
+       на которую показывается состав счёта: галочка не должна двигать точку сравнения. */
+    var pBase = Object.assign({}, p, { reinvest: false });
+    var baseGoal = CALC.simulate(pBase).goalMonths;
+    var pl = CALC.plan(p, S.wantMonths == null ? null : S.wantMonths);
+    stepsBox.innerHTML = renderSteps().replace(/qstep-disc /g, "qstep-disc done-all ").replace(/active/g, "done");
+    var h = "";
+    var horizonMonths, headline, sub = "", options = "";
+
+    if (pl.branch === "fits") {
+      horizonMonths = pl.tCalc;
+      headline = "Миллион — за " + yearsN(pl.tCalc);
+      if (S.wantMonths && pl.tCalc < S.wantMonths) sub = "Это даже раньше, чем вы планировали. " + durStr(pl.tCalc).replace("за", "Путь займёт") + " при " + rub(p.monthly) + " в месяц.";
+      else sub = "При " + (p.first ? "стартовом взносе " + rub(p.first) + " и " : "") + "взносе " + rub(p.monthly) + " в месяц цель достижима " + durStr(pl.tCalc) + ".";
+    } else if (pl.branch === "raise") {
+      var mReq = roundUp100(pl.mReq);
+      horizonMonths = S.wantMonths;
+      headline = "Поднимите взнос до " + rub(mReq) + " в месяц — и миллион за " + yearsN(S.wantMonths);
+      sub = "Ваш желаемый срок достижим. Либо оставьте " + rub(p.monthly) + " в месяц — тогда миллион за " + yearsN(pl.tCalc) + ".";
+      options = optBtn("Поднять взнос до " + rub(mReq) + "/мес", "миллион за " + yearsN(S.wantMonths), "raise:" + mReq) +
+                optBtn("Оставить " + rub(p.monthly) + "/мес", "миллион за " + yearsN(pl.tCalc), "keep");
+      horizonMonths = pl.tCalc;
+    } else if (pl.branch === "keep") {
+      horizonMonths = pl.tCalc;
+      headline = "При " + rub(p.monthly) + " в месяц миллион — за " + yearsN(pl.tCalc);
+      sub = "К желаемому сроку (" + yearsN(S.wantMonths) + ") на счёте будет ~" + rub(pl.atWant) + " — отличный промежуточный рубеж. Хотите быстрее — поднимите взнос или добавьте стартовый.";
+      var mReq2 = roundUp100(pl.mReq);
+      options = optBtn("Поднять взнос до " + rub(mReq2) + "/мес", "миллион за " + yearsN(S.wantMonths), "raise:" + mReq2);
+      if (pl.extraFirst != null && pl.extraFirst > 0) {
+        var ef = roundUp100(pl.extraFirst);
+        options += optBtn("Добавить стартовый взнос " + rub(ef), "миллион за " + yearsN(S.wantMonths), "first:" + ef);
+      }
+    } else { /* extreme */
+      horizonMonths = pl.tCalc && pl.tCalc <= 480 ? pl.tCalc : null;
+      headline = "Давайте подберём реалистичный план";
+      var m500 = CALC.monthsToAmount(p, 500000);
+      sub = (pl.tCalc && pl.tCalc <= 480 ? "При " + rub(p.monthly) + " в месяц миллион — за " + yearsN(pl.tCalc) + ". " : "") +
+            (m500 ? "Промежуточная цель 500 000 ₽ при текущих взносах — через " + yearsN(m500) + ". " : "") +
+            "Вот планы, с которых удобно начать:";
+      [3000, 6000, 12000].forEach(function (mv) {
+        if (mv <= (p.monthly || 0)) return;
+        var g = CALC.simulate(Object.assign({}, p, { monthly: mv })).goalMonths;
+        if (g && g <= 240) options += optBtn(rub(mv) + " в месяц", "миллион за " + yearsN(g), "raise:" + mv);
+      });
+      if (!horizonMonths) horizonMonths = 480;
+    }
+
+    /* оговорка о праве на выплату — накопление суммы и право её получить наступают по разным правилам */
+    sub += " Выплаты назначаются при наступлении оснований, установленных законодательством и договором.";
+
+    /* если план пользователя быстрее классических 5 лет — показываем выигрыш */
+    if (pl.tCalc && pl.tCalc < utpGoal()) {
+      sub += " Это на " + timeDiffStr(utpGoal() - pl.tCalc) +
+             " быстрее нашего классического плана «миллион за 5 лет по 10 000 ₽ в месяц».";
+    }
+
+    /* дата сравнения фиксирована базовым планом — не зависит от галочки вычета */
+    var cmpMonths = baseGoal && pl.branch !== "extreme" ? baseGoal : horizonMonths;
+    var st = structureAt(p, cmpMonths);
+    var donut = donutHtml(st, rub(st.value), "на счёте ПДС через " + yearsN(cmpMonths));
+
+    h += '<div class="r-head">' + headline + "</div>";
+    h += '<div class="r-sub">' + sub + "</div>";
+    if (options) h += '<div class="r-options r-options--glow">' + options + "</div>";
+    h += '<div class="r-grid">' + donut.open;
+
+    /* Налоговый вычет. Без галочки — «сверх миллиона» на карту.
+       С галочкой — возврат каждого года идёт на счёт: сумма за ВЕСЬ период,
+       на неё начисляется ИД, и она увеличивает базу господдержки → цель наступает раньше. */
+    /* Сумма вычета зависит только от ваших взносов за период — от галочки она не меняется */
+    var dedTotal = CALC.deductionsEarned(p, cmpMonths);
+    var valBase = CALC.valueAt(pBase, cmpMonths);
+    var valRe = CALC.valueAt(Object.assign({}, p, { reinvest: true }), cmpMonths);
+    var plus = valRe - valBase;
+    var mRe = CALC.simulate(Object.assign({}, p, { reinvest: true })).goalMonths;
+    var faster = (baseGoal && mRe) ? baseGoal - mRe : 0;
+    function monthWord(n) {
+      return n + " " + (n % 10 === 1 && n % 100 !== 11 ? "месяц" : [2,3,4].indexOf(n % 10) >= 0 && [12,13,14].indexOf(n % 100) < 0 ? "месяца" : "месяцев");
+    }
+
+    h += '<div class="deduct">';
+    h += '<div class="deduct-line"><span class="gz-icon">savings</span><div><b>Налоговый вычет за период — ' + rub(dedTotal) + "</b>" +
+         '<span class="d-sub">' + (S.reinvest
+           ? "получив вычет в налоговом органе, вы вносите его на счёт как взнос — тогда к моменту цели это +" + rub(plus) + " к счёту" + (faster > 0 ? ", а миллион наступает на " + monthWord(faster) + " раньше" : "") + (dedTotal - st.dedRe > 0 ? ". В том числе " + rub(dedTotal - st.dedRe) + " — после достижения цели, когда сможете получить вычет за последние взносы" : "")
+           : "вы можете получить его в налоговом органе — это сверх суммы на счёте") +
+         "</span></div></div>";
+    h += '<label class="checkbox"><input type="checkbox" id="reinvest-chk"' + (S.reinvest ? " checked" : "") + '><span>Буду самостоятельно вносить полученный налоговый вычет на счёт ПДС</span></label>';
+    h += "</div>";
+
+    h += '<div class="r-cta"><a class="btn btn-accent" href="' + signupUrl() + '" target="_blank" rel="noopener" data-cta="result-open">Начать копить</a>' +
+         '<button type="button" class="btn btn-quiet" id="q-restart"><span class="gz-icon" style="font-size:18px">refresh</span>Изменить ответы</button></div>';
+
+    /* сохранение плана: картинка на устройство и отправка себе в мессенджер */
+    h += '<div class="plan-tools">' +
+      '<button type="button" class="btn-tool btn-tool-main" id="plan-save"><span class="gz-icon">download</span>Скачать план</button>' +
+      '<button type="button" class="btn-tool" id="plan-share"><span class="gz-icon">ios_share</span>Поделиться планом</button>' +
+      '<span class="plan-hint" id="plan-hint">Картинка с планом сохранится на устройство. По ссылке этот же расчёт откроется снова — у вас или у того, кому вы её отправите.</span>' +
+    '</div>';
+    h += donut.close + "</div>";
+
+    h += '<p class="legal r-legal">Предварительный расчёт, не является офертой и гарантией дохода.' +
+      (S.kLabel ? " В расчёте: доход «" + esc(S.kLabel).toLowerCase() + "»." : "") +
+      ' <button type="button" class="link-more" aria-expanded="false" data-alt="Свернуть">Подробнее</button>' +
+      '<span class="legal-rest" hidden> Размер государственной поддержки определяется администратором софинансирования исходя из суммы уплаченных вами сберегательных взносов за истекший календарный год и данных ФНС России о вашем среднемесячном доходе. Возможно увеличение или уменьшение дохода от размещения пенсионных резервов. Результаты инвестирования в прошлом не определяют доходов в будущем. Государство не гарантирует доходности размещения пенсионных резервов. Ставка 10% годовых использована исключительно для наглядности примера. Государственная поддержка — до 36 000 ₽ в год в течение первых 10 лет уплаты взносов, при взносах от 2 000 ₽ в год; условия установлены Федеральным законом от 07.05.1998 № 75-ФЗ «О негосударственных пенсионных фондах». Налоговый вычет предоставляется с суммы уплаченных взносов (не более 400 000 ₽ в год) по применимой к вашим доходам ставке НДФЛ; для получения вычета необходимо обратиться в налоговый орган. Выплаты по договору долгосрочных сбережений назначаются при наступлении оснований, установленных законодательством и договором.</span></p>';
+
+    card.innerHTML = '<div class="q-inner r-inner">' + h + "</div>";
+    card.scrollTop = prevScroll;   /* позиция внутри карточки сохраняется, страница не двигается */
+
+    document.getElementById("reinvest-chk").addEventListener("change", function (e) {
+      S.reinvest = e.target.checked; renderResult(true);
+    });
+    document.getElementById("q-restart").addEventListener("click", function () { S.step = 0; renderQuestion(); });
+
+    /* --- сохранение и отправка плана --- */
+    document.getElementById("plan-save").addEventListener("click", function () {
+      var btn = this; btn.disabled = true;
+      drawPlanCard(function (canvas) {
+        btn.disabled = false;
+        if (!canvas) { hintPlan("Не удалось собрать картинку. Попробуйте ещё раз."); return; }
+        canvas.toBlob(function (blob) {
+          if (!blob) { hintPlan("Не удалось сохранить картинку."); return; }
+          var url = URL.createObjectURL(blob);
+          var a = document.createElement("a");
+          a.href = url; a.download = "Мой-план-миллион.png";
+          document.body.appendChild(a); a.click(); document.body.removeChild(a);
+          setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
+          hintPlan("Готово: картинка сохранена на устройство.");
+        }, "image/png");
+      });
+    });
+
+    document.getElementById("plan-share").addEventListener("click", function () { sharePlan(this); });
+    card.querySelectorAll(".r-opt").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var act = btn.dataset.act;
+        if (act.indexOf("raise:") === 0) { S.monthly = +act.slice(6); S.wantMonths = S.wantMonths || null; }
+        else if (act.indexOf("first:") === 0) { S.first = (S.first || 0) + (+act.slice(6)); }
+        else if (act === "keep") { S.wantMonths = null; }
+        renderResult(true);
+      });
+    });
+  }
+
+  /* открытие по сохранённой ссылке: ?plan=f10000-m10000-k4-r1 */
+  var planParam = (location.search.match(/[?&]plan=([^&]+)/) || [])[1];
+  if (planParam && applyPlanCode(decodeURIComponent(planParam))) renderResult();
+  else renderQuestion();
+
+  /* ---------- УТП: готовый план «миллион за 5 лет по 10 000 ₽» ---------- */
+  var UTP = { first: 10000, monthly: 10000, k: 0.25, kLabel: "Свыше 150 000 ₽", reinvest: true };
+  (function () {
+    var up = { first: UTP.first, monthly: UTP.monthly, k: UTP.k, reinvest: true, startMonth: START_MONTH };
+    var sim = CALC.simulate(up);
+    var g = sim.goalMonths, hh = sim.hist[g - 1];
+    var years = Math.round(g / 12);
+    /* факты УТП считаются движком — цифры на баннере всегда совпадают с расчётом */
+    document.getElementById("utp-facts").innerHTML =
+      '<div class="utp-fact"><b>' + durStr(g).replace("за ", "") + "</b><span>до миллиона</span></div>" +
+      '<div class="utp-fact"><b>' + rub(hh.contrib) + "</b><span>ваши взносы</span></div>" +
+      '<div class="utp-fact"><b>' + rub(hh.cofin) + "</b><span>господдержка¹</span></div>" +
+      '<div class="utp-fact"><b>' + rub(hh.dedRe) + "</b><span>налоговый вычет³</span></div>" +
+      '<div class="utp-fact"><b>' + rub(hh.value - hh.contrib - hh.cofin - hh.dedRe) + "</b><span>инвестиционный доход²</span></div>";
+    var ht = document.getElementById("hero-term");
+    if (ht) ht.textContent = years + " " + (years === 1 ? "год" : years < 5 ? "года" : "лет");
+
+    document.getElementById("utp-go").addEventListener("click", function () {
+      S.first = UTP.first; S.monthly = UTP.monthly; S.k = UTP.k; S.kLabel = UTP.kLabel;
+      S.wantMonths = null; S.reinvest = UTP.reinvest; S.step = QUESTIONS.length;
+      renderResult();
+      document.getElementById("quiz-card").scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+  })();
+
+  /* ---------- «Три плана — одна цель» ----------
+     Минимальный / умеренный / оптимальный. Все цифры считает движок;
+     разница во времени показана относительно оптимального плана. */
+  (function () {
+    var PLANS = [
+      { name: "Минимальный", monthly: 3000 },
+      { name: "Оптимальный", monthly: 10000, best: true, tag: "Рекомендуем" },
+      { name: "Умеренный", monthly: 6000 }
+    ];
+    var base = { first: 10000, k: 0.25, reinvest: true, startMonth: START_MONTH };
+    var calc = PLANS.map(function (pl) {
+      var sim = CALC.simulate(Object.assign({ monthly: pl.monthly }, base));
+      var g = sim.goalMonths, h = sim.hist[g - 1];
+      return { g: g, own: h.contrib, added: h.value - h.contrib, total: h.value };
+    });
+    var bestG = calc[PLANS.map(function (p) { return !!p.best; }).indexOf(true)].g;
+    function yearsRound(m) {   // «≈ 5 лет» / «≈ 7,5 лет» — без месяцев
+      var y = Math.round(m / 6) / 2;
+      var i = Math.floor(y), half = y !== i;
+      var w = half ? "лет" : (i % 10 === 1 && i % 100 !== 11 ? "год" : [2,3,4].indexOf(i % 10) >= 0 && [12,13,14].indexOf(i % 100) < 0 ? "года" : "лет");
+      return "≈ " + (half ? i + ",5" : i) + " " + w;
+    }
+    document.getElementById("plans").innerHTML = PLANS.map(function (pl, i) {
+      var c = calc[i];
+      var diff = c.g - bestG;
+      return '<div class="plan' + (pl.best ? " plan-best" : "") + '">' +
+        (pl.tag ? '<span class="plan-tag">' + pl.tag + "</span>" : "") +
+        '<div class="plan-name">' + pl.name + "</div>" +
+        '<div class="plan-pay">' + rub(pl.monthly) + ' <small>в месяц</small></div>' +
+        '<div class="plan-term">Миллион за ' + yearsRound(c.g).replace("≈ ", "") + "</div>" +
+        '<div class="plan-diff">' + (diff > 0 ? "дольше оптимального на " + timeDiffStr(diff) : "комфортный взнос — обозримый срок") + "</div>" +
+        '<div class="plan-rows">' +
+          '<div class="plan-row"><span>Ваши взносы</span><b>' + rub(c.own) + "</b></div>" +
+          '<div class="plan-row"><span>Сверх ваших взносов</span><b>+' + rub(c.added) + "</b></div>" +
+          '<div class="plan-row"><span>Итог на счёте</span><b>' + rub(c.total) + "</b></div>" +
+        "</div>" +
+        '<button type="button" class="btn ' + (pl.best ? "btn-accent" : "btn-primary") + '" data-plan="' + i + '" data-cta="plan-' + pl.monthly + '">Выбрать план</button>' +
+      "</div>";
+    }).join("");
+    /* мобильная карусель: точки-индикатор и старт с рекомендуемой карточки */
+    (function () {
+      var box = document.getElementById("plans"), dots = document.getElementById("plans-dots");
+      if (!box || !dots) return;
+      var cards = box.querySelectorAll(".plan");
+      dots.innerHTML = Array.prototype.map.call(cards, function () { return "<span></span>"; }).join("");
+      function mark() {
+        var mid = box.scrollLeft + box.clientWidth / 2, idx = 0;
+        cards.forEach(function (c, i) { if (Math.abs(c.offsetLeft + c.offsetWidth / 2 - mid) < c.offsetWidth / 2) idx = i; });
+        dots.querySelectorAll("span").forEach(function (d, i) { d.className = i === idx ? "on" : ""; });
+      }
+      box.addEventListener("scroll", mark, { passive: true });
+      function centerBest() {
+        if (!isMobile() || box.scrollWidth <= box.clientWidth) return;
+        var best = box.querySelector(".plan-best");
+        if (best) box.scrollLeft = best.offsetLeft - (box.clientWidth - best.offsetWidth) / 2 - box.offsetLeft;
+        mark();
+      }
+      centerBest();
+      window.addEventListener("resize", centerBest);
+    })();
+
+    document.querySelectorAll("#plans [data-plan]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var pl = PLANS[+b.dataset.plan];
+        S.first = base.first; S.monthly = pl.monthly; S.k = base.k; S.kLabel = "Свыше 150 000 ₽";
+        S.wantMonths = null; S.reinvest = true; S.step = QUESTIONS.length;
+        renderResult();
+        document.getElementById("quiz-card").scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+    });
+  })();
+
+  /* ---------- «Кто скидывается на ваш миллион» ----------
+     Тот же сценарий, что в УТП. Ни одного термина: государство добавляет,
+     налоговая возвращает, фонд приумножает. Доли считаются из расчёта. */
+  (function () {
+    var p = { first: UTP.first, monthly: UTP.monthly, k: UTP.k, reinvest: true, startMonth: START_MONTH };
+    var sim = CALC.simulate(p);
+    var g = sim.goalMonths, h = sim.hist[g - 1];
+    var own = h.contrib, gov = h.cofin, tax = h.dedRe, fund = h.value - own - gov - tax;
+    var total = h.value;
+
+    /* 10 монет: доли округляем так, чтобы в сумме всегда получалось ровно 10 */
+    var raw = [own, gov, tax, fund].map(function (v) { return v / total * 10; });
+    var cnt = raw.map(Math.floor);
+    var rest = 10 - cnt.reduce(function (a, b) { return a + b; }, 0);
+    var order = raw.map(function (v, i) { return { i: i, frac: v - Math.floor(v) }; })
+                   .sort(function (a, b) { return b.frac - a.frac; });
+    for (var j = 0; j < rest; j++) cnt[order[j % 4].i]++;
+
+    var CLS = ["coin-you", "coin-gov", "coin-tax", "coin-fund"];
+    var TITLE = ["Вы", "Государство", "Налоговый вычет", "Фонд"];
+    var coinsHtml = "";
+    CLS.forEach(function (c, i) {
+      for (var n = 0; n < cnt[i]; n++) coinsHtml += '<span class="coin ' + c + '" title="' + TITLE[i] + '"></span>';
+    });
+    document.getElementById("share-coins").innerHTML = coinsHtml;
+
+    document.getElementById("share-sub").innerHTML =
+      "Из каждых 10&nbsp;рублей на&nbsp;счёте " + (cnt[0] + cnt[2]) + "&nbsp;— ваши собственные: взносы и&nbsp;самостоятельно внесённый налоговый вычет. Остальное добавляют государство и&nbsp;фонд";
+
+    var ROWS = [
+      { cls: "coin-you", who: "Вы", what: "Откладываете " + rub(UTP.monthly) + " в месяц — автоматически, с карты", sum: own },
+      { cls: "coin-gov", who: "Государство", what: "Добавляет свои деньги к вашим взносам — до 36 000 ₽ в год, первые 10 лет", sum: gov },
+      { cls: "coin-tax", who: "Налоговый вычет", what: "Часть уплаченного НДФЛ, который вы можете вернуть через налоговый орган и внести на счёт ПДС — это тоже ваши деньги", sum: tax },
+      { cls: "coin-fund", who: "Фонд", what: 'Начисляет инвестиционный доход на средства на счёте<button type="button" class="fn-ref" data-fn="2" aria-label="Сноска 2" aria-expanded="false">²</button>', sum: fund }
+    ];
+    document.getElementById("share-list").innerHTML = ROWS.map(function (r) {
+      return '<li><span class="s-dot ' + r.cls + '"></span><span class="s-text"><span class="s-who">' + r.who + "</span>" +
+             '<span class="s-what">' + r.what + "</span></span><span class=\"s-sum\">" + rub(r.sum) + "</span></li>";
+    }).join("");
+
+    document.getElementById("share-total").innerHTML =
+      "Ваши взносы — <b>" + rub(own) + "</b>, а на счёте будет <b>" + rub(total) +
+      "</b> — благодаря господдержке, внесённому вами налоговому вычету и инвестиционному доходу.";
+
+    document.getElementById("share-legal").innerHTML =
+      "Расчёт для примера: первый взнос " + rub(UTP.first) + " и " + rub(UTP.monthly) +
+      " в месяц " + durStrIn(g) + ", доход свыше 150 000 ₽ в месяц; полученный налоговый вычет вы самостоятельно вносите на счёт. " +
+      "Предварительный расчёт, не является офертой и гарантией дохода. " +
+      '<button type="button" class="link-more" aria-expanded="false" data-alt="Свернуть">Подробнее</button>' +
+      '<span class="legal-rest" hidden> Возможно увеличение или уменьшение дохода от размещения пенсионных резервов. Результаты инвестирования в прошлом не определяют доходов в будущем. Государство не гарантирует доходности размещения пенсионных резервов.</span>';
+  })();
+
+
+  /* ============================================================
+     СОХРАНЕНИЕ ПЛАНА
+     Карточка рисуется в браузере пользователя (Canvas), никуда не отправляется,
+     внешних библиотек и запросов нет. QR-код собирается своим кодом (см. qrMatrix).
+     ============================================================ */
+
+  /* телефон/планшет: узкий экран или сенсорный ввод как основной */
+  function isMobile() {
+    return window.innerWidth < 768 || (window.matchMedia && window.matchMedia("(pointer: coarse)").matches && window.innerWidth < 1024);
+  }
+
+
+  /* короткий код плана: f — первый взнос, m — ежемесячный, k — коэффициент, r — вычет в ПДС */
+  function planCode() {
+    var kMap = { 1: "1", 0.5: "2", 0.25: "4" };
+    return "f" + (S.first || 0) + "-m" + (S.monthly || 0) +
+           "-k" + (kMap[S.k] || "4") + "-r" + (S.reinvest ? 1 : 0);
+  }
+  function planUrl() {
+    var base = location.origin + location.pathname;
+    if (location.protocol === "file:") base = "https://musamusaevai.github.io/nakopimillion/";
+    return base + "?plan=" + planCode() + "#quiz";
+  }
+  function signupUrl() {
+    /* код плана (planCode) к ссылке оформления пока не добавляем — флоу его не принимает.
+       Когда команда оформления начнёт читать параметр: return SIGNUP_URL + "&plan=" + planCode(); */
+    return SIGNUP_URL;
+  }
+  /* восстановление расчёта по ссылке ?plan=... */
+  function applyPlanCode(code) {
+    var m = /^f(\d+)-m(\d+)-k([124])-r([01])$/.exec(code || "");
+    if (!m) return false;
+    var kMap = { "1": 1, "2": 0.5, "4": 0.25 };
+    var labels = { "1": "До 80 000 ₽", "2": "80 000 – 150 000 ₽", "4": "Свыше 150 000 ₽" };
+    S.first = +m[1]; S.monthly = +m[2]; S.k = kMap[m[3]]; S.kLabel = labels[m[3]];
+    S.reinvest = m[4] === "1"; S.wantMonths = null; S.step = QUESTIONS.length;
+    return true;
+  }
+
+  function hintPlan(text, ok) {
+    var el = document.getElementById("plan-hint");
+    if (!el) return;
+    el.textContent = text;
+    el.className = "plan-hint" + (ok ? " plan-copied" : "");
+  }
+  function promptLink(link) {
+    window.prompt("Скопируйте ссылку на ваш план:", link);
+  }
+
+  /* отправка в мессенджер: сначала пробуем системное «Поделиться» с картинкой,
+     иначе — обычная ссылка на выбранный мессенджер */
+  /* сообщение, которое уходит вместе со ссылкой */
+  function planShareText() {
+    /* срок берём из движка по текущим ответам — заголовок экрана в ветке «подберём план» срок не содержит */
+    var goal = CALC.simulate(params()).goalMonths;
+    var parts = [];
+    if (S.first) parts.push("первый взнос " + rub(S.first));
+    if (S.monthly) parts.push((S.first ? "затем " : "") + rub(S.monthly) + " в месяц");
+    var plan = parts.join(", ");
+    var term = goal && goal <= 480 ? " — миллион за " + yearsN(goal) : "";
+    return ("Мой план накопления миллиона: " + plan + term + ". Посчитайте свой: " + planUrl()).replace(/\u00A0/g, " ");
+  }
+
+  /* системное окно «Поделиться»; если браузер его не умеет — копируем ссылку */
+  function sharePlan(btn) {
+    var text = planShareText();
+    if (navigator.share) {
+      navigator.share({ title: "Мой план накопления миллиона", text: text })
+        .then(function () { hintPlan("Ссылка отправлена.", true); })
+        .catch(function () { /* пользователь закрыл окно — молча */ });
+      return;
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () {
+        hintPlan("Сообщение со ссылкой на план скопировано — вставьте его в любой мессенджер.", true);
+      }, function () { promptLink(text); });
+    } else promptLink(text);
+  }
+
+  var PLAN_LEGAL = "Предварительный расчёт, не является офертой, индивидуальной инвестиционной рекомендацией и гарантией дохода. Ставка 10% годовых использована исключительно для наглядности примера. Возможно увеличение или уменьшение дохода от размещения пенсионных резервов. Результаты инвестирования в прошлом не определяют доходов в будущем. Государство не гарантирует доходности размещения пенсионных резервов. Государственная поддержка предоставляется при соблюдении условий, установленных Федеральным законом от 07.05.1998 № 75-ФЗ «О негосударственных пенсионных фондах»: взносы от 2 000 ₽ в год, первые 10 лет уплаты взносов, до 36 000 ₽ в год; её размер определяется администратором софинансирования по данным ФНС России о среднемесячном доходе. Налоговый вычет предоставляется налоговым органом по вашему обращению. Выплаты назначаются при наступлении оснований, установленных законодательством и договором. АО «НПФ ГАЗФОНД пенсионные накопления», лицензия Банка России № 430 от 30.04.2014.";
+
+  /* текст для переноса на карточке: числа, «₽» и тире не должны разрываться между строками */
+  function nbsp(t) {
+    return String(t)
+      .replace(/(\d)[ \u202F](\d{3})/g, "$1\u00A0$2")
+      .replace(/(\d)[ \u202F](\d{3})/g, "$1\u00A0$2")
+      .replace(/ ₽/g, "\u00A0₽")
+      .replace(/ — /g, "\u00A0— ");
+  }
+
+  /* «1 Договор → 2 Первый взнос → 3 Автоплатёж» в одну строку: шрифт подбирается под доступную ширину */
+  function drawSteps(x, x0, y, maxW, o) {
+    var steps = ["Договор", "Первый взнос", "Автоплатёж"], fs = o.fs, circle = o.circle;
+    function measure(size, r) {
+      x.font = "600 " + size + "px " + o.F;
+      var total = 0;
+      steps.forEach(function (t, i) { total += r * 2 + Math.round(size * 0.45) + x.measureText(t).width + (i < 2 ? Math.round(size * 2.1) : 0); });
+      return total;
+    }
+    while (fs > 13 && measure(fs, circle) > maxW) { fs -= 1; circle = Math.max(10, Math.round(circle * fs / o.fs)); }
+    var sx = x0, gapIn = Math.round(fs * 0.45), gapOut = Math.round(fs * 2.1);
+    steps.forEach(function (t, i) {
+      x.fillStyle = o.circleColor; x.beginPath(); x.arc(sx + circle, y - Math.round(fs * 0.34), circle, 0, Math.PI * 2); x.fill();
+      x.font = "700 " + Math.round(fs * 0.8) + "px " + o.F; x.fillStyle = o.numColor; x.textAlign = "center";
+      x.fillText(String(i + 1), sx + circle, y + 0.5);
+      x.font = "600 " + fs + "px " + o.F; x.fillStyle = o.textColor; x.textAlign = "left";
+      var tx = sx + circle * 2 + gapIn;
+      x.fillText(t, tx, y);
+      var w = x.measureText(t).width;
+      if (i < 2) {
+        x.font = "400 " + fs + "px " + o.F; x.fillStyle = o.arrowColor; x.textAlign = "center";
+        x.fillText("→", tx + w + gapOut / 2, y);
+      }
+      sx = tx + w + gapOut;
+    });
+    x.textAlign = "left";
+  }
+
+  /* ---------- карточка плана 1080×1920 ---------- */
+  var PLAN_LOGO = null;
+  function planLogo(cb) {
+    if (PLAN_LOGO !== null) { cb(PLAN_LOGO); return; }
+    var img = new Image();
+    img.onload = function () { PLAN_LOGO = img; cb(img); };
+    img.onerror = function () { PLAN_LOGO = false; cb(false); };
+    img.src = "data:image/png;base64,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";
+  }
+
+  /* на телефоне — вертикальная карточка (под экран и мессенджеры), на компьютере — горизонтальная 4:3 */
+  function drawPlanCard(done) {
+    planLogo(function (logo) {
+      try { done(isMobile() ? renderPlanCanvas(logo) : renderPlanCanvasWide(logo)); }
+      catch (e) { done(null); }
+    });
+  }
+
+  /* ---------- горизонтальная карточка 1600×1200 (4:3) для компьютера ---------- */
+  function renderPlanCanvasWide(logo) {
+    /* Сетка: левая синяя панель 620px на всю высоту контентной зоны, правая колонка,
+       внизу — полоса дисклеймера на всю ширину. Все блоки рисуются от базовых линий. */
+    var W = 1600, H = 1200, cv = document.createElement("canvas");
+    cv.width = W; cv.height = H;
+    var x = cv.getContext("2d");
+    var F = "Golos Text, Arial, Helvetica, sans-serif";
+    var NAVY = "#283069", BLUE = "#0064FF", MUTED = "#8E92B4", LINE = "#E3E8F7";
+    var PAD = 64, PANEL_W = 620, FOOT_H = 236, BODY_H = H - FOOT_H;
+    var LX = PAD, LW = PANEL_W - PAD * 2;                 /* левая колонка: 64..556 */
+    var RX = PANEL_W + 72, RW = W - RX - PAD;             /* правая колонка: 692..1536 */
+
+    var p = params();
+    var sim = CALC.simulate(p), goal = sim.goalMonths || 480;
+    var st = structureAt(p, goal);
+    var dedTotal = CALC.deductionsEarned(p, goal);
+    var dedLater = Math.max(0, dedTotal - st.dedRe);
+
+    function rnd(xx, yy, w, h, r) {
+      x.beginPath(); x.moveTo(xx + r, yy);
+      x.arcTo(xx + w, yy, xx + w, yy + h, r); x.arcTo(xx + w, yy + h, xx, yy + h, r);
+      x.arcTo(xx, yy + h, xx, yy, r); x.arcTo(xx, yy, xx + w, yy, r); x.closePath();
+    }
+    function txt(t, xx, yy, size, weight, color, align) {
+      x.font = (weight || 400) + " " + size + "px " + F; x.fillStyle = color || NAVY; x.textAlign = align || "left";
+      x.fillText(t, xx, yy); return x.measureText(t).width;
+    }
+    function wrap(t, xx, yy, maxW, size, lh, color, weight, maxLines) {
+      x.font = (weight || 400) + " " + size + "px " + F; x.fillStyle = color || MUTED; x.textAlign = "left";
+      var words = nbsp(t).split(" "), line = "", yc = yy, n = 0;
+      for (var i = 0; i < words.length; i++) {
+        var test = line ? line + " " + words[i] : words[i];
+        if (x.measureText(test).width > maxW && line) {
+          x.fillText(line, xx, yc); line = words[i]; yc += lh; n++;
+          if (maxLines && n >= maxLines - 1) { /* последняя строка: если остаток помещается — целиком, иначе с многоточием */
+            var rest = words.slice(i).join(" ");
+            if (x.measureText(rest).width <= maxW) { x.fillText(rest, xx, yc); return yc + lh; }
+            while (x.measureText(rest + "…").width > maxW && rest.length) rest = rest.slice(0, -1);
+            x.fillText(rest.replace(/\s+$/, "") + "…", xx, yc); return yc + lh;
+          }
+        } else line = test;
+      }
+      if (line) { x.fillText(line, xx, yc); yc += lh; }
+      return yc;
+    }
+
+    /* фон и панель */
+    x.fillStyle = "#F5F6FD"; x.fillRect(0, 0, W, H);
+    var hg = x.createLinearGradient(0, 0, 0, BODY_H);
+    hg.addColorStop(0, "#0B37C8"); hg.addColorStop(1, "#0064FF");
+    x.fillStyle = hg; x.fillRect(0, 0, PANEL_W, BODY_H);
+
+    /* ================= ЛЕВАЯ КОЛОНКА ================= */
+    var y = 56;
+    if (logo) { var lw = 210, lh2 = Math.round(lw * logo.height / logo.width); x.drawImage(logo, LX, y, lw, lh2); y += lh2; }
+    else { txt("НПФ ГАЗФОНД", LX, y + 40, 34, 800, "#FFFFFF"); y += 60; }
+
+    y += 46;
+    txt("ЦЕЛЬ — МИЛЛИОН", LX, y, 22, 700, "rgba(255,255,255,.7)");
+    y += 44;
+    txt("Ваш персональный план", LX, y, 40, 700, "#FFFFFF");
+    y += 36;
+    txt("программа долгосрочных сбережений", LX, y, 22, 400, "rgba(255,255,255,.78)");
+
+    /* результат */
+    y += 78;
+    txt("Миллион — за " + yearsN(goal), LX, y, 54, 800, "#FFFFFF");
+    y += 42;
+    y = wrap("по расчёту на счёте может накопиться около " + rub(st.value), LX, y, LW, 23, 30, "rgba(255,255,255,.85)", 500, 2);
+
+    /* параметры */
+    y += 30;
+    txt("Параметры вашего плана", LX, y, 22, 700, "rgba(255,255,255,.95)");
+    y += 16;
+    var rows = [
+      ["Первый взнос", S.first ? rub(S.first) : "без стартового"],
+      ["Ежемесячно", rub(S.monthly || 0)],
+      ["Среднемесячный доход", (S.kLabel || "свыше 150 000 ₽").toLowerCase()],
+      ["Налоговый вычет", S.reinvest ? "вношу на счёт ПДС" : "оставляю себе"]
+    ];
+    var ROW = 42, boxH = 30 + rows.length * ROW;
+    rnd(LX, y, LW, boxH, 18); x.fillStyle = "rgba(255,255,255,.13)"; x.fill();
+    var py = y + 22 + ROW - 12;
+    rows.forEach(function (r, i) {
+      if (i) { x.strokeStyle = "rgba(255,255,255,.14)"; x.lineWidth = 1; x.beginPath(); x.moveTo(LX + 18, py - 28); x.lineTo(LX + LW - 18, py - 28); x.stroke(); }
+      txt(r[0], LX + 20, py, 21, 400, "rgba(255,255,255,.72)");
+      txt(r[1], LX + LW - 20, py, 21, 600, "#FFFFFF", "right");
+      py += ROW;
+    });
+    y += boxH;
+
+    /* автоплатёж — прижат к низу панели, чтобы не зависеть от высоты блоков выше */
+    var apH = 206, ay0 = BODY_H - PAD - apH;
+    if (ay0 < y + 24) ay0 = y + 24;                       /* страховка от наложения */
+    rnd(LX, ay0, LW, apH, 18); x.fillStyle = "rgba(255,255,255,.13)"; x.fill();
+    var ay = ay0 + 42;
+    txt("Чтобы план работал сам", LX + 20, ay, 24, 700, "#FFFFFF");
+    ay += 34;
+    ay = wrap("Подключите ежемесячный автоплатёж на " + rub(S.monthly || 0) + " — и план заработает сам, без повторяющихся действий.",
+              LX + 20, ay, LW - 40, 20, 27, "rgba(255,255,255,.85)", 400, 3);
+    ay += 22;
+    drawSteps(x, LX + 20, ay, LW - 40, { fs: 20, circle: 13, textColor: "#FFFFFF", numColor: BLUE, circleColor: "#FFFFFF", arrowColor: "rgba(255,255,255,.6)", F: F });
+
+    /* ================= ПРАВАЯ КОЛОНКА ================= */
+    var ry = 96;
+    txt("Из чего сложится сумма", RX, ry, 32, 700, NAVY);
+    ry += 34;
+    var segs = [["Ваши взносы", st.contrib, "#0051FF"], ["Господдержка", st.cofin, "#9A9FFB"], ["Инвестиционный доход", st.id, "#36DFDD"]];
+    if (st.dedRe > 0) segs.push(["Внесённый налоговый вычет", st.dedRe, "#FF9F78"]);
+    var total = st.value || 1, barH = 40;
+    x.save(); rnd(RX, ry, RW, barH, 20); x.clip();
+    var acc = 0;
+    segs.forEach(function (sg) { var w = RW * (sg[1] / total); x.fillStyle = sg[2]; x.fillRect(RX + acc, ry, w + 1, barH); acc += w; });
+    x.restore();
+    ry += barH + 48;
+    var LROW = 44;
+    segs.forEach(function (sg) {
+      x.fillStyle = sg[2]; x.beginPath(); x.arc(RX + 11, ry - 8, 10, 0, Math.PI * 2); x.fill();
+      txt(sg[0], RX + 36, ry, 25, 400, NAVY);
+      txt(rub(sg[1]), RX + RW, ry, 25, 700, NAVY, "right");
+      ry += LROW;
+    });
+    ry -= 10;
+    x.strokeStyle = LINE; x.lineWidth = 2; x.beginPath(); x.moveTo(RX, ry); x.lineTo(RX + RW, ry); x.stroke();
+    ry += 40;
+    txt("Всего на счёте", RX, ry, 27, 700, NAVY);
+    txt(rub(st.value), RX + RW, ry, 30, 800, BLUE, "right");
+    ry += 34;
+    if (dedLater > 0) {
+      ry = wrap(S.reinvest
+        ? "Ещё " + rub(dedLater) + " — вычет за последние взносы: его можно получить после достижения цели."
+        : "Кроме того, за период вы можете вернуть " + rub(dedLater) + " налогового вычета — это сверх суммы на счёте.",
+        RX, ry, RW, 20, 27, MUTED, 400, 2);
+    }
+
+    /* блок оформления с QR — прижат к низу контентной зоны, на одной линии с автоплатежом */
+    var qrN = qrMatrix(signupUrl()), mod = Math.floor(190 / qrN.length), qw = mod * qrN.length;
+    var qBoxH = qw + 40, qy0 = BODY_H - PAD - qBoxH;
+    if (qy0 < ry + 24) qy0 = ry + 24;
+    rnd(RX, qy0, RW, qBoxH, 18); x.fillStyle = "#FFFFFF"; x.fill();
+    var qx = RX + RW - 20 - qw, qy = qy0 + 20;
+    x.fillStyle = "#0B1B4D";
+    for (var r = 0; r < qrN.length; r++) for (var c = 0; c < qrN.length; c++) if (qrN[r][c]) x.fillRect(qx + c * mod, qy + r * mod, mod, mod);
+    var tyq = qy0 + 62;
+    txt("Оформить договор", RX + 28, tyq, 28, 700, NAVY);
+    wrap("Наведите камеру телефона на код — откроется оформление договора долгосрочных сбережений с выбранными параметрами.",
+         RX + 28, tyq + 42, RW - qw - 80, 21, 29, MUTED, 400, 3);
+
+    /* ================= ПОЛОСА ДИСКЛЕЙМЕРА ================= */
+    x.strokeStyle = LINE; x.lineWidth = 2; x.beginPath(); x.moveTo(PAD, BODY_H + 1); x.lineTo(W - PAD, BODY_H + 1); x.stroke();
+    var dy = BODY_H + 44;
+    var end = wrap(PLAN_LEGAL, PAD, dy, W - PAD * 2, 16, 22, "#8A90B0", 400, 6);
+    var now = new Date();
+    txt("Расчёт от " + ("0" + now.getDate()).slice(-2) + "." + ("0" + (now.getMonth() + 1)).slice(-2) + "." + now.getFullYear() +
+        " · gazfond-pn.ru · 8 800 700 75 50", PAD, Math.min(Math.max(end + 22, BODY_H + 190), H - 28), 18, 600, MUTED);
+    return cv;
+  }
+
+  function renderPlanCanvas(logo) {
+    var W = 1080, H = 2800, cv = document.createElement("canvas");   /* с запасом, лишнее обрежем в конце */
+    cv.width = W; cv.height = H;
+    var x = cv.getContext("2d");
+    var F = "Golos Text, Arial, Helvetica, sans-serif";
+    var NAVY = "#283069", BLUE = "#0064FF", MUTED = "#8E92B4", LINE = "#E3E8F7", PAD = 76;
+
+    var p = params();
+    var sim = CALC.simulate(p), goal = sim.goalMonths || 480;
+    var st = structureAt(p, goal);
+    var dedTotal = CALC.deductionsEarned(p, goal);
+    var dedLater = Math.max(0, dedTotal - st.dedRe);
+
+    function rnd(xx, yy, w, h, r) {
+      x.beginPath();
+      x.moveTo(xx + r, yy);
+      x.arcTo(xx + w, yy, xx + w, yy + h, r);
+      x.arcTo(xx + w, yy + h, xx, yy + h, r);
+      x.arcTo(xx, yy + h, xx, yy, r);
+      x.arcTo(xx, yy, xx + w, yy, r);
+      x.closePath();
+    }
+    function txt(t, xx, yy, size, weight, color, align) {
+      x.font = (weight || 400) + " " + size + "px " + F;
+      x.fillStyle = color || NAVY;
+      x.textAlign = align || "left";
+      x.fillText(t, xx, yy);
+      return x.measureText(t).width;
+    }
+    function wrap(t, xx, yy, maxW, size, lh, color, weight) {
+      x.font = (weight || 400) + " " + size + "px " + F;
+      x.fillStyle = color || MUTED;
+      x.textAlign = "left";
+      var words = nbsp(t).split(" "), line = "", yc = yy;
+      for (var i = 0; i < words.length; i++) {
+        var test = line ? line + " " + words[i] : words[i];
+        if (x.measureText(test).width > maxW && line) { x.fillText(line, xx, yc); line = words[i]; yc += lh; }
+        else line = test;
+      }
+      if (line) { x.fillText(line, xx, yc); yc += lh; }
+      return yc;
+    }
+
+    x.fillStyle = "#F5F6FD"; x.fillRect(0, 0, W, H);
+
+    /* ---------- шапка ---------- */
+    var HEAD = 430;
+    var hg = x.createLinearGradient(0, 0, W, HEAD);
+    hg.addColorStop(0, "#0B37C8"); hg.addColorStop(1, "#0064FF");
+    x.fillStyle = hg; x.fillRect(0, 0, W, HEAD);
+
+    if (logo) {
+      var lw = 264, lh2 = Math.round(lw * logo.height / logo.width);
+      x.drawImage(logo, PAD, 60, lw, lh2);
+    } else {
+      txt("НПФ ГАЗФОНД", PAD, 108, 38, 800, "#FFFFFF");
+      txt("пенсионные накопления", PAD, 146, 22, 500, "rgba(255,255,255,.85)");
+    }
+
+    txt("ЦЕЛЬ — МИЛЛИОН", PAD, 292, 30, 700, "rgba(255,255,255,.7)");
+    txt("Ваш персональный план", PAD, 352, 50, 700, "#FFFFFF");
+    txt("программа долгосрочных сбережений", PAD, 398, 29, 400, "rgba(255,255,255,.78)");
+
+    /* ---------- результат ---------- */
+    var y = HEAD + 96;
+    txt("Миллион — за " + yearsN(goal), PAD, y, 72, 800, NAVY);
+    y += 56;
+    txt("по расчёту на счёте может накопиться около " + rub(st.value), PAD, y, 32, 500, BLUE);
+
+    /* ---------- параметры ---------- */
+    y += 84;
+    txt("Параметры вашего плана долгосрочных сбережений", PAD, y, 32, 700, NAVY);
+    y += 32;
+    var rows = [
+      ["Первый взнос", S.first ? rub(S.first) : "без стартового"],
+      ["Ежемесячно", rub(S.monthly || 0)],
+      ["Среднемесячный доход", (S.kLabel || "свыше 150 000 ₽").toLowerCase()],
+      ["Налоговый вычет", S.reinvest ? "вношу на счёт ПДС" : "оставляю себе"]
+    ];
+    var boxH = 52 + rows.length * 50;
+    rnd(PAD - 16, y, W - (PAD - 16) * 2, boxH, 26); x.fillStyle = "#FFFFFF"; x.fill();
+    var py = y + 62;
+    rows.forEach(function (r) {
+      txt(r[0], PAD + 12, py, 29, 400, MUTED);
+      txt(r[1], W - PAD - 12, py, 29, 600, NAVY, "right");
+      py += 50;
+    });
+    y += boxH + 62;
+
+    /* ---------- структура ---------- */
+    txt("Из чего сложится сумма", PAD, y, 36, 700, NAVY);
+    y += 40;
+
+    var segs = [
+      ["Ваши взносы", st.contrib, "#0051FF"],
+      ["Господдержка", st.cofin, "#9A9FFB"],
+      ["Инвестиционный доход", st.id, "#36DFDD"]
+    ];
+    if (st.dedRe > 0) segs.push(["Внесённый налоговый вычет", st.dedRe, "#FF9F78"]);
+    var total = st.value || 1, barH = 48, barW = W - PAD * 2;   /* полоса на 60% выше */
+    x.save(); rnd(PAD, y, barW, barH, 24); x.clip();
+    var acc = 0;
+    segs.forEach(function (sg) {
+      var w = barW * (sg[1] / total);
+      x.fillStyle = sg[2]; x.fillRect(PAD + acc, y, w + 1, barH); acc += w;
+    });
+    x.restore();
+    y += barH + 54;
+
+    segs.forEach(function (sg) {
+      x.fillStyle = sg[2];
+      x.beginPath(); x.arc(PAD + 12, y - 9, 11, 0, Math.PI * 2); x.fill();
+      txt(sg[0], PAD + 38, y, 29, 400, NAVY);
+      txt(rub(sg[1]), W - PAD, y, 29, 700, NAVY, "right");
+      y += 48;
+    });
+    x.strokeStyle = LINE; x.lineWidth = 2;
+    x.beginPath(); x.moveTo(PAD, y - 10); x.lineTo(W - PAD, y - 10); x.stroke();
+    y += 30;
+    txt("Всего на счёте", PAD, y, 31, 700, NAVY);
+    txt(rub(st.value), W - PAD, y, 34, 800, BLUE, "right");
+    y += 38;
+    if (dedLater > 0) {
+      y = wrap(S.reinvest
+        ? "Ещё " + rub(dedLater) + " — вычет за последние взносы: его можно получить после достижения цели."
+        : "Кроме того, за период вы можете вернуть " + rub(dedLater) + " налогового вычета — это сверх суммы на счёте.",
+        PAD, y, barW, 24, 32, MUTED) + 8;
+    }
+
+    /* ---------- автоплатёж ---------- */
+    y += 38;
+    var apH = 276;
+    rnd(PAD - 16, y, W - (PAD - 16) * 2, apH, 26); x.fillStyle = "#EDF3FF"; x.fill();
+    var ay = y + 58;
+    txt("Чтобы план работал сам", PAD + 12, ay, 36, 700, NAVY);
+    ay += 48;
+    ay = wrap("Подключите ежемесячный автоплатёж на " + rub(S.monthly || 0) +
+              " — и план заработает сам, без повторяющихся действий.", PAD + 12, ay, barW - 24, 29, 38, "#3C4577") + 26;
+    drawSteps(x, PAD + 12, ay, barW - 24, { fs: 28, circle: 18, textColor: NAVY, numColor: "#FFFFFF", circleColor: BLUE, arrowColor: MUTED, F: F });
+    y += apH + 50;
+
+    /* ---------- QR ---------- */
+    var mq = qrMatrix(signupUrl());
+    var mod = Math.floor(210 / mq.length), qw = mod * mq.length;
+    var qx = W - PAD - qw, qy = y;
+    x.fillStyle = "#FFFFFF"; x.fillRect(qx - 14, qy - 14, qw + 28, qw + 28);
+    x.fillStyle = "#0B1B4D";
+    for (var r = 0; r < mq.length; r++) for (var c = 0; c < mq.length; c++)
+      if (mq[r][c]) x.fillRect(qx + c * mod, qy + r * mod, mod, mod);
+    txt("Оформить договор", PAD, qy + 46, 34, 700, NAVY);
+    wrap("Наведите камеру телефона на код — откроется оформление с выбранными параметрами плана.",
+         PAD, qy + 96, W - PAD * 2 - qw - 50, 26, 35, MUTED);
+    y = qy + qw + 46;
+
+    /* ---------- дисклеймер и дата ---------- */
+    x.strokeStyle = LINE; x.lineWidth = 2;
+    x.beginPath(); x.moveTo(PAD, y); x.lineTo(W - PAD, y); x.stroke();
+    y += 32;
+    var end = wrap(PLAN_LEGAL, PAD, y, barW, 20, 27, "#8A90B0");
+    var now = new Date();
+    var dateY = end + 30;
+    txt("Расчёт от " + ("0" + now.getDate()).slice(-2) + "." + ("0" + (now.getMonth() + 1)).slice(-2) + "." + now.getFullYear() +
+        " · gazfond-pn.ru · 8 800 700 75 50", PAD, dateY, 23, 600, MUTED);
+
+    /* обрезаем холст по фактическому концу содержимого */
+    var fin = document.createElement("canvas");
+    fin.width = W; fin.height = Math.min(H, Math.round(dateY + 54));
+    var fx = fin.getContext("2d");
+    fx.fillStyle = "#F5F6FD"; fx.fillRect(0, 0, fin.width, fin.height);
+    fx.drawImage(cv, 0, 0);
+    return fin;
+  }
+
+  /* ---------- QR-код (свой энкодер, без библиотек) ---------- */
+  /* Компактный QR-энкодер: byte mode, уровень коррекции M, версии 1–10.
+     Без зависимостей. Возвращает матрицу true/false. */
+  function qrMatrix(text) {
+    /* ---- данные в UTF-8 ---- */
+    var bytes = [];
+    for (var i = 0; i < text.length; i++) {
+      var c = text.charCodeAt(i);
+      if (c < 0x80) bytes.push(c);
+      else if (c < 0x800) { bytes.push(0xC0 | (c >> 6), 0x80 | (c & 63)); }
+      else { bytes.push(0xE0 | (c >> 12), 0x80 | ((c >> 6) & 63), 0x80 | (c & 63)); }
+    }
+  
+    /* ---- ёмкость byte-mode и параметры блоков для уровня M (версии 1..10) ---- */
+    var CAP = [0, 14, 26, 42, 62, 84, 106, 122, 152, 180, 213];
+    /* [всего кодовых слов, слов данных, блоков группы1, блоков группы2] */
+    var BLK = [null,
+      [26, 16, 1, 0], [44, 28, 1, 0], [70, 44, 1, 0], [100, 64, 2, 0], [134, 86, 2, 0],
+      [172, 108, 4, 0], [196, 124, 4, 0], [242, 154, 2, 2], [292, 182, 3, 2], [346, 216, 4, 1]
+    ];
+    var ver = 0;
+    for (var v = 1; v <= 10; v++) if (bytes.length <= CAP[v]) { ver = v; break; }
+    if (!ver) throw new Error("QR: строка слишком длинная");
+  
+    var total = BLK[ver][0], dataWords = BLK[ver][1];
+    var size = 17 + ver * 4;
+  
+    /* ---- битовый поток: режим 0100, длина, данные, терминатор ---- */
+    var bits = [];
+    function put(val, len) { for (var i = len - 1; i >= 0; i--) bits.push((val >> i) & 1); }
+    put(4, 4);
+    put(bytes.length, ver < 10 ? 8 : 16);
+    for (var i = 0; i < bytes.length; i++) put(bytes[i], 8);
+    var cap = dataWords * 8;
+    for (var i = 0; i < 4 && bits.length < cap; i++) bits.push(0);
+    while (bits.length % 8) bits.push(0);
+    var data = [];
+    for (var i = 0; i < bits.length; i += 8) {
+      var b = 0; for (var j = 0; j < 8; j++) b = (b << 1) | bits[i + j];
+      data.push(b);
+    }
+    var pad = [0xEC, 0x11], pi = 0;
+    while (data.length < dataWords) data.push(pad[pi++ % 2]);
+  
+    /* ---- поля Галуа GF(256) ---- */
+    var EXP = new Array(512), LOG = new Array(256);
+    for (var i = 0, x = 1; i < 255; i++) { EXP[i] = x; LOG[x] = i; x <<= 1; if (x & 0x100) x ^= 0x11D; }
+    for (var i = 255; i < 512; i++) EXP[i] = EXP[i - 255];
+    function mul(a, b) { return (a === 0 || b === 0) ? 0 : EXP[LOG[a] + LOG[b]]; }
+  
+    /* ---- разбивка на блоки и коды коррекции ---- */
+    var g1 = BLK[ver][2], g2 = BLK[ver][3], blocks = g1 + g2;
+    var ecLen = Math.floor((total - dataWords) / blocks);
+    var d1 = Math.floor(dataWords / blocks), d2 = d1 + (g2 ? 1 : 0);
+  
+    /* порождающий многочлен */
+    var gen = [1];
+    for (var i = 0; i < ecLen; i++) {
+      var next = new Array(gen.length + 1).fill(0);
+      for (var j = 0; j < gen.length; j++) {
+        next[j] ^= gen[j];
+        next[j + 1] ^= mul(gen[j], EXP[i]);
+      }
+      gen = next;
+    }
+  
+    var dBlocks = [], eBlocks = [], off = 0;
+    for (var b = 0; b < blocks; b++) {
+      var len = b < g1 ? d1 : d2;
+      var blk = data.slice(off, off + len); off += len;
+      dBlocks.push(blk);
+      var rem = blk.concat(new Array(ecLen).fill(0));
+      for (var i = 0; i < len; i++) {
+        var coef = rem[i];
+        if (coef === 0) continue;
+        for (var j = 0; j < gen.length; j++) rem[i + j] ^= mul(gen[j], coef);
+      }
+      eBlocks.push(rem.slice(len));
+    }
+  
+    /* ---- чередование ---- */
+    var out = [];
+    for (var i = 0; i < d2; i++) for (var b = 0; b < blocks; b++) if (i < dBlocks[b].length) out.push(dBlocks[b][i]);
+    for (var i = 0; i < ecLen; i++) for (var b = 0; b < blocks; b++) out.push(eBlocks[b][i]);
+  
+    /* ---- сетка ---- */
+    var m = [], reserved = [];
+    for (var r = 0; r < size; r++) { m.push(new Array(size).fill(0)); reserved.push(new Array(size).fill(0)); }
+  
+    function finder(r0, c0) {
+      for (var r = -1; r <= 7; r++) for (var c = -1; c <= 7; c++) {
+        var rr = r0 + r, cc = c0 + c;
+        if (rr < 0 || cc < 0 || rr >= size || cc >= size) continue;
+        var on = (r >= 0 && r <= 6 && (c === 0 || c === 6)) || (c >= 0 && c <= 6 && (r === 0 || r === 6)) || (r >= 2 && r <= 4 && c >= 2 && c <= 4);
+        m[rr][cc] = on ? 1 : 0; reserved[rr][cc] = 1;
+      }
+    }
+    finder(0, 0); finder(0, size - 7); finder(size - 7, 0);
+  
+    /* тайминги */
+    for (var i = 8; i < size - 8; i++) {
+      m[6][i] = i % 2 === 0 ? 1 : 0; reserved[6][i] = 1;
+      m[i][6] = i % 2 === 0 ? 1 : 0; reserved[i][6] = 1;
+    }
+    /* тёмный модуль */
+    m[size - 8][8] = 1; reserved[size - 8][8] = 1;
+  
+    /* выравнивающие узоры */
+    var AL = [[], [], [6,18], [6,22], [6,26], [6,30], [6,34], [6,22,38], [6,24,42], [6,26,46], [6,28,50]][ver];
+    if (AL) for (var a = 0; a < AL.length; a++) for (var b2 = 0; b2 < AL.length; b2++) {
+      var r0 = AL[a], c0 = AL[b2];
+      /* пропускаем только узоры, попадающие на поисковые шаблоны (углы); на линию синхронизации — рисуем */
+      if ((r0 <= 8 && c0 <= 8) || (r0 <= 8 && c0 >= size - 9) || (r0 >= size - 9 && c0 <= 8)) continue;
+      for (var r = -2; r <= 2; r++) for (var c = -2; c <= 2; c++) {
+        var on = Math.max(Math.abs(r), Math.abs(c)) !== 1;
+        m[r0 + r][c0 + c] = on ? 1 : 0; reserved[r0 + r][c0 + c] = 1;
+      }
+    }
+  
+    /* резерв под формат */
+    for (var i = 0; i < 9; i++) {
+      if (!reserved[8][i]) reserved[8][i] = 2;
+      if (!reserved[i][8]) reserved[i][8] = 2;
+    }
+    for (var i = 0; i < 8; i++) {
+      if (!reserved[8][size - 1 - i]) reserved[8][size - 1 - i] = 2;
+      if (!reserved[size - 1 - i][8]) reserved[size - 1 - i][8] = 2;
+    }
+    /* резерв под версию (7+) */
+    if (ver >= 7) for (var i = 0; i < 6; i++) for (var j = 0; j < 3; j++) {
+      reserved[size - 11 + j][i] = 2; reserved[i][size - 11 + j] = 2;
+    }
+  
+    /* ---- укладка данных ---- */
+    var bitIdx = 0, dirUp = true;
+    for (var col = size - 1; col > 0; col -= 2) {
+      if (col === 6) col--;
+      for (var t = 0; t < size; t++) {
+        var row = dirUp ? size - 1 - t : t;
+        for (var s = 0; s < 2; s++) {
+          var c = col - s;
+          if (reserved[row][c]) continue;
+          var bit = 0;
+          if (bitIdx < out.length * 8) bit = (out[bitIdx >> 3] >> (7 - (bitIdx & 7))) & 1;
+          bitIdx++;
+          m[row][c] = bit;
+        }
+      }
+      dirUp = !dirUp;
+    }
+  
+    /* ---- маски и выбор лучшей ---- */
+    function maskFn(k, r, c) {
+      switch (k) {
+        case 0: return (r + c) % 2 === 0;
+        case 1: return r % 2 === 0;
+        case 2: return c % 3 === 0;
+        case 3: return (r + c) % 3 === 0;
+        case 4: return (Math.floor(r / 2) + Math.floor(c / 3)) % 2 === 0;
+        case 5: return ((r * c) % 2) + ((r * c) % 3) === 0;
+        case 6: return (((r * c) % 2) + ((r * c) % 3)) % 2 === 0;
+        default: return (((r + c) % 2) + ((r * c) % 3)) % 2 === 0;
+      }
+    }
+    function penalty(g) {
+      var p = 0, n = g.length;
+      /* правило 1: серии */
+      for (var r = 0; r < n; r++) for (var pass = 0; pass < 2; pass++) {
+        var run = 1, prev = pass ? g[0][r] : g[r][0];
+        for (var i = 1; i < n; i++) {
+          var v = pass ? g[i][r] : g[r][i];
+          if (v === prev) { run++; } else { if (run >= 5) p += 3 + (run - 5); run = 1; prev = v; }
+        }
+        if (run >= 5) p += 3 + (run - 5);
+      }
+      /* правило 2: блоки 2×2 */
+      for (var r = 0; r < n - 1; r++) for (var c = 0; c < n - 1; c++) {
+        var v = g[r][c];
+        if (v === g[r][c + 1] && v === g[r + 1][c] && v === g[r + 1][c + 1]) p += 3;
+      }
+      /* правило 3: шаблон 1:1:3:1:1 */
+      var pat1 = [1,0,1,1,1,0,1,0,0,0,0], pat2 = [0,0,0,0,1,0,1,1,1,0,1];
+      for (var r = 0; r < n; r++) for (var c = 0; c + 10 < n; c++) {
+        var okH1 = true, okH2 = true, okV1 = true, okV2 = true;
+        for (var i = 0; i < 11; i++) {
+          if (g[r][c + i] !== pat1[i]) okH1 = false;
+          if (g[r][c + i] !== pat2[i]) okH2 = false;
+          if (g[c + i][r] !== pat1[i]) okV1 = false;
+          if (g[c + i][r] !== pat2[i]) okV2 = false;
+        }
+        if (okH1) p += 40; if (okH2) p += 40; if (okV1) p += 40; if (okV2) p += 40;
+      }
+      /* правило 4: баланс тёмных */
+      var dark = 0;
+      for (var r = 0; r < n; r++) for (var c = 0; c < n; c++) if (g[r][c]) dark++;
+      p += Math.floor(Math.abs(dark * 100 / (n * n) - 50) / 5) * 10;
+      return p;
+    }
+  
+    function formatBits(maskK) {
+      /* уровень M = 00 */
+      var fmt = (0 << 3) | maskK;
+      var rem = fmt;
+      for (var i = 0; i < 10; i++) rem = (rem << 1) ^ (((rem >> 9) & 1) * 0x537);
+      return ((fmt << 10) | rem) ^ 0x5412;
+    }
+    function versionBits(v) {
+      var rem = v;
+      for (var i = 0; i < 12; i++) rem = (rem << 1) ^ (((rem >> 11) & 1) * 0x1F25);
+      return (v << 12) | rem;
+    }
+  
+    var best = null, bestK = 0;
+    for (var k = 0; k < 8; k++) {
+      var g = [];
+      for (var r = 0; r < size; r++) {
+        g.push([]);
+        for (var c = 0; c < size; c++) {
+          var val = m[r][c];
+          if (reserved[r][c] !== 1 && maskFn(k, r, c)) val ^= 1;
+          g[r].push(val);
+        }
+      }
+      /* формат */
+      var f = formatBits(k);
+      for (var i = 0; i < 15; i++) {
+        var bit = (f >> i) & 1;
+        /* вертикальная полоса у левого верхнего угла */
+        if (i < 6) g[i][8] = bit;
+        else if (i < 8) g[i + 1][8] = bit;
+        else g[size - 15 + i][8] = bit;
+        /* горизонтальная полоса */
+        if (i < 8) g[8][size - i - 1] = bit;
+        else if (i < 9) g[8][15 - i] = bit;
+        else g[8][15 - i - 1] = bit;
+      }
+      g[size - 8][8] = 1;
+      /* версия */
+      if (ver >= 7) {
+        var vb = versionBits(ver);
+        for (var i = 0; i < 18; i++) {
+          var bit = (vb >> i) & 1;
+          g[Math.floor(i / 3)][size - 11 + (i % 3)] = bit;
+          g[size - 11 + (i % 3)][Math.floor(i / 3)] = bit;
+        }
+      }
+      var p = penalty(g);
+      if (best === null || p < best.p) { best = { g: g, p: p }; bestK = k; }
+    }
+    return best.g.map(function (row) { return row.map(function (v) { return !!v; }); });
+  }
+
+  /* ---------- типографика: неразрывные пробелы по правилам русского набора ----------
+     Применяется ко всем текстовым узлам страницы, включая то, что рисуется скриптом позже.
+     Правила: разряды чисел; число + единица (₽, %, лет, года, месяцев…); «№ 430»;
+     короткие предлоги/союзы прилипают к следующему слову; тире — к предыдущему. ---------- */
+  var TYPO_RULES = [
+    [/(\d)[ \u202F](?=\d{3}(?!\d))/g, "$1\u00A0"],
+    [/(\d) (?=(₽|%|год|года|лет|мес\.|месяц|месяца|месяцев|тыс\.|млн|млрд|кв\.|ФЗ)(?![а-яё]))/g, "$1\u00A0"],
+    [/№ (?=\d)/g, "№\u00A0"],
+    [/(^|[\s(«„])(в|во|на|и|с|со|к|ко|о|об|у|по|за|не|ни|от|до|из|а|но|или|же|бы|ли|да|для|при|под|над|без|про|то|что|как|уже)(?=\s)([ ])/gi, "$1$2\u00A0"],
+    [/ — /g, "\u00A0— "]
+  ];
+  function typoText(t) {
+    var out = t;
+    TYPO_RULES.forEach(function (r) { out = out.replace(r[0], r[1]); });
+    return out;
+  }
+  var TYPO_SKIP = { SCRIPT: 1, STYLE: 1, TEXTAREA: 1, INPUT: 1, CODE: 1, PRE: 1, SVG: 1, svg: 1 };
+  function typoFix(root) {
+    if (!root) return;
+    if (root.nodeType === 3) {
+      if (root.parentNode && !TYPO_SKIP[root.parentNode.nodeName] && !(root.parentNode.closest && root.parentNode.closest("svg"))) {
+        var v = typoText(root.nodeValue);
+        if (v !== root.nodeValue) root.nodeValue = v;
+      }
+      return;
+    }
+    if (root.nodeType !== 1 && root.nodeType !== 11) return;
+    if (TYPO_SKIP[root.nodeName]) return;
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false), n, batch = [];
+    while ((n = walker.nextNode())) batch.push(n);
+    batch.forEach(typoFix);
+  }
+  typoFix(document.body);
+  if (window.MutationObserver) {
+    new MutationObserver(function (muts) {
+      muts.forEach(function (m) {
+        if (m.type === "characterData") typoFix(m.target);
+        else m.addedNodes.forEach(typoFix);
+      });
+    }).observe(document.body, { childList: true, subtree: true, characterData: true });
+  }
+
+  /* ---------- фиксированная плашка: показываем после прокрутки за шапку ---------- */
+  (function () {
+    var bar = document.getElementById("stickybar"), hdr = document.querySelector(".site-header");
+    if (!bar || !hdr) return;
+    var shown = false, ticking = false;
+    function check() {
+      ticking = false;
+      var need = window.scrollY > hdr.offsetTop + hdr.offsetHeight + 40;
+      if (need !== shown) { shown = need; bar.classList.toggle("on", need); bar.setAttribute("aria-hidden", need ? "false" : "true"); }
+    }
+    window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(check); } }, { passive: true });
+    check();
+  })();
+
+  /* ---------- юридические оговорки: сноски-поповеры и «Подробнее» ----------
+     Скрытые тексты остаются в HTML (display:none/hidden), при печати страницы
+     раскрываются полностью (см. @media print). Ховера нет намеренно: на
+     сенсорных экранах он не работает, всё открывается кликом/тапом. ---------- */
+  var FN = {
+    "1": "Государственная поддержка предоставляется при соблюдении условий, установленных Федеральным законом от 07.05.1998 № 75-ФЗ «О негосударственных пенсионных фондах»: взносы от 2 000 ₽ в год, в течение первых 10 лет уплаты взносов, до 36 000 ₽ в год; размер определяется на основании данных ФНС России о вашем среднемесячном доходе.",
+    "2": "Возможно увеличение или уменьшение дохода от размещения пенсионных резервов. Результаты инвестирования в прошлом не определяют доходов в будущем. Государство не гарантирует доходности размещения пенсионных резервов. В расчётах использована ставка 10% годовых исключительно для наглядности.",
+    "3": "Налоговый вычет предоставляется налоговым органом по вашему обращению; полученную сумму вы можете самостоятельно внести на счёт."
+  };
+  var fnPop = document.createElement("div");
+  fnPop.id = "fn-pop"; fnPop.setAttribute("role", "note");
+  document.body.appendChild(fnPop);
+  var fnCur = null;
+  function fnHide() { fnPop.style.display = "none"; if (fnCur) { fnCur.setAttribute("aria-expanded", "false"); fnCur = null; } }
+  document.addEventListener("click", function (e) {
+    var more = e.target.closest ? e.target.closest(".link-more") : null;
+    if (more) {
+      var rest = more.nextElementSibling;
+      if (rest) {
+        var open = rest.hasAttribute("hidden");
+        if (open) rest.removeAttribute("hidden"); else rest.setAttribute("hidden", "");
+        more.setAttribute("aria-expanded", open ? "true" : "false");
+        if (more.dataset.alt) { var t = more.textContent; more.textContent = more.dataset.alt; more.dataset.alt = t; }
+      }
+      return;
+    }
+    var ref = e.target.closest ? e.target.closest(".fn-ref") : null;
+    if (ref && FN[ref.dataset.fn]) {
+      if (fnCur === ref) { fnHide(); return; }
+      fnHide();
+      fnPop.textContent = FN[ref.dataset.fn];
+      fnPop.style.display = "block";
+      var r = ref.getBoundingClientRect(), w = fnPop.offsetWidth || 320;
+      var maxL = (document.documentElement.clientWidth || 1000) - w - 8;
+      fnPop.style.left = Math.max(8, Math.min(r.left + window.scrollX - 16, maxL)) + "px";
+      fnPop.style.top = (r.bottom + window.scrollY + 8) + "px";
+      ref.setAttribute("aria-expanded", "true"); fnCur = ref;
+      return;
+    }
+    fnHide();
+  });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") fnHide(); });
+
+  /* ---------- появление блоков при прокрутке ----------
+     IntersectionObserver вместо слушателя scroll: браузер сам сообщает о пересечении,
+     на каждый блок срабатывает один раз и наблюдение снимается — нагрузки на прокрутку нет.
+     Если API недоступен или включён режим уменьшенной анимации — контент просто виден. */
+  (function () {
+    var nodes = document.querySelectorAll(".reveal, .reveal-stagger");
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!("IntersectionObserver" in window) || reduce) return;
+
+    nodes.forEach(function (n) { n.classList.add("is-armed"); });
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        e.target.classList.add("is-in");
+        e.target.classList.remove("is-armed");
+        io.unobserve(e.target);
+      });
+    }, { rootMargin: "0px 0px -12% 0px", threshold: 0.08 });
+    nodes.forEach(function (n) { io.observe(n); });
+
+    /* блоки, уже видимые при загрузке, показываем сразу — без «мигания» первого экрана */
+    requestAnimationFrame(function () {
+      nodes.forEach(function (n) {
+        var r = n.getBoundingClientRect();
+        if (r.top < window.innerHeight * 0.9) { n.classList.add("is-in"); n.classList.remove("is-armed"); io.unobserve(n); }
+      });
+    });
+  })();
+
+  /* ---------- страховка на случай, если шрифт иконок не загрузился ----------
+     (файл не выложен, заблокирован политикой и т. п.) Браузер показал бы текстовые имена
+     («headset_mic»). Прячем иконки — вёрстка остаётся целой. */
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(function () {
+      if (!document.fonts.check('24px "Material Symbols Rounded"')) {
+        var st = document.createElement("style");
+        st.textContent = ".gz-icon{display:none !important}";
+        document.head.appendChild(st);
+      }
+    });
+  }
+
+  /* ---------- FAQ ---------- */
+  var FAQ = [
+    ["Что такое программа долгосрочных сбережений?",
+     "ПДС — сберегательный инструмент, который появился по инициативе Министерства финансов и Банка России в 2024 году. Вы делаете взносы, государство добавляет софинансирование, фонд начисляет инвестиционный доход, а взносы дают право на налоговый вычет."],
+    ["Когда можно получить накопленные средства?",
+     "<b>ВАЖНО:</b> право на периодические выплаты по договору долгосрочных сбережений возникает по общему правилу через 15 лет действия договора либо по достижении возраста 55 лет (для женщин) и 60 лет (для мужчин). В особых жизненных ситуациях, установленных законодательством (например, оплата дорогостоящего лечения), можно получить до 100% средств без потери условий программы. При досрочном расторжении договора выплачивается выкупная сумма, размер которой определяется договором и может быть меньше внесённых средств; кроме того, могут быть утрачены налоговые льготы и право на государственную поддержку. Накопление суммы на счёте и возникновение права на выплату — разные события: конкретные основания и порядок выплат установлены договором и законодательством."],
+    ["Как работает софинансирование от государства?",
+     "Государство добавляет до 36 000 ₽ в год в течение первых 10 лет участия — при ваших взносах от 2 000 ₽ в год. Размер доплаты зависит от официального среднемесячного дохода: до 80 000 ₽ — рубль на рубль; от 80 000,01 до 150 000 ₽ — рубль на два; от 150 000,01 ₽ — рубль на четыре. Поддержка за год зачисляется на счёт в году, следующем за годом уплаты взносов, в срок, установленный законодательством. Её размер определяется администратором софинансирования на основании данных ФНС России о вашем среднемесячном доходе."],
+    ["Как начисляется инвестиционный доход?",
+     "Фонд размещает средства в облигации, акции и другие инструменты, разрешённые законодательством для пенсионных резервов, и по итогам года распределяет полученный инвестиционный доход по счетам клиентов. Возможно увеличение или уменьшение дохода от размещения пенсионных резервов. Результаты инвестирования в прошлом не определяют доходов в будущем. Государство не гарантирует доходности размещения пенсионных резервов. В расчётах на этой странице ставка 10% годовых использована исключительно для наглядности примера."],
+    ["Что с налоговым вычетом?",
+     "Уплаченные взносы (не более 400 000 ₽ в год) дают право на налоговый вычет по применимой к вашим доходам ставке НДФЛ. Вычет не начисляется автоматически: для его получения нужно обратиться в налоговый орган — например, через личный кабинет на сайте ФНС. Полученную сумму вы можете самостоятельно внести на счёт ПДС — так цель приблизится быстрее; на экране расчёта для этого есть отметка."],
+    ["Как часто нужно делать взносы?",
+     "Когда вам удобно: обязательных взносов и штрафов за паузу нет. Для плана «Цель — миллион» мы предлагаем ежемесячный автоплатёж через СБП — его сумму можно в любой момент изменить, а в каждом письме о прогрессе есть кнопка разового пополнения."],
+    ["Насколько защищены сбережения?",
+     "Средства застрахованы государством в лице Агентства по страхованию вкладов на сумму до 2,8 млн ₽. В случае смерти вкладчика средства выплачиваются правопреемникам, указанным в договоре, а если они не указаны — правопреемникам по закону. Исключение — случай, когда вкладчику назначена пожизненная периодическая выплата."]
+  ];
+  var faqBox = document.getElementById("faq");
+  faqBox.innerHTML = FAQ.map(function (f, i) {
+    return '<div class="faq-item"><button type="button" class="faq-q" data-i="' + i + '">' + f[0] + '<span class="gz-icon">keyboard_arrow_down</span></button><div class="faq-a">' + f[1] + "</div></div>";
+  }).join("");
+  faqBox.querySelectorAll(".faq-q").forEach(function (b) {
+    b.addEventListener("click", function () { b.parentElement.classList.toggle("open"); });
+  });
+
+  /* ---------- график «с ПДС / без ПДС» ---------- */
+  (function () {
+    /* Налоговый вычет возвращается на счёт ПДС (reinvest) — поэтому входит в накопленную сумму */
+    var P = { first: 10000, monthly: 10000, k: 0.25, startMonth: START_MONTH, reinvest: true };
+    var TARGET = CALC.TARGET;
+    /* горизонт — до момента, когда миллион набирается даже без программы, плюс запас */
+    var goalPlain = Math.ceil((TARGET - P.first) / P.monthly);
+    var MONTHS = goalPlain + 6;
+    var sim = CALC.simulate(Object.assign({}, P, { maxMonths: MONTHS }));
+    var goalPds = sim.hist.findIndex(function (h) { return h.value >= TARGET; }) + 1;
+    var parts = sim.hist.map(function (h) {
+      return { contrib: h.contrib, cofin: h.cofin, ded: h.dedRe, id: Math.max(0, h.value - h.contrib - h.cofin - h.dedRe), value: h.value };
+    });
+    var MONTHS_NOM = ["январь","февраль","март","апрель","май","июнь","июль","август","сентябрь","октябрь","ноябрь","декабрь"];
+    /* Последовательная сине-голубая шкала: тёмное основание внизу → светлое вверх.
+       Шаг светлоты ~18 L*, соседние значения шкалы не используются (Carbon / Cloudscape). */
+    var COL = { contrib: "#26306E", cofin: "#3A5DA8", ded: "#6D9AD1", id: "#A8CBE6" };
+    var COL_LINE = "#26306E", COL_PLAIN = "#6E7899";
+
+    function monthsWord(m) {
+      var yy = Math.floor(m / 12), mm = m % 12, out = [];
+      if (yy) out.push(yy + " " + (yy % 10 === 1 && yy % 100 !== 11 ? "год" : [2,3,4].indexOf(yy % 10) >= 0 && [12,13,14].indexOf(yy % 100) < 0 ? "года" : "лет"));
+      if (mm) out.push(mm + " " + (mm % 10 === 1 && mm % 100 !== 11 ? "месяц" : [2,3,4].indexOf(mm % 10) >= 0 && [12,13,14].indexOf(mm % 100) < 0 ? "месяца" : "месяцев"));
+      return out.join(" ") || "0 месяцев";
+    }
+
+    /* padT — свободная белая «полка» сверху: там живут подписи сроков, а не поверх графика */
+    /* геометрия: на телефоне — компактный вертикальный viewBox, чтобы график целиком помещался в экран */
+    var W = 960, H = 500, padL = 76, padR = 24, padT = 108, padB = 42, MOB = false, FS = 12;
+    function layout() {
+      var svgEl = document.getElementById("cmp-svg");
+      var wpx = svgEl ? svgEl.getBoundingClientRect().width : 960;
+      MOB = wpx > 0 && wpx < 600;
+      if (MOB) { W = 420; H = 470; padL = 54; padR = 14; padT = 148; padB = 34; FS = 14; }
+      else     { W = 960; H = 500; padL = 76; padR = 24; padT = 108; padB = 42; FS = 12; }
+    }
+    layout();
+    /* шкала: «круглый» шаг, не больше 5 делений */
+    var peak = Math.max(parts[MONTHS - 1].value * 1.03, 1500000);
+    var yStep = 250000; while (peak / yStep > 5) yStep *= 2;
+    var yMax = Math.ceil(peak / yStep) * yStep;
+    var x = function (i) { return padL + (W - padL - padR) * i / (MONTHS - 1); };
+    var y = function (v) { return padT + (H - padT - padB) * (1 - v / yMax); };
+    function short(n) {
+      if (n >= 1000000) return (n / 1000000).toFixed(1).replace(".", ",").replace(",0", "") + " млн ₽";
+      return Math.round(n / 1000) + " тыс. ₽";
+    }
+    function line(vals) {
+      return vals.map(function (v, i) { return (i ? "L" : "M") + x(i).toFixed(1) + " " + y(v).toFixed(1); }).join(" ");
+    }
+    /* лента между двумя уровнями — слой накопительной диаграммы */
+    function band(lower, upper) {
+      var up = upper.map(function (v, i) { return (i ? "L" : "M") + x(i).toFixed(1) + " " + y(v).toFixed(1); }).join(" ");
+      var dn = [];
+      for (var i = lower.length - 1; i >= 0; i--) dn.push("L" + x(i).toFixed(1) + " " + y(lower[i]).toFixed(1));
+      return up + " " + dn.join(" ") + " Z";
+    }
+
+    var svg = document.getElementById("cmp-svg");
+    var legendBox = document.getElementById("cmp-legend");
+    var MODE = "simple";          // режим по умолчанию — простой; «Подробный» = прежний вид
+    /* Простой режим: две области и две подписи. Подробный: полная разбивка по источникам. */
+    var SIMPLE = { pds: "#3A5DA8", plain: "#C9D6EA" };
+
+    function draw() {
+    layout();
+    var detailed = MODE === "detailed";
+    svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+    /* слой «ваши взносы» — светлая штриховка вместо тяжёлой заливки */
+    var s = '<defs><filter id="cmp-blur" x="-30%" y="-60%" width="160%" height="220%"><feGaussianBlur stdDeviation="6"/></filter>' +
+      '<pattern id="cmp-hatch" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">' +
+      '<rect width="9" height="9" fill="#E4ECF9"/><line x1="0" y1="0" x2="0" y2="9" stroke="#7E9AC9" stroke-width="2.4"/></pattern></defs>';
+    var i, g, d;
+
+    /* сетка и ось Y */
+    for (var vv = yStep; vv <= yMax + 1; vv += yStep) {
+      var gy = y(vv);
+      s += '<line x1="' + padL + '" x2="' + (W - padR) + '" y1="' + gy + '" y2="' + gy + '" stroke="rgba(40,48,105,.08)"/>';
+      s += '<text x="' + (padL - 10) + '" y="' + (gy + 4) + '" text-anchor="end" font-size="' + FS + '" fill="#8E92B4" font-family="Golos Text,sans-serif">' + short(vv) + "</text>";
+    }
+    /* годы по оси X */
+    for (i = 0; i < MONTHS; i += 24) {
+      d = new Date(START_YEAR, START_MONTH + i, 1);
+      s += '<text x="' + x(i) + '" y="' + (H - 14) + '" text-anchor="middle" font-size="' + FS + '" fill="#8E92B4" font-family="Golos Text,sans-serif">' + d.getFullYear() + "</text>";
+    }
+
+    /* накопительные слои: взносы → господдержка → вычет → инвестдоход */
+    var lv0 = parts.map(function () { return 0; });
+    var lv1 = parts.map(function (p) { return p.contrib; });
+    var lv2 = parts.map(function (p) { return p.contrib + p.cofin; });
+    var lv3 = parts.map(function (p) { return p.contrib + p.cofin + p.ded; });
+    var lv4 = parts.map(function (p) { return p.value; });
+    if (detailed) {
+      s += '<path d="' + band(lv0, lv1) + '" fill="url(#cmp-hatch)"/>';
+      s += '<path d="' + band(lv1, lv2) + '" fill="' + COL.cofin + '"/>';
+      s += '<path d="' + band(lv2, lv3) + '" fill="' + COL.ded + '"/>';
+      s += '<path d="' + band(lv3, lv4) + '" fill="' + COL.id + '"/>';
+      /* тонкие светлые разделители между слоями — контраст без утяжеления (Cloudscape) */
+      s += '<path d="' + line(lv2) + '" fill="none" stroke="#fff" stroke-width="1" stroke-opacity=".5"/>';
+      s += '<path d="' + line(lv3) + '" fill="none" stroke="#fff" stroke-width="1" stroke-opacity=".5"/>';
+      s += '<path d="' + line(lv4) + '" fill="none" stroke="' + COL_LINE + '" stroke-width="1.5" stroke-opacity=".45"/>';
+
+      /* без программы — те же взносы в копилку (белая подложка, чтобы читалось на заливке) */
+      s += '<path d="' + line(lv1) + '" fill="none" stroke="#fff" stroke-width="5" stroke-opacity=".9"/>';
+      s += '<path d="' + line(lv1) + '" fill="none" stroke="' + COL_PLAIN + '" stroke-width="2" stroke-dasharray="7 5"/>';
+    } else {
+      /* Простой режим: только две области — «с программой» и «без неё» */
+      s += '<path d="' + band(lv0, lv4) + '" fill="' + SIMPLE.pds + '" fill-opacity=".92"/>';
+      s += '<path d="' + band(lv0, lv1) + '" fill="' + SIMPLE.plain + '"/>';
+      s += '<path d="' + line(lv1) + '" fill="none" stroke="#8FA6C8" stroke-width="1.5"/>';
+      s += '<path d="' + line(lv4) + '" fill="none" stroke="' + COL_LINE + '" stroke-width="2"/>';
+    }
+
+    /* линия цели — единственный тёплый акцент на холодной шкале */
+    var ty = y(TARGET);
+    s += '<line x1="' + padL + '" x2="' + (W - padR) + '" y1="' + ty + '" y2="' + ty + '" stroke="#FF7D4A" stroke-dasharray="6 6" stroke-width="1.5"/>';
+    s += '<text x="' + (padL + 6) + '" y="' + (ty - 9) + '" font-size="' + FS + '" font-weight="700" fill="#FF7D4A" font-family="Golos Text,sans-serif">Цель — миллион</text>';
+    /* --- подписи вынесены в свободную белую зону над графиком, к точкам ведут выноски --- */
+    function pillFs() { return FS + 1; }
+    function pillW(label) { return label.length * (pillFs() * 0.57) + 22; }
+    function pill(cx, cy, label, color, fill, glow) {
+      var wdt = pillW(label), hgt = pillFs() * 2;
+      var g = "";
+      if (glow) {   /* мягкое пульсирующее свечение под плашкой — акцент на выигрыше во времени */
+        g = '<rect class="cmp-glow" x="' + (cx - wdt / 2 - 6) + '" y="' + (cy - hgt / 2 - 6) + '" width="' + (wdt + 12) + '" height="' + (hgt + 12) +
+            '" rx="' + (hgt / 2 + 6) + '" fill="' + color + '" filter="url(#cmp-blur)"/>';
+      }
+      return '<g>' + g + '<rect x="' + (cx - wdt / 2) + '" y="' + (cy - hgt / 2) + '" width="' + wdt + '" height="' + hgt +
+        '" rx="' + (hgt / 2) + '" fill="' + (fill || "#fff") + '" stroke="' + color + '" stroke-opacity="' + (glow ? ".9" : ".28") + '"' + (glow ? ' stroke-width="1.5"' : "") + '/>' +
+        '<text x="' + cx + '" y="' + (cy + pillFs() * 0.35) + '" text-anchor="middle" font-size="' + pillFs() + '" font-weight="700" fill="' + color +
+        '" font-family="Golos Text,sans-serif">' + label + "</text></g>";
+    }
+    /* выноска — строго вертикальный пунктир от подписи вниз к точке на линии цели */
+    function leader(px, fromY, toY, color) {
+      return '<line x1="' + px + '" x2="' + px + '" y1="' + fromY + '" y2="' + toY +
+        '" stroke="' + color + '" stroke-width="1.2" stroke-dasharray="4 4" stroke-opacity=".75"/>';
+    }
+
+    var xa = goalPds > 0 ? x(goalPds - 1) : null, xb = x(goalPlain - 1);
+    var lblA = "С ПДС — " + monthsWord(goalPds), lblB = "Без ПДС — " + monthsWord(goalPlain);
+    var yLabel = MOB ? 96 : 74, yArrow = MOB ? 40 : 30, yLabelB = MOB ? 126 : yLabel;
+    var cxA = xa === null ? null : Math.min(Math.max(xa, padL + pillW(lblA) / 2), W - padR - pillW(lblA) / 2);
+    var cxB = Math.min(Math.max(xb, padL + pillW(lblB) / 2), W - padR - pillW(lblB) / 2);
+    /* подписи не должны наезжать друг на друга (на телефоне они в разных строках) */
+    if (!MOB && cxA !== null && cxB - cxA < (pillW(lblA) + pillW(lblB)) / 2 + 12) {
+      cxB = Math.min(cxA + (pillW(lblA) + pillW(lblB)) / 2 + 12, W - padR - pillW(lblB) / 2);
+    }
+
+    if (xa !== null) {
+      s += leader(xa, yLabel + 16, ty, COL_LINE);
+      s += '<circle cx="' + xa + '" cy="' + ty + '" r="6" fill="' + COL_LINE + '" stroke="#fff" stroke-width="2.5"/>';
+    }
+    s += leader(xb, yLabelB + 16, ty, COL_PLAIN);
+    s += '<circle cx="' + xb + '" cy="' + ty + '" r="6" fill="#fff" stroke="' + COL_PLAIN + '" stroke-width="2.5"/>';
+
+    /* выигрыш во времени — стрелка в самом верху, между реальными точками */
+    if (xa !== null) {
+      var lblD = "миллион на " + monthsWord(goalPlain - goalPds) + " раньше";
+      var yLine = MOB ? yArrow + 30 : yArrow;   /* на телефоне плашка шире расстояния между точками — стрелка под ней */
+      s += '<line x1="' + xa + '" x2="' + xb + '" y1="' + yLine + '" y2="' + yLine + '" stroke="#14A570" stroke-width="1.5"/>';
+      s += '<path d="M' + (xa + 7) + " " + (yLine - 4) + "L" + xa + " " + yLine + "L" + (xa + 7) + " " + (yLine + 4) + '" fill="none" stroke="#14A570" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>';
+      s += '<path d="M' + (xb - 7) + " " + (yLine - 4) + "L" + xb + " " + yLine + "L" + (xb - 7) + " " + (yLine + 4) + '" fill="none" stroke="#14A570" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>';
+      var cxD = Math.min(Math.max((xa + xb) / 2, padL + pillW(lblD) / 2), W - padR - pillW(lblD) / 2);
+      s += pill(cxD, yArrow, lblD, "#14A570", "#F1FBF7", true);
+      s += pill(cxA, yLabel, lblA, COL_LINE);
+    }
+    s += pill(cxB, yLabelB, lblB, "#4C5670");
+
+    /* hover-элементы */
+    s += '<line id="cmp-guide" y1="' + padT + '" y2="' + y(0) + '" stroke="rgba(40,48,105,.35)" stroke-width="1" visibility="hidden"/>';
+    s += '<circle id="cmp-dot1" r="5" fill="' + COL_LINE + '" stroke="#fff" stroke-width="2" visibility="hidden"/>';
+    s += '<circle id="cmp-dot2" r="5" fill="#fff" stroke="' + COL_PLAIN + '" stroke-width="2.5" visibility="hidden"/>';
+    s += '<rect id="cmp-cap" x="' + padL + '" y="' + padT + '" width="' + (W - padL - padR) + '" height="' + (H - padT - padB) + '" fill="transparent"/>';
+    svg.innerHTML = s;
+
+    /* легенда — по режиму */
+    legendBox.innerHTML = detailed
+      ? '<span class="leg-row"><span class="leg-dot leg-hatch"></span>Ваши взносы<small>ежемесячно</small></span>' +
+        '<span class="leg-row"><span class="leg-dot" style="background:' + COL.cofin + '"></span>Господдержка<small>зачисляется в следующем году</small></span>' +
+        '<span class="leg-row"><span class="leg-dot" style="background:' + COL.ded + '"></span>Налоговый вычет<small>вы вносите его сами</small></span>' +
+        '<span class="leg-row"><span class="leg-dot" style="background:' + COL.id + '"></span>Инвестиционный доход<small>распределяется по итогам года</small></span>' +
+        '<span class="leg-row"><span class="leg-dash"></span>Без программы<small>те же взносы в копилку</small></span>'
+      : '<span class="leg-row"><span class="leg-dot" style="background:' + SIMPLE.pds + '"></span>С программой долгосрочных сбережений</span>' +
+        '<span class="leg-row"><span class="leg-dot" style="background:' + SIMPLE.plain + '"></span>Без программы — те же взносы в копилку</span>';
+
+    /* итоги под графиком */
+    var atGoal = parts[goalPds - 1];
+    document.getElementById("cmp-stats").innerHTML =
+      '<div class="cmp-stat"><div class="v pos">на ' + monthsWord(goalPlain - goalPds) + ' раньше</div><div class="c">выигрыш во времени: за вас работают господдержка, вычет и доход фонда</div></div>' +
+      '<div class="cmp-stat"><div class="v">' + monthsWord(goalPds) + '</div><div class="c">до миллиона в программе долгосрочных сбережений</div></div>' +
+      '<div class="cmp-stat"><div class="v">' + monthsWord(goalPlain) + '</div><div class="c">до миллиона без программы — те же взносы просто в копилку</div></div>';
+    function breakRow(color, name, val, hatch) {
+      return '<li><span class="b-dot"' + (hatch ? ' data-hatch="1"' : "") + ' style="background:' + color + '"></span>' +
+        "<span>" + name + "</span><b>" + rub(val) + "</b></li>";
+    }
+    document.getElementById("cmp-break").innerHTML =
+      '<div class="b-head">Миллион за <b>' + monthsWord(goalPds) + "</b> складывается так</div>" +
+      "<ul class=\"b-list\">" +
+        breakRow("#E4ECF9", "Ваши взносы", atGoal.contrib, true) +
+        breakRow(COL.cofin, "Господдержка", atGoal.cofin) +
+        breakRow(COL.ded, "Налоговый вычет", atGoal.ded) +
+        breakRow(COL.id, "Инвестиционный доход", atGoal.id) +
+        '<li class="b-total"><span class="b-dot" style="background:transparent"></span><span>Итого на счёте ПДС</span><b>' + rub(atGoal.value) + "</b></li>" +
+        '<li class="b-plain"><span class="b-dash"></span><span>Без программы за это же время</span><b>' + rub(P.first + P.monthly * goalPds) + "</b></li>" +
+      "</ul>";
+
+    /* hover */
+    var wrap = document.getElementById("cmp-wrap"), tip = document.getElementById("cmp-tip");
+    var guide = document.getElementById("cmp-guide"), d1 = document.getElementById("cmp-dot1"), d2 = document.getElementById("cmp-dot2");
+    function show(clientX) {
+      var r = svg.getBoundingClientRect(), scale = r.width / W;
+      var xs = (clientX - r.left) / scale;
+      var i = Math.round((xs - padL) / (W - padL - padR) * (MONTHS - 1));
+      i = Math.max(0, Math.min(MONTHS - 1, i));
+      var xi = x(i), p = parts[i];
+      guide.setAttribute("x1", xi); guide.setAttribute("x2", xi); guide.setAttribute("visibility", "visible");
+      d1.setAttribute("cx", xi); d1.setAttribute("cy", y(p.value)); d1.setAttribute("visibility", "visible");
+      /* точки-маркеры окрашены в цвета шкалы (см. инициализацию) */
+      d2.setAttribute("cx", xi); d2.setAttribute("cy", y(p.contrib)); d2.setAttribute("visibility", "visible");
+      var d = new Date(START_YEAR, START_MONTH + i, 1);
+      function row(color, name, val) {
+        return '<div class="t-row"><span><span class="leg-dot" style="background:' + color + ';display:inline-block;margin-right:6px"></span>' + name + "</span><b>" + rub(val) + "</b></div>";
+      }
+      tip.innerHTML = '<div class="t-date">' + MONTHS_NOM[d.getMonth()].charAt(0).toUpperCase() + MONTHS_NOM[d.getMonth()].slice(1) + " " + d.getFullYear() + " · " + (i + 1) + "-й месяц</div>" +
+        '<div class="t-row t-total"><span>На счёте ПДС</span><b>' + rub(p.value) + "</b></div>" +
+        (detailed
+          ? '<div class="t-row"><span><span class="leg-dot leg-hatch" style="display:inline-block;margin-right:6px"></span>Ваши взносы</span><b>' + rub(p.contrib) + "</b></div>" +
+            row(COL.cofin, "Господдержка", p.cofin) +
+            row(COL.ded, "Налоговый вычет", p.ded) +
+            row(COL.id, "Инвестиционный доход", p.id)
+          : "") +
+        '<div class="t-row" style="margin-top:6px"><span>Без программы</span><b>' + rub(p.contrib) + "</b></div>" +
+        '<div class="t-diff">Разница: +' + rub(p.value - p.contrib) + "</div>";
+      tip.style.display = "block";
+      var wrapR = wrap.getBoundingClientRect();
+      var tipX = (xi * scale) + (r.left - wrapR.left) + 16;
+      if (tipX + tip.offsetWidth > wrapR.width - 8) tipX = (xi * scale) + (r.left - wrapR.left) - tip.offsetWidth - 16;
+      var tipY = Math.min(y(p.value) * scale + (r.top - wrapR.top) - 20, wrapR.height - tip.offsetHeight - 8);
+      tip.style.left = Math.max(4, tipX) + "px";
+      tip.style.top = Math.max(4, tipY) + "px";
+    }
+    function hide() {
+      tip.style.display = "none";
+      guide.setAttribute("visibility", "hidden"); d1.setAttribute("visibility", "hidden"); d2.setAttribute("visibility", "hidden");
+    }
+    svg.addEventListener("mousemove", function (e) { show(e.clientX); });
+    svg.addEventListener("mouseleave", hide);
+    svg.addEventListener("touchstart", function (e) { show(e.touches[0].clientX); }, { passive: true });
+    svg.addEventListener("touchmove", function (e) { show(e.touches[0].clientX); }, { passive: true });
+    svg.addEventListener("touchend", hide);
+    }  /* конец draw() */
+
+    draw();
+    /* смена ширины окна / поворот телефона — перерисовать в подходящей геометрии */
+    (function () {
+      var t = null, last = MOB;
+      window.addEventListener("resize", function () {
+        clearTimeout(t);
+        t = setTimeout(function () { layout(); if (MOB !== last) { last = MOB; draw(); } }, 150);
+      });
+    })();
+    /* переключатель режима просмотра: простой ↔ подробный */
+    document.querySelectorAll(".cmp-mode").forEach(function (b) {
+      b.addEventListener("click", function () {
+        if (b.dataset.mode === MODE) return;
+        MODE = b.dataset.mode;
+        document.querySelectorAll(".cmp-mode").forEach(function (x) { x.classList.toggle("is-active", x === b); });
+        draw();
+      });
+    });
+  })();
+})();
+</script>
+</body>
+</html>
