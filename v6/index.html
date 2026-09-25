@@ -698,8 +698,12 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.08)}
 .loop{width:100%;margin-block:-2rem -1rem}
 .loop-dark{inset:6% 18%;width:64%;height:88%}
 @media (max-width:48rem){
-  .src-head{grid-template-columns:minmax(0,1fr);align-items:start;gap:0}
-  .loop{width:min(13rem,60vw);margin:.25rem auto -.5rem}
+  /* телефон: колонна — акцент справа от заголовка, подзаголовок во всю ширину */
+  .src-head{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"h loop" "lead lead";align-items:center;column-gap:.75rem;row-gap:0}
+  .src-head .s-head{display:contents}
+  .src-head .s-head h2{grid-area:h}
+  .src-head .s-head p{grid-area:lead}
+  .loop{grid-area:loop;width:clamp(6.5rem,28vw,8rem);margin:-.5rem -.5rem -.5rem 0}
 }
 /* ---- напоминание: заметная кнопка и выбор календаря ---- */
 .remind-btn{display:flex;align-items:center;gap:.875rem;width:100%;padding:.875rem 1rem;border-radius:1.125rem;background:color-mix(in srgb,var(--warm) 10%,var(--card));box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--warm) 45%,transparent);text-align:left;transition:transform .1s ease-out,background-color .2s}
