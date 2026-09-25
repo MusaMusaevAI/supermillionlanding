@@ -741,6 +741,10 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.08)}
 }
 @media (prefers-reduced-transparency:reduce){.cm-panel{background:var(--card);-webkit-backdrop-filter:none;backdrop-filter:none}}
 @media (max-width:30rem){.go-btn{font-size:1.0625rem;padding:0 1rem;min-height:3.5rem}.go-btn .gov{width:1.125rem;height:1.125rem}}
+/* «Не готовы сейчас?» — опция, а не второй призыв: как в первом экране */
+.later{justify-items:center;gap:.25rem;margin-top:.375rem}
+.later .hc-remind{margin-top:0}
+.later .chip-btn{justify-self:center}
 </style>
 </head>
 <body>
@@ -1008,8 +1012,7 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.08)}
           <a class="btn btn-primary btn-lg" href="https://contract-pds.gazfond-pn.ru/?u=nakopimillion&amp;utm_source=landing_million&amp;utm_medium=calc&amp;utm_campaign=pds_million_v5" target="_blank" rel="noopener" data-goal="cta_contract" data-pos="calc"><svg class="i"><use href="#i-gov"/></svg>Оформить через Госуслуги</a>
         </div>
         <div class="later">
-          <span>Не готовы сейчас?</span>
-          <button type="button" class="remind-btn" data-remind data-pos="calc"><span class="rb-ic" aria-hidden="true"><svg class="i"><use href="#i-bell"/></svg></span><span class="rb-t"><b>Напомнить до 31 декабря</b><small>Добавим событие в ваш календарь</small></span><svg class="i rb-go" aria-hidden="true"><use href="#i-chevr"/></svg></button>
+          <button type="button" class="hc-remind" data-remind data-pos="calc"><svg class="i"><use href="#i-bell"/></svg>Не готовы сейчас? <b>Напомнить до 31 декабря</b></button>
           <button type="button" class="chip-btn" data-share data-pos="calc"><svg class="i"><use href="#i-share"/></svg>Отправить план себе</button>
         </div>
       </div>
@@ -1080,7 +1083,7 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.08)}
         </ol>
         <a class="btn btn-primary go-btn m-only" href="https://contract-pds.gazfond-pn.ru/?u=nakopimillion&amp;utm_source=landing_million&amp;utm_medium=go_bottom&amp;utm_campaign=pds_million_v5" target="_blank" rel="noopener" data-goal="cta_contract" data-pos="go_bottom"><svg class="i gov"><use href="#i-gov"/></svg>Оформить через Госуслуги</a>
         <div class="later center">
-          <button type="button" class="remind-btn" data-remind data-pos="go"><span class="rb-ic" aria-hidden="true"><svg class="i"><use href="#i-bell"/></svg></span><span class="rb-t"><b>Напомнить до 31 декабря</b><small>Добавим событие в ваш календарь</small></span><svg class="i rb-go" aria-hidden="true"><use href="#i-chevr"/></svg></button>
+          <button type="button" class="hc-remind" data-remind data-pos="go"><svg class="i"><use href="#i-bell"/></svg>Не готовы сейчас? <b>Напомнить до 31 декабря</b></button>
           <button type="button" class="chip-btn" data-share data-pos="go"><svg class="i"><use href="#i-share"/></svg>Отправить план себе</button>
         </div>
       </div>
