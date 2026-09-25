@@ -1,0 +1,24 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//GAZFOND PN//PDS//RU
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:pds-remind-2026@gazfond-pn.ru
+DTSTAMP:20260925T000000Z
+DTSTART:20261201T100000
+DTEND:20261201T103000
+SUMMARY:Взнос в ПДС до 31 декабря — господдер
+ жка и вычет за 2026
+DESCRIPTION:Взносы от 2 000 ₽ до 31 декабря дают п
+ раво на господдержку и налоговый вычет з
+ а 2026 год.\n\nОформить договор через Госусл
+ уги: https://million.gazfond-pn.com/v6/
+URL:https://million.gazfond-pn.com/v6/
+BEGIN:VALARM
+TRIGGER:-PT0M
+ACTION:DISPLAY
+DESCRIPTION:Взнос в ПДС до 31 декабря
+END:VALARM
+END:VEVENT
+END:VCALENDAR

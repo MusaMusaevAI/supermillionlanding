@@ -700,6 +700,47 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.08)}
   .src-head{grid-template-columns:minmax(0,1fr);align-items:start;gap:0}
   .loop{width:min(19rem,86vw);margin:.5rem auto -1rem}
 }
+/* ---- напоминание: заметная кнопка и выбор календаря ---- */
+.remind-btn{display:flex;align-items:center;gap:.875rem;width:100%;padding:.875rem 1rem;border-radius:1.125rem;background:color-mix(in srgb,var(--warm) 10%,var(--card));box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--warm) 45%,transparent);text-align:left;transition:transform .1s ease-out,background-color .2s}
+.remind-btn:hover{background:color-mix(in srgb,var(--warm) 16%,var(--card))}
+.remind-btn:active{transform:scale(.98)}
+.rb-ic{flex:none;display:grid;place-items:center;width:2.5rem;height:2.5rem;border-radius:50%;background:var(--warm);color:#fff}
+.rb-ic .i{width:1.125rem;height:1.125rem}
+.rb-t{flex:1;min-width:0}
+.rb-t b{display:block;font-size:1rem;font-weight:600;letter-spacing:-.012em;color:var(--ink)}
+.rb-t small{display:block;margin-top:.125rem;font-size:.8125rem;color:var(--muted);letter-spacing:0}
+.rb-go{width:1rem;height:1rem;color:var(--warm)}
+.later{display:grid;grid-template-columns:minmax(0,1fr);gap:.5rem;margin-top:1rem}
+.later > span{font-size:.8125rem;color:var(--muted)}
+.later .chip-btn{justify-self:start}
+.later.center{justify-items:stretch}
+.later.center .chip-btn{justify-self:center}
+.hc-remind{display:flex;align-items:center;justify-content:center;gap:.375rem;width:100%;min-height:2.75rem;margin-top:.375rem;border-radius:.875rem;font-size:.875rem;color:var(--muted);letter-spacing:-.005em;transition:background-color .2s}
+.hc-remind:hover{background:var(--fill)}
+.hc-remind b{font-weight:600;color:var(--warm)}
+.hc-remind .i{width:1rem;height:1rem;color:var(--warm)}
+.calmenu{position:fixed;inset:0;z-index:450}
+.cm-scrim{position:absolute;inset:0;background:rgba(0,0,0,.28)}
+.cm-panel{position:absolute;width:min(22rem,calc(100vw - 1.5rem));padding:.5rem;border-radius:1.25rem;background:var(--mat-thick);-webkit-backdrop-filter:saturate(180%) blur(28px);backdrop-filter:saturate(180%) blur(28px);box-shadow:var(--shadow-3),inset 0 1px 0 var(--mat-edge);will-change:transform,opacity}
+.cm-head{padding:.625rem .75rem .75rem}
+.cm-head b{display:block;font-size:1rem;font-weight:600;letter-spacing:-.012em}
+.cm-head span{display:block;margin-top:.125rem;font-size:.8125rem;color:var(--muted);letter-spacing:0}
+.cm-list{display:grid;gap:.125rem}
+.cm-item{display:flex;align-items:center;gap:.75rem;width:100%;padding:.625rem .75rem;border-radius:.875rem;text-align:left;transition:background-color .15s}
+.cm-item:hover,.cm-item:focus-visible{background:var(--fill)}
+.cm-item:active{background:var(--fill-2)}
+.cm-ic{flex:none;display:grid;place-items:center;width:2.25rem;height:2.25rem;border-radius:.625rem;background:var(--accent-soft);color:var(--accent)}
+.cm-ic .i{width:1.125rem;height:1.125rem}
+.cm-item b{display:block;font-size:.9375rem;font-weight:600;letter-spacing:-.01em;color:var(--ink)}
+.cm-item small{display:block;font-size:.75rem;color:var(--muted);letter-spacing:0}
+.cm-list .cm-item:first-child .cm-ic{background:var(--accent);color:#fff}
+.cm-cancel{display:none;width:100%;min-height:3rem;margin-top:.375rem;border-radius:.875rem;background:var(--fill);font-size:1rem;font-weight:600;color:var(--accent)}
+@media (max-width:48rem){
+  .cm-panel{left:.5rem!important;right:.5rem;bottom:calc(.5rem + env(safe-area-inset-bottom,0px));top:auto!important;width:auto}
+  .cm-cancel{display:block}
+}
+@media (prefers-reduced-transparency:reduce){.cm-panel{background:var(--card);-webkit-backdrop-filter:none;backdrop-filter:none}}
+@media (max-width:30rem){.go-btn{font-size:1.0625rem;padding:0 1rem;min-height:3.5rem}.go-btn .gov{width:1.125rem;height:1.125rem}}
 </style>
 </head>
 <body>
@@ -787,6 +828,7 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.08)}
         <div class="hc-mil num" id="hMil"><span id="hMilL">1 000 000 ₽ на счёте</span><b id="hMilV">около 8,5 лет</b></div>
       </div>
       <a class="btn btn-primary btn-lg hc-cta" href="https://contract-pds.gazfond-pn.ru/?u=nakopimillion&amp;utm_source=landing_million&amp;utm_medium=hero&amp;utm_campaign=pds_million_v5" target="_blank" rel="noopener" data-goal="cta_contract" data-pos="hero"><svg class="i"><use href="#i-gov"/></svg>Оформить через Госуслуги</a>
+      <button type="button" class="hc-remind" data-remind data-pos="hero"><svg class="i"><use href="#i-bell"/></svg>Не готовы сейчас? <b>Напомнить до 31 декабря</b></button>
       <div class="hc-foot">
         <span id="hFor">Для 35 лет, женщина</span>
         <a class="link" href="#calc" data-goal="calc_detail_open" data-pos="hero">Настроить подробнее <svg class="i"><use href="#i-chevr"/></svg></a>
@@ -967,7 +1009,7 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.08)}
         </div>
         <div class="later">
           <span>Не готовы сейчас?</span>
-          <button type="button" class="chip-btn" data-remind data-pos="calc"><svg class="i"><use href="#i-bell"/></svg>Напомнить до 31 декабря</button>
+          <button type="button" class="remind-btn" data-remind data-pos="calc"><span class="rb-ic" aria-hidden="true"><svg class="i"><use href="#i-bell"/></svg></span><span class="rb-t"><b>Напомнить до 31 декабря</b><small>Добавим событие в ваш календарь</small></span><svg class="i rb-go" aria-hidden="true"><use href="#i-chevr"/></svg></button>
           <button type="button" class="chip-btn" data-share data-pos="calc"><svg class="i"><use href="#i-share"/></svg>Отправить план себе</button>
         </div>
       </div>
@@ -1038,7 +1080,7 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.08)}
         </ol>
         <a class="btn btn-primary go-btn m-only" href="https://contract-pds.gazfond-pn.ru/?u=nakopimillion&amp;utm_source=landing_million&amp;utm_medium=go_bottom&amp;utm_campaign=pds_million_v5" target="_blank" rel="noopener" data-goal="cta_contract" data-pos="go_bottom"><svg class="i gov"><use href="#i-gov"/></svg>Оформить через Госуслуги</a>
         <div class="later center">
-          <button type="button" class="chip-btn" data-remind data-pos="go"><svg class="i"><use href="#i-bell"/></svg>Напомнить до 31 декабря</button>
+          <button type="button" class="remind-btn" data-remind data-pos="go"><span class="rb-ic" aria-hidden="true"><svg class="i"><use href="#i-bell"/></svg></span><span class="rb-t"><b>Напомнить до 31 декабря</b><small>Добавим событие в ваш календарь</small></span><svg class="i rb-go" aria-hidden="true"><use href="#i-chevr"/></svg></button>
           <button type="button" class="chip-btn" data-share data-pos="go"><svg class="i"><use href="#i-share"/></svg>Отправить план себе</button>
         </div>
       </div>
@@ -1109,6 +1151,19 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.08)}
 <div class="mbar" id="mbar" aria-hidden="true">
   <div class="t"><b class="num" id="mbTitle">≈ 2 610 430 ₽ к 2041</b><span id="mbSub">5 000 ₽ в месяц · до 31 декабря</span></div>
   <a class="btn btn-primary btn-sm" id="mbBtn" href="https://contract-pds.gazfond-pn.ru/?u=nakopimillion&amp;utm_source=landing_million&amp;utm_medium=mbar&amp;utm_campaign=pds_million_v5" target="_blank" rel="noopener" tabindex="-1" data-goal="cta_contract" data-pos="mbar">Оформить</a>
+</div>
+<div class="calmenu" id="calmenu" hidden>
+  <div class="cm-scrim" data-cm-close></div>
+  <div class="cm-panel" role="dialog" aria-modal="true" aria-labelledby="cmTitle">
+    <div class="cm-head"><b id="cmTitle">Куда добавить напоминание?</b><span id="cmWhen">1 декабря, 10:00 — за месяц до конца года</span></div>
+    <div class="cm-list" id="cmList">
+      <button type="button" class="cm-item" data-cal="apple"><span class="cm-ic" aria-hidden="true"><svg class="i"><use href="#i-cal"/></svg></span><span><b>Календарь iPhone и Mac</b><small>откроется окно «Добавить событие»</small></span></button>
+      <button type="button" class="cm-item" data-cal="google"><span class="cm-ic" aria-hidden="true"><svg class="i"><use href="#i-cal"/></svg></span><span><b>Google Календарь</b><small>Android и браузер — событие уже заполнено</small></span></button>
+      <button type="button" class="cm-item" data-cal="outlook"><span class="cm-ic" aria-hidden="true"><svg class="i"><use href="#i-cal"/></svg></span><span><b>Outlook</b><small>рабочая или личная почта Microsoft</small></span></button>
+      <button type="button" class="cm-item" data-cal="ics"><span class="cm-ic" aria-hidden="true"><svg class="i"><use href="#i-cal"/></svg></span><span><b>Другой календарь</b><small>Яндекс, Mail.ru и другие — файл .ics</small></span></button>
+    </div>
+    <button type="button" class="cm-cancel" data-cm-close>Отмена</button>
+  </div>
 </div>
 <div class="vmodal" id="vmodal" hidden>
   <div class="vm-scrim" data-close></div>
@@ -1559,20 +1614,87 @@ if (typeof module !== "undefined" && module.exports) module.exports = CALC;
       "Предварительный расчёт: доходность 10 % годовых для примера, доход не гарантирован. АО «НПФ ГАЗФОНД пенсионные накопления».";
   }
   function pageUrl() { return location.href.split("#")[0]; }
-  $$("[data-remind]").forEach(function (b) {
-    b.addEventListener("click", function () {
-      track("remind_calendar", { pos: b.getAttribute("data-pos") });
-      var d = new Date(Math.max(now.getTime() + 7 * 864e5, new Date(startYear, 11, 1, 10).getTime()));
-      if (d > new Date(startYear, 11, 30)) d = new Date(now.getTime() + 864e5);
-      var pad = function (n) { return String(n).padStart(2, "0"); }, ds = d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate());
-      var esc = function (s) { return s.replace(/\\/g, "\\\\").replace(/\n/g, "\\n").replace(/,/g, "\\,").replace(/;/g, "\;"); };
-      var ics = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//GAZFOND PN//PDS//RU", "BEGIN:VEVENT", "UID:pds-" + Date.now() + "@gazfond-pn.ru", "DTSTAMP:" + new Date().toISOString().replace(/[-:]/g, "").split(".")[0] + "Z",
-        "DTSTART;VALUE=DATE:" + ds, "SUMMARY:" + esc("Взнос в ПДС до 31 декабря — господдержка и вычет за " + startYear), "DESCRIPTION:" + esc(planText() + "\n\nОформить: " + pageUrl()), "URL:" + pageUrl(),
-        "BEGIN:VALARM", "TRIGGER:PT10H", "ACTION:DISPLAY", "DESCRIPTION:Взнос в ПДС до 31 декабря", "END:VALARM", "END:VEVENT", "END:VCALENDAR"].join("\r\n");
-      var blob = new Blob([ics], { type: "text/calendar;charset=utf-8" }), a = doc.createElement("a");
-      a.href = URL.createObjectURL(blob); a.download = "napominanie-pds.ics"; doc.body.appendChild(a); a.click();
-      setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
-      haptic(10); say("Напоминание добавлено — откройте файл");
+  /* =====================================================================
+     НАПОМИНАНИЕ — без скачивания файла:
+     Google и Outlook открывают уже заполненное событие по ссылке,
+     iPhone/Mac получают .ics с сервера — Safari сразу показывает «Добавить событие».
+     Файл .ics остаётся только как вариант «Другой календарь».
+     ===================================================================== */
+  var calMenu = $("#calmenu"), cmPanel = $(".cm-panel", calMenu), cmScrim = $(".cm-scrim", calMenu), cmOpen = false, cmFrom = null, cmPos = "";
+  var ua = navigator.userAgent, isApple = /iPhone|iPad|iPod|Macintosh/.test(ua) && !/Android/.test(ua), isAndroid = /Android/.test(ua);
+  var mqCm = window.matchMedia("(max-width: 48rem)");
+  (function orderCalendars() {
+    var list = $("#cmList"), first = isApple ? "apple" : "google";
+    list.insertBefore($('[data-cal="' + first + '"]', list), list.firstChild);
+    if (isAndroid) list.appendChild($('[data-cal="apple"]', list));
+  })();
+  function remindDate() {
+    var d = new Date(startYear, 11, 1, 10, 0, 0);
+    if (d.getTime() - now.getTime() < 3 * 864e5) { d = new Date(now.getTime() + 864e5); d.setHours(10, 0, 0, 0); }
+    if (d > new Date(startYear, 11, 31, 10)) d = new Date(startYear, 11, 31, 10, 0, 0);
+    return d;
+  }
+  var MONTHS_R = MONTHS_G;
+  function evTitle() { return "Взнос в ПДС до 31 декабря — господдержка и вычет за " + startYear; }
+  function evText() { return planText() + "\n\nОформить договор через Госуслуги: " + pageUrl(); }
+  function utc(d) { return d.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z"; }
+  var cmSpring = new Spring({ from: 0, precision: 0.002, onUpdate: function (p) {
+    cmScrim.style.opacity = clamp(p, 0, 1).toFixed(3);
+    if (mqCm.matches) { cmPanel.style.transform = "translate3d(0," + ((1 - p) * 105).toFixed(2) + "%,0)"; cmPanel.style.opacity = ""; }
+    else { var q = clamp(p, 0, 1); cmPanel.style.transform = "scale(" + (0.92 + 0.08 * q).toFixed(4) + ")"; cmPanel.style.opacity = q.toFixed(3); }
+  }, onRest: function (p) { if (p === 0 && !cmOpen) calMenu.hidden = true; } });
+  function cmShow(btn) {
+    cmOpen = true; cmFrom = btn; cmPos = btn.getAttribute("data-pos") || "";
+    var d = remindDate();
+    $("#cmWhen").textContent = d.getDate() + " " + MONTHS_R[d.getMonth()] + ", 10:00" + (d.getMonth() === 11 && d.getDate() === 1 ? " — за месяц до конца года" : "");
+    calMenu.hidden = false;
+    if (!mqCm.matches) {
+      /* на компьютере меню появляется у кнопки и растёт из неё */
+      var r = btn.getBoundingClientRect(), w = cmPanel.offsetWidth, h = cmPanel.offsetHeight;
+      var left = clamp(r.left + r.width / 2 - w / 2, 12, window.innerWidth - w - 12), below = r.bottom + 10 + h < window.innerHeight;
+      var top = below ? r.bottom + 10 : Math.max(12, r.top - 10 - h);
+      cmPanel.style.left = left + "px"; cmPanel.style.top = top + "px";
+      cmPanel.style.transformOrigin = (r.left + r.width / 2 - left) + "px " + (below ? "0px" : h + "px");
+    } else { cmPanel.style.left = ""; cmPanel.style.top = ""; cmPanel.style.transformOrigin = "50% 100%"; }
+    if (!cmSpring.isMoving()) cmSpring.set(0);
+    cmSpring.to(1, { damping: 1, response: 0.34 });
+    setTimeout(function () { var f = $(".cm-item", calMenu); if (f) f.focus({ preventScroll: true }); }, 30);
+    track("remind_open", { pos: cmPos });
+  }
+  function cmHide() { if (!cmOpen) return; cmOpen = false; cmSpring.to(0, { damping: 1, response: 0.3 }); if (cmFrom) cmFrom.focus({ preventScroll: true }); }
+  $$("[data-remind]").forEach(function (b) { b.addEventListener("click", function () { cmShow(b); }); });
+  $$("[data-cm-close]", calMenu).forEach(function (el) { el.addEventListener("click", cmHide); });
+  doc.addEventListener("keydown", function (e) { if (e.key === "Escape" && cmOpen) cmHide(); });
+  function icsText(d) {
+    var pad = function (n) { return String(n).padStart(2, "0"); };
+    var loc = d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate()) + "T" + pad(d.getHours()) + pad(d.getMinutes()) + "00";
+    var e2 = new Date(d.getTime() + 30 * 6e4), loc2 = e2.getFullYear() + pad(e2.getMonth() + 1) + pad(e2.getDate()) + "T" + pad(e2.getHours()) + pad(e2.getMinutes()) + "00";
+    var esc = function (s) { return s.replace(/\\/g, "\\\\").replace(/\n/g, "\\n").replace(/,/g, "\\,").replace(/;/g, "\;"); };
+    return ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//GAZFOND PN//PDS//RU", "CALSCALE:GREGORIAN", "METHOD:PUBLISH", "BEGIN:VEVENT", "UID:pds-" + Date.now() + "@gazfond-pn.ru", "DTSTAMP:" + utc(new Date()),
+      "DTSTART:" + loc, "DTEND:" + loc2, "SUMMARY:" + esc(evTitle()), "DESCRIPTION:" + esc(evText()), "URL:" + pageUrl(),
+      "BEGIN:VALARM", "TRIGGER:-PT0M", "ACTION:DISPLAY", "DESCRIPTION:" + esc("Взнос в ПДС до 31 декабря"), "END:VALARM", "END:VEVENT", "END:VCALENDAR"].join("\r\n");
+  }
+  function icsDownload(d) {
+    var blob = new Blob([icsText(d)], { type: "text/calendar;charset=utf-8" }), a = doc.createElement("a");
+    a.href = URL.createObjectURL(blob); a.download = "napominanie-pds.ics"; doc.body.appendChild(a); a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+  }
+  $$(".cm-item", calMenu).forEach(function (it) {
+    it.addEventListener("click", function () {
+      var kind = it.getAttribute("data-cal"), d = remindDate(), end = new Date(d.getTime() + 30 * 6e4);
+      track("remind_calendar", { pos: cmPos, cal: kind });
+      if (kind === "google") {
+        window.open("https://calendar.google.com/calendar/render?action=TEMPLATE&text=" + encodeURIComponent(evTitle()) + "&dates=" + utc(d) + "/" + utc(end) + "&details=" + encodeURIComponent(evText()) + "&location=" + encodeURIComponent(pageUrl()), "_blank", "noopener");
+      } else if (kind === "outlook") {
+        window.open("https://outlook.live.com/calendar/0/deeplink/compose?path=%2Fcalendar%2Faction%2Fcompose&rru=addevent&subject=" + encodeURIComponent(evTitle()) + "&startdt=" + encodeURIComponent(d.toISOString()) + "&enddt=" + encodeURIComponent(end.toISOString()) + "&body=" + encodeURIComponent(evText()), "_blank", "noopener");
+      } else if (kind === "apple") {
+        /* Safari открывает .ics с сервера как «Добавить событие»; файл лежит рядом со страницей.
+           Если 1 декабря уже прошло или страница открыта локально — собираем событие на лету. */
+        var staticOk = location.protocol.indexOf("http") === 0 && d.getMonth() === 11 && d.getDate() === 1 && d.getFullYear() === 2026;
+        if (staticOk) location.href = "media/napominanie-pds-2026.ics"; else icsDownload(d);
+      } else icsDownload(d);
+      cmHide(); haptic(10);
+      if (kind === "ics") say("Файл календаря сохранён — откройте его");
     });
   });
   $$("[data-share]").forEach(function (b) {
