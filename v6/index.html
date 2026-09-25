@@ -1225,7 +1225,7 @@ var CALC = (function () {
 
   function simulate(p) {
     var first = p.first || 0, monthly = p.monthly || 0, k = p.k, target = p.target || TARGET;
-    var reinvest = !!p.reinvest, startMonth = p.startMonth || 0, maxMonths = p.maxMonths || MAX_MONTHS;
+    var reinvest = !!p.reinvest, startMonth = p.startMonth || 0, maxMonths = p.maxMonths || MAX_MONTHS, rate = p.rate != null ? p.rate : RATE;
     var balance = 0, accrued = 0, pending = 0, contrib = 0, cofin = 0, dedRe = 0;
     var yearOwn = {}, yearPaid = {}, hist = [], goal = null;
     for (var m = 0; m < maxMonths; m++) {
@@ -1241,7 +1241,7 @@ var CALC = (function () {
         if (prev >= COFIN_MIN) { var cf = Math.min(COFIN_MAX, k * prev); balance += cf; cofin += cf; }
       }
       if (mo === CAP_MONTH && pending > 0) { balance += pending; pending = 0; }
-      accrued += balance * RATE / 12;
+      accrued += balance * rate / 12;
       if (mo === 11) { pending += accrued; accrued = 0; }
       var value = balance + accrued + pending;
       hist.push({ value: value, contrib: contrib, cofin: cofin, dedRe: dedRe });
@@ -1831,24 +1831,72 @@ if (typeof module !== "undefined" && module.exports) module.exports = CALC;
     });
   }
   function planData() {
-    var L = last, p = L.p, hp = L.hp, po = L.po, g = L.g;
-    var horizon = Math.min(CALC.MAX_MONTHS, Math.max(L.pm + 1, g || 0, 24) + 8), series = [];
-    for (var i = 0; i < horizon; i++) series.push({ v: L.sim.hist[i].value, b: p.first + p.monthly * (i + 1) });
-    var inc = Math.max(0, hp.value - hp.contrib - hp.cofin - hp.dedRe);
+    var L = last, p = L.p, hp = L.hp, po = L.po, g = L.g, pm = L.pm, sim = L.sim, V = hp.value;
     var end = new Date(startYear, 11, 31, 23, 59, 59), dl = Math.max(0, Math.ceil((end - Date.now()) / 864e5));
     var incomeTxt = { "1": "доход до 80 тыс. ₽", "0.5": "доход 80–150 тыс. ₽", "0.25": "доход от 150 тыс. ₽" }[String(state.k)] || "";
-    var yrs = po.basis === "now" ? "через 15 лет" : yearsTxt(L.pm);
+    var now15 = po.basis === "now", yrs = now15 ? "через 15 лет" : yearsTxt(pm), payYear = calYear(pm);
+    var mil = p.target === 1000000;
+    /* «8,5 года», «5 лет», «1 год» */
+    function yrsShort(m) { var h = Math.round(m / 6) / 2; if (h < 1) return m + " " + plural(m, ["месяц", "месяца", "месяцев"]); if (h !== Math.floor(h)) return String(h).replace(".", ",") + " года"; return h + " " + plural(h, ["год", "года", "лет"]); }
+    function at(o, months) { var r = CALC.simulate(Object.assign({}, p, o, { maxMonths: Math.max(1, months) })); return r.hist[r.hist.length - 1]; }
+    function goalOf(o) { return CALC.simulate(Object.assign({}, p, o)).goalMonths; }
+    var r100 = function (v) { return Math.round(v / 100) * 100; };
+    /* ---- год за годом: сумма в конце каждого года до выплат ---- */
+    var years = [], prev = { value: 0, contrib: 0, cofin: 0, dedRe: 0 }, halfDone = false, goalDone = false, firstGov = false, incOver = false, nextMil = Math.max(2, Math.floor(p.target / 1e6) + 1);
+    var MIL = ["", "Один миллион", "Два миллиона", "Три миллиона", "Четыре миллиона", "Пять миллионов", "Шесть миллионов", "Семь миллионов", "Восемь миллионов", "Девять миллионов"];
+    for (var y = startYear; y <= payYear; y++) {
+      var idx = Math.min((y - startYear) * 12 + 11 - startMonth, pm - 1), h = sim.hist[idx];
+      if (idx < 0 || !h) break;
+      var dC = h.cofin - prev.cofin, dD = h.dedRe - prev.dedRe, dI = (h.value - h.contrib - h.cofin - h.dedRe) - (prev.value - prev.contrib - prev.cofin - prev.dedRe);
+      var ev = "", evB = "", cls = "", last_ = y === payYear || idx === pm - 1;
+      if (last_) { evB = now15 ? "Через 15 лет" : "Выплаты доступны."; ev = now15 ? "" : " Вы выбираете, как получать"; cls = "fin"; }
+      else if (!goalDone && h.value >= p.target) { goalDone = true; halfDone = true; evB = mil ? "Первый миллион" : "Цель " + rub(p.target); cls = "hl mil"; }
+      else if (!halfDone && h.value >= p.target / 2) { halfDone = true; evB = mil ? "Полмиллиона" : "Половина цели"; cls = "hl"; }
+      else if (y === startYear) { evB = "Старт."; ev = " Первые взносы до 31 декабря"; }
+      else if (!firstGov && dC > 0) { firstGov = true; evB = "Первая господдержка"; ev = " +" + rub(dC) + (dD > 0 ? " и вычет +" + rub(dD) : ""); cls = "gov"; }
+      else if (y - startYear === 10 && h.cofin > 0) { evB = "Господдержка получена полностью:"; ev = " " + rub(h.cofin); cls = "gov"; }
+      else if (nextMil < 10 && h.value >= nextMil * 1e6 && goalDone) { ev = MIL[nextMil]; nextMil++; }
+      else if (y - startYear === 9 && h.cofin > 0) { ev = "Последний год, за который начислят господдержку"; }
+      else if (!incOver && firstGov && dC > 0 && dI > dC) { incOver = true; ev = "Доход фонда за год больше господдержки"; }
+      else if (y === startYear + 2 && dC > 0) { ev = "Господдержка за год +" + rub(dC); }
+      if (!firstGov && dC > 0) firstGov = true;
+      if (h.value >= p.target) { goalDone = true; halfDone = true; }
+      while (nextMil < 10 && h.value >= nextMil * 1e6 && cls.indexOf("mil") < 0 && ev.indexOf("миллион") < 0 && goalDone && !last_) nextMil++;
+      years.push({ y: y, v: h.value, ev: ev, evB: evB, cls: cls });
+      prev = h;
+    }
+    /* ---- первый год ---- */
+    var own0 = sim.yearOwn[0] || 0, own1 = sim.yearOwn[1] || 0, ded0 = 0.13 * Math.min(400000, own0), ded1 = 0.13 * Math.min(400000, own1);
+    var gov0 = own0 >= 2000 ? Math.min(36000, state.k * own0) : 0, gov1 = Math.min(36000, state.k * (own1 + (state.reinvest ? ded0 : 0)));
+    var endY1 = years[1] ? years[1].v : V;
+    /* ---- что если: другие взносы ---- */
+    var base = [3000, 5000, 7000, 10000], m = p.monthly, set;
+    if (base.indexOf(m) >= 0) set = base;
+    else { var rr = function (v) { return Math.max(500, Math.round(v / 500) * 500); }; set = [rr(m * 0.6), m, rr(m * 1.4), rr(m * 2)].filter(function (v, i, a) { return a.indexOf(v) === i; }); }
+    var scen = set.map(function (mm) { var gg = goalOf({ monthly: mm }); return { m: mm, v: at({ monthly: mm }, pm).value, g: gg, gTxt: gg ? (mil ? "миллион" : "цель") + " через " + yrsShort(gg) : (mil ? "миллион" : "цель") + " позже 40 лет", me: mm === m }; });
+    var plusV = at({ monthly: m + 1000 }, pm).value, plusG = goalOf({ monthly: m + 1000 }), dG = g && plusG ? g - plusG : 0;
+    var plus = { add: plusV - V, sooner: dG >= 12 ? "на " + yrsShort(dG).replace(/^1 год$/, "год") + " раньше" : dG > 0 ? "на " + dG + " " + plural(dG, ["месяц", "месяца", "месяцев"]) + " раньше" : "" };
+    var yields = [0.10, 0.08, 0.06].map(function (r) { return { r: r, v: at({ rate: r }, pm).value }; });
+    var noInc = hp.contrib + hp.cofin + hp.dedRe;
+    var kAlt = state.k !== 1 ? at({ k: 1 }, pm).value : 0;
+    var govFrom = startYear + 1, govTo = startYear + 10, cofinAll = sim.hist[Math.min(sim.hist.length - 1, (10 - 0) * 12 + 11 - startMonth + 12)].cofin;
+    var cofinRatio = { "1": "1 ₽ на каждый ваш рубль", "0.5": "1 ₽ на каждые 2 ₽ взносов", "0.25": "1 ₽ на каждые 4 ₽ взносов" }[String(state.k)] || "";
+    var months = Math.round(hp.contrib - p.first) > 0 ? Math.round((hp.contrib - p.first) / p.monthly) : 0;
     return {
-      rub: rub, shortRub: shortRub, monthly: p.monthly, first: p.first, target: p.target, goalTxt: rub(p.target),
-      hp: { value: hp.value, contrib: hp.contrib, cofin: hp.cofin, ded: hp.dedRe, inc: inc, add: hp.value - hp.contrib },
-      whenTxt: po.basis === "now" ? "На счёте через 15 лет" : "На счёте " + yrs + ", когда станут доступны выплаты",
-      yearsCap: yrs.charAt(0).toUpperCase() + yrs.slice(1),
-      gYears: g ? approx(g) : "более чем через 40 лет", gShort: g ? termRound(g) : "",
-      payTxt: po.basis === "now" ? "основание по возрасту уже есть" : yrs + " (с " + calYear(po.m) + " года)", payYear: calYear(po.m),
+      rub: rub, shortRub: shortRub, plural: plural, yrsShort: yrsShort,
+      monthly: p.monthly, first: p.first, target: p.target, mil: mil, goalTxt: rub(p.target), k: state.k, reinvest: state.reinvest, now15: now15,
+      V: V, hp: { value: V, contrib: hp.contrib, cofin: hp.cofin, ded: hp.dedRe, inc: Math.max(0, V - noInc), add: V - hp.contrib },
+      yrs: yrs, pmYears: Math.round(pm / 12), months: months,
+      whenTxt: now15 ? "будет на счёте через 15 лет" : "будет на счёте " + yrs + ", когда станут доступны выплаты",
+      chips: [rub(p.monthly) + " в месяц"].concat(p.first ? ["старт " + rub(p.first)] : []).concat([state.age + " " + plural(state.age, ["год", "года", "лет"]) + ", " + (state.sex === "m" ? "мужчина" : "женщина"), incomeTxt]).filter(Boolean),
+      g: g, gYear: g ? calYear(g - 1) : null, gIn: g ? "через " + yrsShort(g) : "позже чем через 40 лет",
+      payYear: payYear, cofinAll: cofinAll, govFrom: govFrom, govTo: govTo, cofinRatio: cofinRatio,
+      pay10: r100(V / 120), pay5: r100(V / 60), ratio: hp.contrib > 0 ? V / hp.contrib : 1, noInc: noInc,
+      years: years, fy: { own0: own0, ded0: r100(ded0), gov0: r100(gov0), own1: own1, ded1: r100(ded1), gov1: r100(gov1), endY1: endY1, monthName: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"][now.getMonth()] },
+      scen: scen, plus: plus, yields: yields, kAlt: kAlt,
       paramsTxt: "Расчёт для " + state.age + " " + plural(state.age, ["года", "лет", "лет"]) + ", " + (state.sex === "m" ? "мужчина" : "женщина") + (incomeTxt ? ", " + incomeTxt : "") + (state.reinvest ? ", налоговый вычет возвращается на счёт" : ", без возврата вычета на счёт") + ". Доходность 10 % годовых взята для примера.",
-      series: series, startYear: startYear, startMonth: startMonth, g: g, pm: po.basis === "now" ? 9999 : L.pm,
-      year: startYear, daysLeft: dl + " " + plural(dl, ["день", "дня", "дней"]),
-      dateTxt: "Расчёт от " + now.getDate() + " " + MONTHS_G[now.getMonth()] + " " + now.getFullYear(),
+      startYear: startYear, startMonth: startMonth, year: startYear, daysLeft: dl,
+      dateTxt: now.getDate() + " " + MONTHS_G[now.getMonth()] + " " + now.getFullYear(),
       contractUrl: "https://contract-pds.gazfond-pn.ru/?u=nakopimillion&utm_source=landing_million&utm_medium=pdf&utm_campaign=pds_million_v5",
       img: {}
     };
@@ -1860,11 +1908,17 @@ if (typeof module !== "undefined" && module.exports) module.exports = CALC;
       var label = $("span", b), was = label.textContent; label.textContent = "Готовим PDF…"; b.setAttribute("aria-busy", "true");
       var phone = mqPhone.matches, D = planData(), colIdx = Math.round(colSpring.target || 0), colSrc = $$("#hCol img")[colIdx];
       track("plan_pdf", { pos: b.getAttribute("data-pos"), layout: phone ? "phone" : "a4" });
-      Promise.all([loadPdfLib(), toPng($(".logo .l-light").src, 360), toPng(colSrc && colSrc.src, 420)].concat($$(".src img").map(function (im) { return toPng(im.getAttribute("src"), 240); })))
+      var pick = function (sel) { var im = $(sel); return im ? im.getAttribute("src") : null; };
+      Promise.all([loadPdfLib(), toPng($(".logo .l-light").src, 360), toPng(colSrc && colSrc.src, 480), toPng(pick('img[src*="badge-asv"]'), 160), toPng(pick('img[src*="shield"]'), 160), toPng(pick('img[src*="hourglass"]'), 120)].concat($$(".src img").map(function (im) { return toPng(im.getAttribute("src"), 200); })))
         .then(function (r) {
-          D.img.logo = r[1] && r[1].url; D.img.logoRatio = r[1] ? r[1].ratio : 1.7; D.img.column = r[2] && r[2].url;
-          D.img.src = [r[3], r[4], r[5], r[6]].map(function (x) { return x && x.url; });
-          var blob = window.buildPlanPdf(D, phone ? "phone" : "a4"), name = "plan-pds-gazfond.pdf";
+          D.img.logo = r[1] && r[1].url; D.img.logoRatio = r[1] ? r[1].ratio : 1.7; D.img.column = r[2] && r[2].url; D.img.columnRatio = r[2] ? r[2].ratio : 0.5625;
+          D.img.asv = r[3] && r[3].url; D.img.shield = r[4] && r[4].url; D.img.shieldRatio = r[4] ? r[4].ratio : 0.9; D.img.hourglass = r[5] && r[5].url; D.img.hourglassRatio = r[5] ? r[5].ratio : 0.6;
+          D.img.src = [r[6], r[7], r[8], r[9]].map(function (x) { return x && x.url; });
+          D.img.srcRatio = [r[6], r[7], r[8], r[9]].map(function (x) { return x ? x.ratio : 1; });
+          return window.buildPlanPdf(D, phone ? "phone" : "a4");
+        })
+        .then(function (blob) {
+          var name = "plan-pds-gazfond.pdf";
           var file = null; try { file = new File([blob], name, { type: "application/pdf" }); } catch (e) {}
           if (phone && file && navigator.canShare && navigator.canShare({ files: [file] })) {
             return navigator.share({ files: [file], title: "Мой план ПДС" }).catch(function () {});
