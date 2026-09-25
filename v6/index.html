@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Цель — миллион · Программа долгосрочных сбережений · ГАЗФОНД пенсионные накопления</title>
-<meta name="description" content="Откладывайте комфортную сумму — государство добавит до 36 000 ₽ в год, налоговый вычет вернёт 13 %, фонд начислит доход. Посчитайте свой план и оформите договор через Госуслуги.">
+<title>Цель миллион · Программа долгосрочных сбережений · ГАЗФОНД пенсионные накопления</title>
+<meta name="description" content="Откладывайте комфортную сумму. Государство может добавить до 36 000 ₽ в год, налоговый вычет вернёт от 13 до 22 % от взносов, фонд начисляет инвестиционный доход. Посчитайте свой план и оформите договор через Госуслуги.">
 <meta name="theme-color" content="#FBFBFD" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/png" href="img/favicon.png">
@@ -13,8 +13,8 @@
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ru_RU">
 <meta property="og:site_name" content="ГАЗФОНД пенсионные накопления">
-<meta property="og:title" content="Цель — миллион · программа долгосрочных сбережений">
-<meta property="og:description" content="Откладывайте комфортную сумму — государство добавит до 36 000 ₽ в год, налоговый вычет вернёт 13 %, фонд начислит доход. Посчитайте свой план и оформите договор через Госуслуги.">
+<meta property="og:title" content="Цель миллион · программа долгосрочных сбережений">
+<meta property="og:description" content="Откладывайте комфортную сумму. Государство может добавить до 36 000 ₽ в год, налоговый вычет вернёт от 13 до 22 % от взносов, фонд начисляет инвестиционный доход. Посчитайте свой план и оформите договор через Госуслуги.">
 <meta property="og:image" content="media/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -745,6 +745,26 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.08)}
 .later{justify-items:center;gap:.25rem;margin-top:.375rem}
 .later .hc-remind{margin-top:0}
 .later .chip-btn{justify-self:center}
+/* тёмная тема: видео играет на светлой «сцене» в цвет его фона — вместо статичной картинки */
+:root[data-theme="dark"] .loop{border-radius:2rem;background:#F3F2F3;overflow:hidden;margin-block:0;box-shadow:0 1.5rem 3rem rgba(0,0,0,.45),inset 0 0 0 1px rgba(255,255,255,.06)}
+:root[data-theme="dark"] .loop-v{display:block;mix-blend-mode:normal;-webkit-mask-image:none;mask-image:none}
+:root[data-theme="dark"] .loop-dark{display:none}
+/* живой счётчик до конца года */
+.cd{display:flex;flex-wrap:wrap;align-items:baseline;gap:.125rem .25rem;margin-top:.5rem;font-variant-numeric:tabular-nums}
+.cd-l{width:100%;font-size:.75rem;font-weight:600;letter-spacing:.02em;text-transform:uppercase;color:var(--warm)}
+.cd b{display:inline-grid;place-items:center;min-width:2.1em;padding:.15em .35em;border-radius:.5rem;background:color-mix(in srgb,var(--warm) 16%,var(--card));font:700 1.125rem/1.1 var(--font-display);letter-spacing:-.01em;color:var(--ink)}
+.cd i{font-style:normal;font-size:.8125rem;color:var(--muted);margin-right:.375rem}
+.cd .cd-s{color:var(--warm)}
+.deadline.sm .cd b{font-size:1rem}
+/* график подробного расчёта: крупнее подписи и подсказка */
+.chart svg{width:100%;height:auto}
+.c-legend{gap:.5rem 1.25rem;font-size:.875rem;color:var(--ink-2);margin-top:.75rem}
+.c-legend span::before{width:1.125rem;height:.25rem}
+.tip{font-size:.875rem;min-width:11rem;padding:.75rem .875rem}
+.tip b{font-size:1.25rem}
+.bd .l{font-size:.8125rem}
+.bd .v{font-size:1.125rem}
+@media (max-width:30rem){.tip{min-width:10rem}}
 </style>
 </head>
 <body>
@@ -763,6 +783,7 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.08)}
   <symbol id="i-share" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 3v12m0-12L8 7m4-4 4 4M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></symbol>
   <symbol id="i-play" viewBox="0 0 24 24"><path fill="currentColor" d="M8 5.5v13a1 1 0 0 0 1.5.9l10.4-6.5a1 1 0 0 0 0-1.8L9.5 4.6A1 1 0 0 0 8 5.5Z"/></symbol>
   <symbol id="i-close" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M6 3h8l4 4v14H6z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M9 13h6M9 17h6M12 9v0"/></symbol>
   <symbol id="i-bell" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a6 6 0 0 1 6 6v3.6l1.7 3A1 1 0 0 1 18.8 16H5.2a1 1 0 0 1-.9-1.4l1.7-3V8a6 6 0 0 1 6-6Zm-2.5 16h5a2.5 2.5 0 0 1-5 0Z"/></symbol>
   <symbol id="i-auto" viewBox="0 0 24 24"><path fill="currentColor" d="M12 4a8 8 0 0 1 7.4 5h-2.2A6 6 0 0 0 6 12H4a8 8 0 0 1 8-8Zm8 8a8 8 0 0 1-8 8 8 8 0 0 1-7.4-5h2.2A6 6 0 0 0 18 12h2Zm-3-6h4v4l-4-4ZM3 14h4v4l-4-4Z"/></symbol>
   <symbol id="i-eye" viewBox="0 0 24 24"><path fill="currentColor" d="M12 5c5 0 9 3.5 10.5 7C21 15.5 17 19 12 19S3 15.5 1.5 12C3 8.5 7 5 12 5Zm0 3.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z"/></symbol>
@@ -786,7 +807,7 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.08)}
     </nav>
     <div class="h-right">
       <div class="h-swap">
-        <a class="h-link phone" href="tel:88007007550" data-goal="call" data-pos="header"><svg class="i"><use href="#i-phone"/></svg><span>8 800 700 75 50</span></a>
+        <a class="h-link phone" href="tel:88007007550" data-goal="call" data-pos="header"><svg class="i"><use href="#i-phone"/></svg><span>8 800 700 75 50</span></a>
         <a class="h-link site" href="https://gazfond-pn.ru/" target="_blank" rel="noopener" tabindex="-1" data-goal="site_link"><span>Сайт фонда</span><svg class="i"><use href="#i-out"/></svg></a>
       </div>
       <button class="icon-btn" id="themeToggle" type="button" aria-label="Переключить тему"><svg class="i sun"><use href="#i-sun"/></svg><svg class="i moon"><use href="#i-moon"/></svg></button>
@@ -802,9 +823,9 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.08)}
     <div class="hero-copy">
       <span class="t-eyebrow reveal">Программа долгосрочных сбережений</span>
       <h1 class="t-hero reveal" data-d="1">Цель<br><span class="grad">миллион</span></h1>
-      <p class="t-lead reveal" data-d="2">Откладывайте комфортную сумму — <b>государство добавит до 36 000 ₽ в год</b>, налоговый вычет вернёт 13 % от взносов, а фонд начислит доход.</p>
+      <p class="t-lead reveal" data-d="2">Откладывайте комфортную сумму. <b>Государство может добавить до 36 000 ₽ в год</b>, налоговый вычет вернёт от 13 до 22 % от взносов, а фонд инвестирует средства и начисляет доход.</p>
       <p class="ops-hero reveal" id="opsHero" hidden><svg class="i"><use href="#i-users"/></svg><span><b>Уже копите в ГАЗФОНД?</b> Пенсионные накопления можно перевести в ПДС и начать не с нуля. <a href="#ops" data-goal="ops_click" data-pos="hero">Как это работает</a></span></p>
-      <div class="deadline reveal" data-d="2"><img class="dl-ic" src="img/hourglass.webp" alt="" width="96" height="178" aria-hidden="true"><span><b>Внесите до 31 декабря</b> — взносы от 2 000 ₽ в <span class="yr">2026</span> году дают господдержку и налоговый вычет за <span class="yr">2026</span> год. <span class="dl-left" id="dlLeft">Осталось 97 дней.</span></span></div>
+      <div class="deadline reveal" data-d="2"><img class="dl-ic" src="img/hourglass.webp" alt="" width="96" height="178" aria-hidden="true"><span><b>Успейте до 31 декабря.</b> Взносы от 2 000 ₽ в <span class="yr">2026</span> году дают право на господдержку и налоговый вычет за этот год.<span class="cd" aria-label="До конца года"><span class="cd-l">До конца года</span><b class="cd-d">97</b><i>дн</i><b class="cd-h">00</b><i>ч</i><b class="cd-m">00</b><i>мин</i><b class="cd-s">00</b><i>с</i></span></span></div>
       <ul class="mini-trust reveal" data-d="3">
         <li><svg class="i"><use href="#i-shield"/></svg>Застраховано АСВ до 2,8 млн ₽</li>
         <li><svg class="i"><use href="#i-users"/></svg>6,7 млн клиентов</li>
@@ -813,23 +834,23 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.08)}
     </div>
 
     <div class="hcalc reveal" data-d="1" id="hcalc">
-      <div class="hc-q"><label for="hMonthly">Сколько комфортно откладывать в месяц?</label><output class="num" id="hMonthlyOut" for="hMonthly">5 000 ₽</output></div>
+      <div class="hc-q"><label for="hMonthly">Сколько комфортно откладывать в месяц?</label><output class="num" id="hMonthlyOut" for="hMonthly">5 000 ₽</output></div>
       <input type="range" id="hMonthly" min="1000" max="50000" step="500" value="5000" aria-label="Взнос в месяц, рублей">
       <div class="seg" id="hPresets" role="group" aria-label="Быстрый выбор взноса">
-        <button type="button" data-v="2000">2 000</button>
-        <button type="button" data-v="3000">3 000</button>
-        <button type="button" data-v="5000" aria-pressed="true">5 000</button>
-        <button type="button" data-v="10000">10 000</button>
-        <button type="button" data-v="15000">15 000</button>
+        <button type="button" data-v="2000">2 000</button>
+        <button type="button" data-v="3000">3 000</button>
+        <button type="button" data-v="5000" aria-pressed="true">5 000</button>
+        <button type="button" data-v="10000">10 000</button>
+        <button type="button" data-v="15000">15 000</button>
       </div>
       <div class="hc-res" aria-live="polite">
         <div class="hc-col" id="hCol" aria-hidden="true"><img src="img/column-short.webp" alt="" width="360" height="640"><img src="img/column-mid.webp" alt="" width="360" height="640"><img src="img/column-tall.webp" alt="" width="360" height="640"></div>
-        <div class="hc-l" id="hLabel">На счёте к сентябрю 2041 — когда откроются выплаты</div>
-        <div class="hc-v num" id="hValue">≈ 2 610 430 ₽</div>
-        <div class="hc-s num" id="hPlus">из них <b>1 710 430 ₽</b> добавят государство, вычет и доход фонда</div>
+        <div class="hc-l" id="hLabel">На счёте через 15 лет, когда станут доступны выплаты</div>
+        <div class="hc-v num" id="hValue">≈ 2 610 430 ₽</div>
+        <div class="hc-s num" id="hPlus">из них <b>1 710 430 ₽</b> добавят государство, вычет и доход фонда</div>
         <div class="bar4" aria-hidden="true"><i id="hB1"></i><i id="hB2"></i><i id="hB3"></i><i id="hB4"></i></div>
         <div class="legend"><span style="--c:var(--c-you)">ваши взносы</span><span style="--c:var(--c-gov)">господдержка</span><span style="--c:var(--c-tax)">вычет</span><span style="--c:var(--c-fund)">доход фонда</span></div>
-        <div class="hc-mil num" id="hMil"><span id="hMilL">1 000 000 ₽ на счёте</span><b id="hMilV">около 8,5 лет</b></div>
+        <div class="hc-mil num" id="hMil"><span id="hMilL">1 000 000 ₽ на счёте</span><b id="hMilV">около 8,5 лет</b></div>
       </div>
       <a class="btn btn-primary btn-lg hc-cta" href="https://contract-pds.gazfond-pn.ru/?u=nakopimillion&amp;utm_source=landing_million&amp;utm_medium=hero&amp;utm_campaign=pds_million_v5" target="_blank" rel="noopener" data-goal="cta_contract" data-pos="hero"><svg class="i"><use href="#i-gov"/></svg>Оформить через Госуслуги</a>
       <button type="button" class="hc-remind" data-remind data-pos="hero"><svg class="i"><use href="#i-bell"/></svg>Не готовы сейчас? <b>Напомнить до 31 декабря</b></button>
@@ -837,7 +858,7 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.08)}
         <span id="hFor">Для 35 лет, женщина</span>
         <a class="link" href="#calc" data-goal="calc_detail_open" data-pos="hero">Настроить подробнее <svg class="i"><use href="#i-chevr"/></svg></a>
       </div>
-      <p class="hc-cav">Предварительный расчёт: доходность 10 % годовых взята для примера, доход не гарантирован.</p>
+      <p class="hc-cav">Предварительный расчёт: доходность 10 % годовых взята для примера, доход не гарантирован.</p>
     </div>
   </div>
 </section>
@@ -847,8 +868,8 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.08)}
   <div class="container">
     <div class="src-head">
       <div class="s-head">
-        <h2 class="t-h2 reveal" id="srcH">Четыре источника.<br>Одна цель.</h2>
-        <p class="t-lead reveal" data-d="1" id="srcLead">При взносе 5 000 ₽ в месяц — к моменту выплат:</p>
+        <h2 class="t-h2 reveal" id="srcH">Четыре источника<br>Одна цель</h2>
+        <p class="t-lead reveal" data-d="1" id="srcLead">При взносе 5 000 ₽ в месяц за 15 лет накопится:</p>
       </div>
       <div class="loop reveal" data-d="1" aria-hidden="true">
         <video class="loop-v" poster="media/hero-loop-poster.webp" autoplay muted loop playsinline preload="auto" disablepictureinpicture><source src="media/hero-loop.webm" type="video/webm"><source src="media/hero-loop.mp4" type="video/mp4"></video>
@@ -858,19 +879,19 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.08)}
     <div class="src-grid">
       <article class="src reveal" style="--c:var(--c-you)">
         <img src="img/src-vznosy.webp" alt="" width="240" height="240" loading="lazy">
-        <div><div class="k">Ваши взносы</div><div class="v num" id="sYou">900 000 ₽</div><p>Любая сумма и любая периодичность. Можно увеличить, уменьшить или пропустить месяц.</p></div>
+        <div><div class="k">Ваши взносы</div><div class="v num" id="sYou">900 000 ₽</div><p>Любая сумма и любая периодичность. Можно увеличить, уменьшить или пропустить месяц.</p></div>
       </article>
       <article class="src reveal" data-d="1" style="--c:var(--c-gov)">
         <img src="img/src-gospodderzhka.webp" alt="" width="240" height="240" loading="lazy">
-        <div><div class="k">Господдержка</div><div class="v num" id="sGov">+ 150 000 ₽</div><p>До 36 000 ₽ в год первые 10 лет. Размер зависит от официального дохода.</p></div>
+        <div><div class="k">Господдержка</div><div class="v num" id="sGov">+ 150 000 ₽</div><p>До 36 000 ₽ в год в первые 10 лет. Размер зависит от официального дохода.</p></div>
       </article>
       <article class="src reveal" style="--c:var(--c-tax)">
         <img src="img/src-vychet.webp" alt="" width="240" height="240" loading="lazy">
-        <div><div class="k">Налоговый вычет</div><div class="v num" id="sTax">+ 117 000 ₽</div><p>13 % от взносов возвращает ФНС по вашему заявлению — вы вносите их обратно на счёт.</p></div>
+        <div><div class="k">Налоговый вычет</div><div class="v num" id="sTax">+ 117 000 ₽</div><p>От 13 до 22 % от взносов, в зависимости от вашей ставки НДФЛ. Возвращает ФНС по заявлению, а вы можете внести эти деньги на счёт. В расчёте взято 13 %.</p></div>
       </article>
       <article class="src reveal" data-d="1" style="--c:var(--c-fund)">
         <img src="img/src-dohod.webp" alt="" width="240" height="240" loading="lazy">
-        <div><div class="k">Доход фонда</div><div class="v num" id="sInc">+ 1 400 000 ₽</div><p>Фонд инвестирует средства и каждый год начисляет доход на счёт.</p></div>
+        <div><div class="k">Доход фонда</div><div class="v num" id="sInc">+ 1 400 000 ₽</div><p>Фонд инвестирует средства и по итогам года распределяет доход по счетам. Размер дохода не гарантирован.</p></div>
       </article>
     </div>
     <div class="src-foot reveal">
@@ -888,8 +909,8 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.08)}
       <img src="img/ops-transfer.webp" alt="" width="560" height="459" loading="lazy">
       <div class="ops-txt">
         <span class="t-eyebrow" style="color:var(--accent)">Для клиентов фонда</span>
-        <h2 class="t-h3" id="opsH">Уже копите в ГАЗФОНД? Начните не с нуля.</h2>
-        <p>Пенсионные накопления (ОПС) можно перевести в программу долгосрочных сбережений — они станут вашим стартовым взносом и будут работать вместе с новыми взносами и господдержкой.</p>
+        <h2 class="t-h3" id="opsH">Уже копите в ГАЗФОНД?<br>Начните не с нуля</h2>
+        <p>Пенсионные накопления (ОПС) можно перевести в программу долгосрочных сбережений. Они будут учтены как ваш взнос и продолжат работать вместе с новыми взносами.</p>
         <div class="ops-btns">
           <a class="btn btn-primary" href="https://contract-pds.gazfond-pn.ru/?u=nakopimillion&amp;utm_source=landing_million&amp;utm_medium=ops&amp;utm_campaign=pds_million_v5" target="_blank" rel="noopener" data-goal="cta_contract" data-pos="ops"><svg class="i"><use href="#i-gov"/></svg>Оформить через Госуслуги</a>
           <a class="link" href="tel:88007007550" data-goal="call" data-pos="ops"><svg class="i"><use href="#i-phone"/></svg>Уточнить условия перевода</a>
@@ -903,8 +924,8 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.08)}
 <section class="section tint" id="calc" aria-labelledby="calcH">
   <div class="container">
     <div class="s-head">
-      <h2 class="t-h2 reveal" id="calcH">Подробный расчёт.</h2>
-      <p class="t-lead reveal" data-d="1">Укажите возраст, доход и цель — покажем, когда на счёте будет цель и когда деньги можно получить.</p>
+      <h2 class="t-h2 reveal" id="calcH">Подробный расчёт</h2>
+      <p class="t-lead reveal" data-d="1">Укажите возраст, доход и цель. Покажем, когда на счёте будет нужная сумма и когда станут доступны выплаты.</p>
     </div>
     <div class="calc">
      <div class="calc-clip" id="calcClip">
@@ -917,23 +938,23 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.08)}
           </div>
         </div>
         <div class="field" id="fieldMonthly">
-          <div class="lab"><label for="monthly">В месяц</label><output id="monthlyOut" class="num" for="monthly">5 000 ₽</output></div>
+          <div class="lab"><label for="monthly">В месяц</label><output id="monthlyOut" class="num" for="monthly">5 000 ₽</output></div>
           <div class="seg" id="presetSeg" role="group" aria-label="Быстрый выбор взноса">
-            <button type="button" data-v="2000">2 000</button>
-            <button type="button" data-v="3000">3 000</button>
-            <button type="button" data-v="5000" aria-pressed="true">5 000</button>
-            <button type="button" data-v="10000">10 000</button>
-            <button type="button" data-v="15000">15 000</button>
+            <button type="button" data-v="2000">2 000</button>
+            <button type="button" data-v="3000">3 000</button>
+            <button type="button" data-v="5000" aria-pressed="true">5 000</button>
+            <button type="button" data-v="10000">10 000</button>
+            <button type="button" data-v="15000">15 000</button>
           </div>
           <input type="range" id="monthly" min="1000" max="50000" step="500" value="5000" aria-label="Ежемесячный взнос, рублей">
-          <div class="range-ticks num"><span>1 000 ₽</span><span>25 000 ₽</span><span>50 000 ₽</span></div>
+          <div class="range-ticks num"><span>1 000 ₽</span><span>25 000 ₽</span><span>50 000 ₽</span></div>
           <label class="numin"><span>Своя сумма</span><input type="number" id="monthlyNum" min="500" max="500000" step="100" value="5000" inputmode="numeric" aria-label="Своя сумма взноса в месяц"><span>₽</span></label>
         </div>
         <div class="field" id="fieldTerm" hidden>
           <div class="lab"><label for="years">Хочу накопить за</label><output id="yearsOut" class="num" for="years">5 лет</output></div>
           <input type="range" id="years" min="2" max="15" step="1" value="5" aria-label="Срок накопления, лет">
           <div class="range-ticks num"><span>2 года</span><span>8 лет</span><span>15 лет</span></div>
-          <p class="daily num" id="needOut">Нужно около 9 600 ₽ в месяц</p>
+          <p class="daily num" id="needOut">Нужно около 9 600 ₽ в месяц</p>
         </div>
         <div class="field">
           <div class="lab"><label for="age">Ваш возраст</label><output id="ageOut" class="num" for="age">35 лет</output></div>
@@ -942,7 +963,7 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.08)}
             <button type="button" data-sex="f" aria-pressed="true">Женщина</button>
             <button type="button" data-sex="m" aria-pressed="false">Мужчина</button>
           </div>
-          <p class="hint">Нужны только чтобы посчитать, когда откроются выплаты.</p>
+          <p class="hint">Нужны только для того, чтобы посчитать, когда станут доступны выплаты.</p>
         </div>
         <div class="field">
           <div class="lab"><span>Официальный доход в месяц</span></div>
@@ -951,10 +972,10 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.08)}
             <button type="button" data-k="0.5">80–150 тыс.</button>
             <button type="button" data-k="0.25" aria-pressed="true">150 тыс. +</button>
           </div>
-          <p class="hint">До 80 тыс. — государство добавляет рубль на рубль; 80–150 тыс. — рубль на два; свыше — рубль на четыре. Не более 36 000 ₽ в год, первые 10 лет.</p>
+          <p class="hint">При доходе до 80 тыс. государство добавляет рубль на рубль, от 80 до 150 тыс. рубль на два, выше 150 тыс. рубль на четыре. Не более 36 000 ₽ в год, в первые 10 лет.</p>
         </div>
         <div class="field">
-          <div class="lab"><span>Цель</span><output id="goalOut" class="num">1 000 000 ₽</output></div>
+          <div class="lab"><span>Цель</span><output id="goalOut" class="num">1 000 000 ₽</output></div>
           <div class="seg" id="goalSeg" role="group" aria-label="Сумма цели">
             <button type="button" data-v="500000">500 тыс.</button>
             <button type="button" data-v="1000000" aria-pressed="true">1 млн</button>
@@ -967,13 +988,13 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.08)}
           <div class="lab"><span>Стартовый взнос</span><output id="firstOut" class="num">без стартового</output></div>
           <div class="seg" id="firstSeg" role="group" aria-label="Стартовый взнос">
             <button type="button" data-v="0" aria-pressed="true">Нет</button>
-            <button type="button" data-v="10000">10 000</button>
-            <button type="button" data-v="50000">50 000</button>
-            <button type="button" data-v="100000">100 000</button>
+            <button type="button" data-v="10000">10 000</button>
+            <button type="button" data-v="50000">50 000</button>
+            <button type="button" data-v="100000">100 000</button>
           </div>
         </div>
         <label class="toggle">
-          <span class="tt">Возвращать налог на счёт<small>Вычет вы оформляете сами в ФНС и решаете, вносить ли его на счёт.</small></span>
+          <span class="tt">Возвращать налог на счёт<small>Вычет вы оформляете сами в ФНС и решаете, вносить ли его на счёт. В расчёте взято 13 %.</small></span>
           <input type="checkbox" id="reinvest" checked><span class="sw" aria-hidden="true"></span>
         </label>
         <button type="button" class="btn btn-primary btn-lg calc-go m-only" id="calcGo">Показать результат</button>
@@ -988,7 +1009,7 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.08)}
             <div class="s" id="paySub">через 15 лет действия договора</div>
           </div>
           <div class="res-card">
-            <div class="l" id="resLabel">Когда на счёте будет 1 000 000 ₽</div>
+            <div class="l" id="resLabel">Когда на счёте будет 1 000 000 ₽</div>
             <div class="v num" id="termOut">около 8 лет</div>
             <div class="s" id="termSub">ориентир</div>
           </div>
@@ -1001,19 +1022,19 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.08)}
         </div>
         <div class="bd-head" id="bdHead">Из чего складывается сумма</div>
         <div class="breakdown num">
-          <div class="bd" style="--c:var(--c-you)"><div class="l">Ваши взносы</div><div class="v" id="bContrib">0 ₽</div></div>
-          <div class="bd" style="--c:var(--c-gov)"><div class="l">Господдержка</div><div class="v" id="bCofin">0 ₽</div></div>
-          <div class="bd" style="--c:var(--c-tax)"><div class="l">Возвращённый вами налог</div><div class="v" id="bDed">0 ₽</div></div>
-          <div class="bd" style="--c:var(--c-fund)"><div class="l">Доход фонда, прогноз</div><div class="v" id="bInc">0 ₽</div></div>
+          <div class="bd" style="--c:var(--c-you)"><div class="l">Ваши взносы</div><div class="v" id="bContrib">0 ₽</div></div>
+          <div class="bd" style="--c:var(--c-gov)"><div class="l">Господдержка</div><div class="v" id="bCofin">0 ₽</div></div>
+          <div class="bd" style="--c:var(--c-tax)"><div class="l">Возвращённый вами налог</div><div class="v" id="bDed">0 ₽</div></div>
+          <div class="bd" style="--c:var(--c-fund)"><div class="l">Доход фонда, прогноз</div><div class="v" id="bInc">0 ₽</div></div>
         </div>
-        <div class="autopay"><svg class="i"><use href="#i-auto"/></svg><span>При оформлении подключите <b>автоплатёж на <span class="num" id="apSum">5 000 ₽</span> в месяц</b> — взносы будут приходить сами, план выполнится без усилий.</span></div>
-        <p class="hc-cav">Предварительный расчёт: доходность 10 % годовых взята для примера, доход не гарантирован. Подробные условия — внизу страницы.</p>
+        <div class="autopay"><svg class="i"><use href="#i-auto"/></svg><span>Регулярные взносы удобно делать <b>автоплатежом на <span class="num" id="apSum">5 000 ₽</span> в месяц</b>: не нужно помнить о переводе каждый месяц.</span></div>
+        <p class="hc-cav">Предварительный расчёт: доходность 10 % годовых взята для примера, доход не гарантирован. Подробные условия внизу страницы.</p>
         <div class="res-cta">
           <a class="btn btn-primary btn-lg" href="https://contract-pds.gazfond-pn.ru/?u=nakopimillion&amp;utm_source=landing_million&amp;utm_medium=calc&amp;utm_campaign=pds_million_v5" target="_blank" rel="noopener" data-goal="cta_contract" data-pos="calc"><svg class="i"><use href="#i-gov"/></svg>Оформить через Госуслуги</a>
         </div>
         <div class="later">
           <button type="button" class="hc-remind" data-remind data-pos="calc"><svg class="i"><use href="#i-bell"/></svg>Не готовы сейчас? <b>Напомнить до 31 декабря</b></button>
-          <button type="button" class="chip-btn" data-share data-pos="calc"><svg class="i"><use href="#i-share"/></svg>Отправить план себе</button>
+          <button type="button" class="chip-btn" data-pdf data-pos="calc"><svg class="i"><use href="#i-doc"/></svg><span>Скачать план в PDF</span></button>
         </div>
       </div>
       </div>
@@ -1026,18 +1047,18 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.08)}
 <section class="section" id="trust" aria-labelledby="trustH">
   <div class="container">
     <div class="s-head">
-      <h2 class="t-h2 reveal" id="trustH">Надёжность —<br>в документах.</h2>
+      <h2 class="t-h2 reveal" id="trustH">Надёжность<br>в документах</h2>
     </div>
     <div class="trust-grid">
       <div class="tr big reveal">
         <img class="tr-shield" src="img/shield.webp" alt="" width="320" height="359" loading="lazy" aria-hidden="true">
-        <img src="img/badge-asv.webp" alt="Долгосрочные сбережения гарантированы — Агентство по страхованию вкладов" width="111" height="111" loading="lazy">
+        <img src="img/badge-asv.webp" alt="Долгосрочные сбережения гарантированы Агентством по страхованию вкладов" width="111" height="111" loading="lazy">
         <div><div class="v num">до 2,8 млн ₽</div><p>Взносы и начисленный доход застрахованы государством в лице Агентства по страхованию вкладов.</p></div>
       </div>
       <div class="tr reveal" data-d="1"><div class="v num">№ 430</div><p>Бессрочная лицензия Банка России с 2014 года</p></div>
       <div class="tr reveal" data-d="2"><div class="v num">6,7 млн</div><p>клиентов доверяют фонду свои накопления</p></div>
       <div class="tr reveal"><div class="v sm">«Финансовая элита России»</div><p>премия 2025 года</p></div>
-      <div class="tr reveal" data-d="1"><div class="v">Госуслуги</div><p>Договор онлайн через подтверждённую учётную запись — без визита в офис</p></div>
+      <div class="tr reveal" data-d="1"><div class="v">Госуслуги</div><p>Договор онлайн через подтверждённую учётную запись, без визита в офис</p></div>
       <!-- TODO: сюда — реальная доходность фонда за прошлые годы (с обязательной оговоркой) и 2–3 отзыва клиентов ПДС с именем и фото. Данные нужно получить у фонда — выдумывать нельзя. -->
     </div>
   </div>
@@ -1050,17 +1071,17 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.08)}
       <div class="go-left">
         <div>
           <span class="t-eyebrow">Ваш план</span>
-          <h2 class="t-h3" id="goH" style="margin-top:.5rem">Оформите договор онлайн через Госуслуги.</h2>
+          <h2 class="t-h3" id="goH" style="margin-top:.5rem">Оформите договор онлайн через Госуслуги</h2>
         </div>
         <div class="plan-sum num" id="goPlan">
-          <div class="ps-row"><span>В месяц</span><b id="gpMonthly">5 000 ₽</b></div>
-          <div class="ps-row"><span id="gpPayL">К открытию выплат</span><b id="gpValue">≈ 2 610 430 ₽</b></div>
-          <div class="ps-row"><span>Выплаты доступны</span><b id="gpPay">с 2041 года</b></div>
+          <div class="ps-row"><span>В месяц</span><b id="gpMonthly">5 000 ₽</b></div>
+          <div class="ps-row"><span id="gpPayL">На счёте через 15 лет</span><b id="gpValue">≈ 2 610 430 ₽</b></div>
+          <div class="ps-row"><span id="gpGoalL">1 000 000 ₽ на счёте</span><b id="gpPay">около 8,5 лет</b></div>
           <div class="bar4" aria-hidden="true"><i id="gpB1"></i><i id="gpB2"></i><i id="gpB3"></i><i id="gpB4"></i></div>
         </div>
-        <div class="deadline sm"><img class="dl-ic" src="img/hourglass.webp" alt="" width="96" height="178" aria-hidden="true"><span><b>До 31 декабря</b> — чтобы получить господдержку и вычет за <span class="yr">2026</span> год. <span class="dl-left">Осталось 97 дней.</span></span></div>
+        <div class="deadline sm"><img class="dl-ic" src="img/hourglass.webp" alt="" width="96" height="178" aria-hidden="true"><span><b>Успейте до 31 декабря</b>, чтобы получить право на господдержку и вычет за <span class="yr">2026</span> год.<span class="cd" aria-label="До конца года"><span class="cd-l">До конца года</span><b class="cd-d">97</b><i>дн</i><b class="cd-h">00</b><i>ч</i><b class="cd-m">00</b><i>мин</i><b class="cd-s">00</b><i>с</i></span></span></div>
         <a class="btn btn-primary go-btn" id="goBtn" href="https://contract-pds.gazfond-pn.ru/?u=nakopimillion&amp;utm_source=landing_million&amp;utm_medium=go&amp;utm_campaign=pds_million_v5" target="_blank" rel="noopener" data-goal="cta_contract" data-pos="go"><svg class="i gov"><use href="#i-gov"/></svg>Оформить через Госуслуги</a>
-        <div class="go-under"><span>Понадобятся паспорт, СНИЛС и вход в Госуслуги. Автоплатёж можно подключить при оформлении.</span><a href="https://contract-pds.gazfond-pn.ru/?u=nakopimillion&amp;utm_source=landing_million&amp;utm_medium=manual&amp;utm_campaign=pds_million_v5" target="_blank" rel="noopener" data-goal="cta_contract" data-pos="manual">Нет Госуслуг? Заполнить вручную</a></div>
+        <div class="go-under"><span>Понадобятся паспорт, СНИЛС и вход в Госуслуги.</span><a href="https://contract-pds.gazfond-pn.ru/?u=nakopimillion&amp;utm_source=landing_million&amp;utm_medium=manual&amp;utm_campaign=pds_million_v5" target="_blank" rel="noopener" data-goal="cta_contract" data-pos="manual">Нет Госуслуг? Заполнить вручную</a></div>
       </div>
       <div class="go-right">
         <div class="next-label"><svg class="i"><use href="#i-eye"/></svg>Так выглядит следующий экран</div>
@@ -1077,14 +1098,14 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.08)}
           <span class="mock-cta">Открыть эту страницу <svg class="i"><use href="#i-chevr"/></svg></span>
         </a>
         <ol class="go-steps">
-          <li><b>1</b><span>Нажмите «Оформить через Госуслуги» и войдите — данные подставятся сами</span></li>
+          <li><b>1</b><span>Нажмите «Оформить через Госуслуги» и войдите, часть данных подставится автоматически</span></li>
           <li><b>2</b><span>Проверьте анкету и поставьте согласие</span></li>
-          <li><b>3</b><span>Сделайте первый взнос и подключите автоплатёж</span></li>
+          <li><b>3</b><span>Сделайте первый взнос. Дальнейшие взносы удобно делать автоплатежом</span></li>
         </ol>
         <a class="btn btn-primary go-btn m-only" href="https://contract-pds.gazfond-pn.ru/?u=nakopimillion&amp;utm_source=landing_million&amp;utm_medium=go_bottom&amp;utm_campaign=pds_million_v5" target="_blank" rel="noopener" data-goal="cta_contract" data-pos="go_bottom"><svg class="i gov"><use href="#i-gov"/></svg>Оформить через Госуслуги</a>
         <div class="later center">
           <button type="button" class="hc-remind" data-remind data-pos="go"><svg class="i"><use href="#i-bell"/></svg>Не готовы сейчас? <b>Напомнить до 31 декабря</b></button>
-          <button type="button" class="chip-btn" data-share data-pos="go"><svg class="i"><use href="#i-share"/></svg>Отправить план себе</button>
+          <button type="button" class="chip-btn" data-pdf data-pos="go"><svg class="i"><use href="#i-doc"/></svg><span>Скачать план в PDF</span></button>
         </div>
       </div>
     </div>
@@ -1095,15 +1116,15 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.08)}
 <section class="section" id="conditions" aria-labelledby="condH">
   <div class="container">
     <div class="s-head">
-      <h2 class="t-h2 reveal" id="condH">Условия — коротко.</h2>
+      <h2 class="t-h2 reveal" id="condH">Коротко об условиях</h2>
     </div>
     <div class="tiles">
-      <article class="tile reveal"><span class="ic"><svg class="i"><use href="#i-auto"/></svg></span><h3 class="t-h4">Взносы можно менять</h3><p>Увеличить, уменьшить, <b>пропустить месяц</b> — обязательных платежей нет. Господдержка начисляется за годы, когда взносы составили от 2 000 ₽.</p></article>
-      <article class="tile reveal" data-d="1"><span class="ic"><svg class="i"><use href="#i-hand"/></svg></span><h3 class="t-h4">Особые жизненные ситуации</h3><p>При дорогостоящем лечении или потере кормильца можно получить <b>до 100 % средств</b> без потери господдержки и дохода.</p></article>
-      <article class="tile reveal" data-d="2"><span class="ic"><svg class="i"><use href="#i-cal"/></svg></span><h3 class="t-h4">Когда доступны выплаты</h3><p>Через <b>15 лет</b> договора либо с <b>55 лет</b> женщинам и <b>60 лет</b> мужчинам — что наступит раньше. До этого деньги продолжают расти.</p></article>
-      <article class="tile reveal"><span class="ic"><svg class="i"><use href="#i-pct"/></svg></span><h3 class="t-h4">Вычет — по вашему заявлению</h3><p>13 % от взносов (не более 400 000 ₽ в год) возвращает ФНС. Фонд эту сумму не начисляет — вы решаете, вносить ли её на счёт.</p></article>
-      <article class="tile reveal" data-d="1"><span class="ic"><svg class="i"><use href="#i-shield"/></svg></span><h3 class="t-h4">Средства наследуются</h3><p>Если с вкладчиком что-то случится, накопления получат правопреемники — по договору или по закону.</p></article>
-      <article class="tile reveal" data-d="2"><span class="ic"><svg class="i"><use href="#i-clock"/></svg></span><h3 class="t-h4">Досрочное расторжение</h3><p>Возможно в любой момент. Тогда выплачивается выкупная сумма — она может быть меньше внесённого, а господдержка и налоговые льготы теряются.</p></article>
+      <article class="tile reveal"><span class="ic"><svg class="i"><use href="#i-auto"/></svg></span><h3 class="t-h4">Взносы можно менять</h3><p>Увеличить, уменьшить, <b>пропустить месяц</b>. Обязательных платежей нет. Господдержка начисляется за годы, когда взносы составили от 2 000 ₽.</p></article>
+      <article class="tile reveal" data-d="1"><span class="ic"><svg class="i"><use href="#i-hand"/></svg></span><h3 class="t-h4">Особые жизненные ситуации</h3><p>При дорогостоящем лечении или потере кормильца можно получить <b>до 100 % средств</b> без потери господдержки и дохода.</p></article>
+      <article class="tile reveal" data-d="2"><span class="ic"><svg class="i"><use href="#i-cal"/></svg></span><h3 class="t-h4">Когда доступны выплаты</h3><p>Через <b>15 лет</b> договора либо с <b>55 лет</b> женщинам и <b>60 лет</b> мужчинам, в зависимости от того, что наступит раньше. До этого деньги остаются на счёте.</p></article>
+      <article class="tile reveal"><span class="ic"><svg class="i"><use href="#i-pct"/></svg></span><h3 class="t-h4">Вычет по вашему заявлению</h3><p>От 13 до 22 % от взносов, в зависимости от ставки НДФЛ, но не более чем с 400 000 ₽ в год. Возвращает ФНС. Фонд эту сумму не начисляет, вы сами решаете, вносить ли её на счёт.</p></article>
+      <article class="tile reveal" data-d="1"><span class="ic"><svg class="i"><use href="#i-shield"/></svg></span><h3 class="t-h4">Средства наследуются</h3><p>Если с вкладчиком что-то случится, накопления получат правопреемники по договору или по закону.</p></article>
+      <article class="tile reveal" data-d="2"><span class="ic"><svg class="i"><use href="#i-clock"/></svg></span><h3 class="t-h4">Досрочное расторжение</h3><p>Возможно в любой момент. Тогда выплачивается выкупная сумма. Она может быть меньше внесённого, а господдержка и налоговые льготы теряются.</p></article>
     </div>
   </div>
 </section>
@@ -1111,16 +1132,16 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.08)}
 <!-- ===================== FAQ ===================== -->
 <section class="section tint" id="faq" aria-labelledby="faqH">
   <div class="container faq">
-    <div><h2 class="t-h2 reveal" id="faqH">Вопросы<br>и ответы.</h2></div>
+    <div><h2 class="t-h2 reveal" id="faqH">Вопросы<br>и ответы</h2></div>
     <div class="faq-list">
-      <details class="qa"><summary>Что такое ПДС?<span class="pm" aria-hidden="true"></span></summary><div class="ans">Программа долгосрочных сбережений — государственный сберегательный инструмент, запущенный Минфином и Банком России в 2024 году. Вы делаете взносы, государство добавляет софинансирование, фонд начисляет доход, а взносы дают право на налоговый вычет.</div></details>
-      <details class="qa"><summary>Почему важно успеть до 31 декабря?<span class="pm" aria-hidden="true"></span></summary><div class="ans">Господдержка и налоговый вычет считаются по календарному году. Чтобы получить господдержку за <span class="yr">2026</span> год, взносы в этом году должны составить не менее 2 000 ₽ — государство перечислит её в следующем году. Вычет за <span class="yr">2026</span> год тоже считается от взносов, сделанных до 31 декабря.</div></details>
-      <details class="qa"><summary>Можно ли перевести пенсионные накопления (ОПС) в ПДС?<span class="pm" aria-hidden="true"></span></summary><div class="ans">Да, накопления обязательного пенсионного страхования можно перевести в программу долгосрочных сбережений — они будут учтены как ваш взнос. Условия и порядок перевода уточните у специалистов фонда по телефону 8 800 700 75 50.</div></details>
-      <details class="qa"><summary>Когда можно забрать деньги?<span class="pm" aria-hidden="true"></span></summary><div class="ans">По общему правилу — через 15 лет действия договора либо с 55 лет (женщины) и 60 лет (мужчины). В особых жизненных ситуациях (дорогостоящее лечение, потеря кормильца) — до 100 % средств без потери условий. При досрочном расторжении выплачивается выкупная сумма, которая может быть меньше взносов; теряются льготы и господдержка. <b>Накопление суммы на счёте и право на выплату — разные события</b>: миллион может появиться на счёте раньше, чем откроется доступ к выплатам.</div></details>
-      <details class="qa"><summary>Обязательно ли вносить одну и ту же сумму каждый месяц?<span class="pm" aria-hidden="true"></span></summary><div class="ans">Нет. Размер и периодичность взносов вы определяете сами: можно увеличить, уменьшить или пропустить месяц — договор от этого не расторгается. Господдержка начисляется за те годы, в которых взносы составили не менее 2 000 ₽. Автоплатёж — удобный, но необязательный способ.</div></details>
-      <details class="qa"><summary>Как считается господдержка?<span class="pm" aria-hidden="true"></span></summary><div class="ans">До 36 000 ₽ в год первые 10 лет при взносах от 2 000 ₽ в год. Доход до 80 000 ₽ в месяц — рубль на рубль; 80 000–150 000 ₽ — рубль на два; свыше — рубль на четыре. Зачисляется в году, следующем за годом взносов; размер определяет администратор по данным ФНС.</div></details>
-      <details class="qa"><summary>Налоговый вычет приходит на счёт сам?<span class="pm" aria-hidden="true"></span></summary><div class="ans">Нет. Вычет — 13 % от взносов (не более 400 000 ₽ в год) — возвращает ФНС по вашему заявлению на ваш банковский счёт. Фонд эту сумму не начисляет. В расчёте на странице мы предполагаем, что вы вносите возвращённый налог обратно на счёт ПДС — это можно отключить в подробном расчёте.</div></details>
-      <details class="qa"><summary>Откуда доход и гарантирован ли он?<span class="pm" aria-hidden="true"></span></summary><div class="ans">Фонд размещает средства в облигации, акции и другие разрешённые инструменты и по итогам года распределяет доход по счетам. Доход не гарантирован, может увеличиваться и уменьшаться; результаты прошлого не определяют будущие. Ставка 10 % на этой странице — только для наглядности.</div></details>
+      <details class="qa"><summary>Что такое ПДС?<span class="pm" aria-hidden="true"></span></summary><div class="ans">Программа долгосрочных сбережений (ПДС) это государственный сберегательный инструмент, запущенный Минфином и Банком России в 2024 году. Вы делаете взносы, государство добавляет софинансирование, фонд начисляет доход, а взносы дают право на налоговый вычет.</div></details>
+      <details class="qa"><summary>Почему важно успеть до 31 декабря?<span class="pm" aria-hidden="true"></span></summary><div class="ans">Господдержка и налоговый вычет считаются по календарному году. Чтобы получить господдержку за <span class="yr">2026</span> год, взносы в этом году должны составить не менее 2 000 ₽. Государство перечислит её в следующем году. Вычет за <span class="yr">2026</span> год тоже считается от взносов, сделанных до 31 декабря.</div></details>
+      <details class="qa"><summary>Можно ли перевести пенсионные накопления (ОПС) в ПДС?<span class="pm" aria-hidden="true"></span></summary><div class="ans">Да, накопления обязательного пенсионного страхования можно перевести в программу долгосрочных сбережений, они будут учтены как ваш взнос. Условия и порядок перевода уточните у специалистов фонда по телефону 8 800 700 75 50.</div></details>
+      <details class="qa"><summary>Когда можно забрать деньги?<span class="pm" aria-hidden="true"></span></summary><div class="ans">По общему правилу через 15 лет действия договора либо с 55 лет (женщины) и 60 лет (мужчины). В особых жизненных ситуациях (дорогостоящее лечение, потеря кормильца) можно получить до 100 % средств без потери условий. При досрочном расторжении выплачивается выкупная сумма, которая может быть меньше взносов; теряются льготы и господдержка. <b>Накопление суммы на счёте и право на выплату это разные события</b>: миллион может появиться на счёте раньше, чем откроется доступ к выплатам.</div></details>
+      <details class="qa"><summary>Обязательно ли вносить одну и ту же сумму каждый месяц?<span class="pm" aria-hidden="true"></span></summary><div class="ans">Нет. Размер и периодичность взносов вы определяете сами: можно увеличить, уменьшить или пропустить месяц. Договор от этого не расторгается. Господдержка начисляется за те годы, в которых взносы составили не менее 2 000 ₽. Автоплатёж удобен, но не обязателен.</div></details>
+      <details class="qa"><summary>Как считается господдержка?<span class="pm" aria-hidden="true"></span></summary><div class="ans">До 36 000 ₽ в год первые 10 лет при взносах от 2 000 ₽ в год. При доходе до 80 000 ₽ в месяц рубль на рубль, от 80 000 до 150 000 ₽ рубль на два, выше рубль на четыре. Зачисляется в году, следующем за годом взносов; размер определяет администратор по данным ФНС.</div></details>
+      <details class="qa"><summary>Налоговый вычет приходит на счёт сам?<span class="pm" aria-hidden="true"></span></summary><div class="ans">Нет. Вычет возвращает ФНС по вашему заявлению на ваш банковский счёт. Это от 13 до 22 % от взносов, в зависимости от ставки НДФЛ, но не более чем с 400 000 ₽ взносов в год. Фонд эту сумму не начисляет. В расчёте на странице мы берём 13 % и предполагаем, что вы вносите возвращённый налог на счёт ПДС. Это можно отключить в подробном расчёте.</div></details>
+      <details class="qa"><summary>Откуда доход и гарантирован ли он?<span class="pm" aria-hidden="true"></span></summary><div class="ans">Фонд размещает средства в облигации, акции и другие разрешённые инструменты и по итогам года распределяет доход по счетам. Доход не гарантирован, может увеличиваться и уменьшаться; результаты прошлого не определяют будущие. Ставка 10 % на этой странице взята только для наглядности.</div></details>
       <details class="qa"><summary>Насколько защищены сбережения?<span class="pm" aria-hidden="true"></span></summary><div class="ans">Средства застрахованы государством в лице АСВ на сумму до 2,8 млн ₽. В случае смерти вкладчика выплачиваются правопреемникам по договору или по закону (кроме случая назначенной пожизненной выплаты).</div></details>
     </div>
   </div>
@@ -1134,15 +1155,15 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.08)}
         <img class="l-light" src="img/logo-blue.webp" alt="ГАЗФОНД пенсионные накопления" width="59" height="34">
         <img class="l-dark" src="img/logo-white.webp" alt="" width="59" height="34">
       </a>
-      <a class="f-call" href="tel:88007007550" data-goal="call" data-pos="footer">8 800 700 75 50<small>Звонок по России бесплатный</small></a>
+      <a class="f-call" href="tel:88007007550" data-goal="call" data-pos="footer">8 800 700 75 50<small>Звонок по России бесплатный</small></a>
       <div class="f-asv"><img src="img/badge-asv.webp" alt="" width="111" height="111" loading="lazy"><span>Долгосрочные сбережения<br>гарантированы АСВ</span></div>
     </div>
     <h4 class="legal-h">Условия расчёта и правовая информация</h4>
-    <p><b>Все расчёты на странице — предварительные, не являются гарантией дохода.</b> Ставка 10 % годовых взята для примера — доход фонда не гарантирован. Господдержка — до 36 000 ₽ в год первые 10 лет при взносах от 2 000 ₽ в год, размер зависит от официального дохода. Налоговый вычет фонд не начисляет: вы возвращаете 13 % через ФНС сами и при желании вносите на счёт. Сравнение в подробном расчёте — с копилкой без процентов: те же взносы без господдержки, вычета и дохода.</p>
-    <p>¹ Государственная поддержка предоставляется при соблюдении условий, установленных Федеральным законом от 07.05.1998 № 75-ФЗ «О негосударственных пенсионных фондах»: при уплате сберегательных взносов от 2 000 ₽ в год, в течение первых 10 лет уплаты взносов; максимальный размер — 36 000 ₽ в год. Размер дополнительных стимулирующих взносов определяется администратором софинансирования на основании данных ФНС России о среднемесячном доходе вкладчика.</p>
-    <p>² Возможно увеличение или уменьшение дохода от размещения пенсионных резервов. Результаты инвестирования в прошлом не определяют доходов в будущем. Государство не гарантирует доходности размещения пенсионных резервов. В расчётах использована ставка 10 % годовых исключительно для наглядности примеров; она не является прогнозом результатов инвестиционной деятельности фонда.</p>
-    <p>³ Налоговый вычет предоставляется с суммы уплаченных сберегательных взносов (не более 400 000 ₽ в год) по применимой ставке НДФЛ; для получения вычета необходимо обратиться в налоговый орган. Полученную сумму вы можете самостоятельно внести на счёт.</p>
-    <p>Выплаты по договору долгосрочных сбережений назначаются при наступлении оснований, установленных законодательством и договором: по общему правилу — через 15 лет действия договора либо по достижении возраста 55 лет (для женщин) и 60 лет (для мужчин), а также в особых жизненных ситуациях. При досрочном расторжении договора выплачивается выкупная сумма, размер которой определяется договором и может быть меньше суммы уплаченных взносов; также могут быть утрачены налоговые льготы и право на государственную поддержку. Средства застрахованы государством в лице Агентства по страхованию вкладов на сумму до 2,8 млн ₽.</p>
+    <p><b>Все расчёты на странице предварительные и не являются гарантией дохода.</b> Ставка 10 % годовых взята для примера, доход фонда не гарантирован. Господдержка составляет до 36 000 ₽ в год в первые 10 лет при взносах от 2 000 ₽ в год, размер зависит от официального дохода. Налоговый вычет фонд не начисляет: вы возвращаете от 13 до 22 % через ФНС сами и при желании вносите на счёт. В расчётах взято 13 %. Сравнение в подробном расчёте идёт с копилкой без процентов: те же взносы без господдержки, вычета и дохода.</p>
+    <p>¹ Государственная поддержка предоставляется при соблюдении условий, установленных Федеральным законом от 07.05.1998 № 75-ФЗ «О негосударственных пенсионных фондах»: при уплате сберегательных взносов от 2 000 ₽ в год, в течение первых 10 лет уплаты взносов; максимальный размер составляет 36 000 ₽ в год. Размер дополнительных стимулирующих взносов определяется администратором софинансирования на основании данных ФНС России о среднемесячном доходе вкладчика.</p>
+    <p>² Возможно увеличение или уменьшение дохода от размещения пенсионных резервов. Результаты инвестирования в прошлом не определяют доходов в будущем. Государство не гарантирует доходности размещения пенсионных резервов. В расчётах использована ставка 10 % годовых исключительно для наглядности примеров; она не является прогнозом результатов инвестиционной деятельности фонда.</p>
+    <p>³ Налоговый вычет предоставляется с суммы уплаченных сберегательных взносов (не более 400 000 ₽ в год) по применимой ставке НДФЛ; для получения вычета необходимо обратиться в налоговый орган. Полученную сумму вы можете самостоятельно внести на счёт.</p>
+    <p>Выплаты по договору долгосрочных сбережений назначаются при наступлении оснований, установленных законодательством и договором: по общему правилу через 15 лет действия договора либо по достижении возраста 55 лет (для женщин) и 60 лет (для мужчин), а также в особых жизненных ситуациях. При досрочном расторжении договора выплачивается выкупная сумма, размер которой определяется договором и может быть меньше суммы уплаченных взносов; также могут быть утрачены налоговые льготы и право на государственную поддержку. Средства застрахованы государством в лице Агентства по страхованию вкладов на сумму до 2,8 млн ₽.</p>
     <p>Информация носит справочный характер, не является офертой, индивидуальной инвестиционной рекомендацией или обещанием доходности. Все расчёты предварительные.</p>
     <div class="made">
       <span>© <span data-year>2026</span>, АО «НПФ ГАЗФОНД пенсионные накопления». Лицензия Банка России № 430 от 30 апреля 2014 г., бессрочная</span>
@@ -1152,18 +1173,18 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.08)}
 </footer>
 
 <div class="mbar" id="mbar" aria-hidden="true">
-  <div class="t"><b class="num" id="mbTitle">≈ 2 610 430 ₽ к 2041</b><span id="mbSub">5 000 ₽ в месяц · до 31 декабря</span></div>
+  <div class="t"><b class="num" id="mbTitle">≈ 2 610 430 ₽ к 2041</b><span id="mbSub">5 000 ₽ в месяц · до 31 декабря</span></div>
   <a class="btn btn-primary btn-sm" id="mbBtn" href="https://contract-pds.gazfond-pn.ru/?u=nakopimillion&amp;utm_source=landing_million&amp;utm_medium=mbar&amp;utm_campaign=pds_million_v5" target="_blank" rel="noopener" tabindex="-1" data-goal="cta_contract" data-pos="mbar">Оформить</a>
 </div>
 <div class="calmenu" id="calmenu" hidden>
   <div class="cm-scrim" data-cm-close></div>
   <div class="cm-panel" role="dialog" aria-modal="true" aria-labelledby="cmTitle">
-    <div class="cm-head"><b id="cmTitle">Куда добавить напоминание?</b><span id="cmWhen">1 декабря, 10:00 — за месяц до конца года</span></div>
+    <div class="cm-head"><b id="cmTitle">Куда добавить напоминание?</b><span id="cmWhen">1 декабря, 10:00, за месяц до конца года</span></div>
     <div class="cm-list" id="cmList">
       <button type="button" class="cm-item" data-cal="apple"><span class="cm-ic" aria-hidden="true"><svg class="i"><use href="#i-cal"/></svg></span><span><b>Календарь iPhone и Mac</b><small>откроется окно «Добавить событие»</small></span></button>
-      <button type="button" class="cm-item" data-cal="google"><span class="cm-ic" aria-hidden="true"><svg class="i"><use href="#i-cal"/></svg></span><span><b>Google Календарь</b><small>Android и браузер — событие уже заполнено</small></span></button>
+      <button type="button" class="cm-item" data-cal="google"><span class="cm-ic" aria-hidden="true"><svg class="i"><use href="#i-cal"/></svg></span><span><b>Google Календарь</b><small>Android и браузер, событие уже заполнено</small></span></button>
       <button type="button" class="cm-item" data-cal="outlook"><span class="cm-ic" aria-hidden="true"><svg class="i"><use href="#i-cal"/></svg></span><span><b>Outlook</b><small>рабочая или личная почта Microsoft</small></span></button>
-      <button type="button" class="cm-item" data-cal="ics"><span class="cm-ic" aria-hidden="true"><svg class="i"><use href="#i-cal"/></svg></span><span><b>Другой календарь</b><small>Яндекс, Mail.ru и другие — файл .ics</small></span></button>
+      <button type="button" class="cm-item" data-cal="ics"><span class="cm-ic" aria-hidden="true"><svg class="i"><use href="#i-cal"/></svg></span><span><b>Другой календарь</b><small>Яндекс, Mail.ru и другие, файл .ics</small></span></button>
     </div>
     <button type="button" class="cm-cancel" data-cm-close>Отмена</button>
   </div>
@@ -1175,7 +1196,7 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.08)}
     <button type="button" class="vm-close" data-close aria-label="Закрыть"><svg class="i"><use href="#i-close"/></svg></button>
     <video class="vm-video" id="vmVideo" controls playsinline preload="none"></video>
     <div class="vm-foot">
-      <span>Пример для 5 000 ₽ в месяц. Предварительный расчёт.</span>
+      <span>Пример для 5 000 ₽ в месяц. Предварительный расчёт.</span>
       <a class="btn btn-primary btn-sm" href="https://contract-pds.gazfond-pn.ru/?u=nakopimillion&amp;utm_source=landing_million&amp;utm_medium=video&amp;utm_campaign=pds_million_v5" target="_blank" rel="noopener" data-goal="cta_contract" data-pos="video">Оформить через Госуслуги</a>
     </div>
   </div>
@@ -1238,6 +1259,8 @@ if (typeof module !== "undefined" && module.exports) module.exports = CALC;
   function plural(n, f) { var a = Math.abs(n) % 100, b = a % 10; if (a > 10 && a < 20) return f[2]; if (b > 1 && b < 5) return f[1]; if (b === 1) return f[0]; return f[2]; }
   function halfYears(months) { var h = Math.round(months / 6) / 2, whole = h === Math.floor(h), n = Math.floor(h); var word = whole ? plural(h, ["год", "года", "лет"]) : ((n % 10 >= 1 && n % 10 <= 4 && !(n % 100 >= 11 && n % 100 <= 14)) ? "года" : "лет"); return (whole ? h : String(h).replace(".", ",")) + " " + word; }
   function approx(months) { if (months == null) return "более 40 лет"; if (months < 12) return "около " + months + " " + plural(months, ["месяца", "месяцев", "месяцев"]); var h = Math.round(months / 6) / 2, whole = h === Math.floor(h); var word = (whole && h % 10 === 1 && h % 100 !== 11) ? "года" : "лет"; return "около " + (whole ? h : String(h).replace(".", ",")) + " " + word; }
+  /* «через 15 лет», «через 10 лет», «через 1 год»: округление до целых лет для всех блоков, кроме подробного расчёта */
+  function yearsTxt(months) { var y = Math.max(1, Math.round(months / 12)); return "через " + y + " " + plural(y, ["год", "года", "лет"]); }
   function termRound(months) { if (months == null) return "более 40 лет"; if (months < 12) return months + " " + plural(months, ["месяц", "месяца", "месяцев"]); return (months % 6 === 0 ? "" : "≈ ") + halfYears(months); }
   var MONTHS_N = ["январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"];
   var MONTHS_P = ["январе", "феврале", "марте", "апреле", "мае", "июне", "июле", "августе", "сентябре", "октябре", "ноябре", "декабре"];
@@ -1426,22 +1449,22 @@ if (typeof module !== "undefined" && module.exports) module.exports = CALC;
     var goalTxt = rub(p.target);
     ui.resLabel.textContent = "Когда на счёте будет " + goalTxt;
     ui.term.textContent = g ? approx(g) : "более 40 лет";
-    ui.termSub.textContent = g ? "ориентир — " + calDate(g - 1) : "при таком взносе и цели. Можно выбрать цель поменьше или другой срок";
+    ui.termSub.textContent = g ? "ориентир: " + calDate(g - 1) : "при таком взносе и цели. Можно выбрать цель поменьше или другой срок";
     var poVal = null;
-    if (po.basis === "now") { ui.payOut.textContent = "условие выполнено"; ui.paySub.textContent = "по возрасту (" + po.payAge + " лет) основание для выплат уже есть; порядок и сроки — по договору"; }
-    else { var poFull = CALC.simulate(Object.assign({}, p, { maxMonths: po.m })); poVal = poFull.hist[poFull.hist.length - 1].value; ui.payOut.textContent = "с " + calYear(po.m) + " года"; ui.paySub.textContent = (po.basis === "15y" ? "через 15 лет действия договора" : "по возрасту: " + po.payAge + " лет — раньше, чем 15 лет договора") + " — " + calDate(po.m); }
+    if (po.basis === "now") { ui.payOut.textContent = "условие выполнено"; ui.paySub.textContent = "по возрасту (" + po.payAge + " лет) основание для выплат уже есть; порядок и сроки определяет договор"; }
+    else { var poFull = CALC.simulate(Object.assign({}, p, { maxMonths: po.m })); poVal = poFull.hist[poFull.hist.length - 1].value; ui.payOut.textContent = "с " + calYear(po.m) + " года"; ui.paySub.textContent = (po.basis === "15y" ? "через 15 лет действия договора" : "по возрасту, с " + po.payAge + " лет, раньше чем через 15 лет договора") + ", " + calDate(po.m); }
     var note = "", cls = "";
-    if (!g) { note = "При взносе <b>" + rub(p.monthly) + "</b> цель <b>" + goalTxt + "</b> на счёте появится позже, чем через 40 лет. Небольшой взнос — нормальный старт: попробуйте цель поменьше (например, " + rub(Math.max(100000, Math.round(p.target / 2 / 100000) * 100000)) + ") или режим «Знаю срок»."; }
-    else if (po.basis === "now") { note = "Основание для выплат по возрасту у вас уже есть. Сумма <b>" + goalTxt + "</b> на счёте будет " + approx(g) + " — порядок и сроки назначения выплат определяются договором."; }
-    else if (g > po.m) { note = "Выплаты станут доступны в " + calDate(po.m, "p") + " — <b>раньше</b>, чем на счёте накопится " + goalTxt + " (ориентир — " + calDate(g - 1) + "). К открытию выплат на счёте будет около <b>" + rub(poVal) + "</b>. Копить можно и после — счёт не закрывается."; cls = "ok"; }
-    else { note = goalTxt + " будет на счёте " + approx(g) + " (ориентир — " + calDate(g - 1) + "), а <b>получить деньги можно будет с " + calDate(po.m, "g") + "</b>. До этого сумма остаётся на счёте и продолжает расти: к этому моменту при тех же взносах — около <b>" + rub(poVal) + "</b>. Досрочно — только выкупная сумма, она может быть меньше внесённого."; cls = (po.m - g >= 36) ? "" : "ok"; }
+    if (!g) { note = "При взносе <b>" + rub(p.monthly) + "</b> цель <b>" + goalTxt + "</b> на счёте появится позже, чем через 40 лет. Небольшой взнос тоже хороший старт: попробуйте цель поменьше (например, " + rub(Math.max(100000, Math.round(p.target / 2 / 100000) * 100000)) + ") или режим «Знаю срок»."; }
+    else if (po.basis === "now") { note = "Основание для выплат по возрасту у вас уже есть. Сумма <b>" + goalTxt + "</b> на счёте будет " + approx(g) + ". Порядок и сроки назначения выплат определяются договором."; }
+    else if (g > po.m) { note = "Выплаты станут доступны в " + calDate(po.m, "p") + ", <b>раньше</b>, чем на счёте накопится " + goalTxt + " (ориентир: " + calDate(g - 1) + "). К этому моменту на счёте будет около <b>" + rub(poVal) + "</b>. Копить можно и дальше, счёт не закрывается."; cls = "ok"; }
+    else { note = goalTxt + " будет на счёте " + approx(g) + " (ориентир: " + calDate(g - 1) + "), а <b>получить деньги можно будет с " + calDate(po.m, "g") + "</b>. До этого сумма остаётся на счёте и продолжает расти: к этому моменту при тех же взносах будет около <b>" + rub(poVal) + "</b>. При досрочном расторжении выплачивается только выкупная сумма, она может быть меньше внесённого."; cls = (po.m - g >= 36) ? "" : "ok"; }
     if (state.mode === "term" && g && po.basis !== "now" && state.years * 12 < po.m) note = "<b>Срок " + state.years + " " + plural(state.years, ["год", "года", "лет"]) + " короче срока до выплат.</b> " + note;
     ui.noteT.innerHTML = note; ui.note.className = "res-note " + cls;
     drawChart(sim, g, gw, p, po, animate);
     /* снимок «к открытию выплат» — главный результат страницы (hero, источники, план) */
     var pm = po.basis === "now" ? 180 : po.m, snap = CALC.simulate(Object.assign({}, p, { maxMonths: Math.max(1, pm) })).hist, hp = snap[snap.length - 1];
     var hpInc = Math.max(0, hp.value - hp.contrib - hp.cofin - hp.dedRe), hpAdd = hp.value - hp.contrib, ptot = hp.value || 1;
-    var whenTxt = po.basis === "now" ? "Через 15 лет — на счёте" : "На счёте к " + calDate(pm, "d") + " — когда откроются выплаты";
+    var yrsTxt = yearsTxt(pm), whenTxt = po.basis === "now" ? "На счёте через 15 лет" : "На счёте " + yrsTxt + ", когда станут доступны выплаты";
     $("#hLabel").textContent = whenTxt;
     numTo(nums.hv, hp.value);
     colTo(hp.value);
@@ -1449,50 +1472,63 @@ if (typeof module !== "undefined" && module.exports) module.exports = CALC;
     [["#hB1", hp.contrib], ["#hB2", hp.cofin], ["#hB3", hp.dedRe], ["#hB4", hpInc]].forEach(function (q) { $(q[0]).style.width = (q[1] / ptot * 100).toFixed(2) + "%"; });
     $("#hMilL").textContent = goalTxt + " на счёте"; $("#hMilV").textContent = g ? approx(g) : "более 40 лет";
     $("#hFor").textContent = "Для " + state.age + " " + plural(state.age, ["года", "лет", "лет"]) + ", " + (state.sex === "m" ? "мужчина" : "женщина");
-    $("#srcLead").textContent = "При взносе " + rub(p.monthly) + " в месяц" + (po.basis === "now" ? " — через 15 лет:" : " — к " + calDate(pm, "d") + ", когда откроются выплаты:");
+    $("#srcLead").textContent = "При взносе " + rub(p.monthly) + " в месяц " + (po.basis === "now" ? "через 15 лет" : yrsTxt) + " на счёте будет:";
     numTo(nums.sy, hp.contrib); numTo(nums.sg, hp.cofin); numTo(nums.st, hp.dedRe); numTo(nums.si, hpInc);
     numTo(nums.c, hp.contrib); numTo(nums.g, hp.cofin); numTo(nums.d, hp.dedRe); numTo(nums.i, hpInc);
-    $("#bdHead").textContent = "Из чего складывается ≈ " + rub(hp.value) + (po.basis === "now" ? " через 15 лет" : " к " + calDate(pm, "d") + ", когда откроются выплаты");
+    $("#bdHead").textContent = "Из чего складывается ≈ " + rub(hp.value) + (po.basis === "now" ? " через 15 лет" : " к " + calDate(pm, "d") + ", когда станут доступны выплаты");
     $("#apSum").textContent = rub(p.monthly);
-    $("#mbTitle").textContent = "≈ " + shortRub(hp.value) + (po.basis === "now" ? " через 15 лет" : " к " + calYear(pm));
+    $("#mbTitle").textContent = "≈ " + shortRub(hp.value) + " " + (po.basis === "now" ? "через 15 лет" : yrsTxt);
     $("#mbSub").textContent = rub(p.monthly) + " в месяц · до 31 декабря";
     last = { sim: sim, g: g, gw: gw, p: p, h: h, inc: inc, po: po, poVal: poVal, hp: hp, pm: pm };
     $("#gpMonthly").textContent = rub(p.monthly) + (p.first ? " · старт " + rub(p.first) : "");
-    $("#gpPayL").textContent = po.basis === "now" ? "Через 15 лет" : "К открытию выплат";
+    $("#gpPayL").textContent = "На счёте " + (po.basis === "now" ? "через 15 лет" : yrsTxt);
     $("#gpValue").textContent = "≈ " + rub(hp.value);
-    $("#gpPay").textContent = po.basis === "now" ? "условие по возрасту есть" : "с " + calYear(po.m) + " года";
+    $("#gpGoalL").textContent = goalTxt + " на счёте"; $("#gpPay").textContent = g ? approx(g) : "более 40 лет";
     $("#gpB1").style.width = (hp.contrib / ptot * 100) + "%"; $("#gpB2").style.width = (hp.cofin / ptot * 100) + "%"; $("#gpB3").style.width = (hp.dedRe / ptot * 100) + "%"; $("#gpB4").style.width = (hpInc / ptot * 100) + "%";
   }
 
   /* ---------------- CHART ---------------- */
   var chartMeta = null;
   function drawChart(sim, g, gw, p, po, animate) {
-    var Wc = 640, Hc = 300, padL = 50, padR = 12, padT = 26, padB = 30, T = p.target;
+    /* график рисуется в реальных пикселях контейнера: шрифт 13–14 px остаётся читаемым и на телефоне,
+       а не уменьшается вместе с картинкой */
+    var Wc = Math.round(ui.svg.parentNode.clientWidth || 640), small = Wc < 520;
+    var fs = small ? 13 : 14, fsB = small ? 14 : 15;
+    var Hc = small ? Math.round(clamp(Wc * 0.95, 280, 360)) : 340, padL = small ? 52 : 60, padR = 14, padT = 34, padB = 34, T = p.target;
+    ui.svg.setAttribute("viewBox", "0 0 " + Wc + " " + Hc); ui.svg.setAttribute("width", Wc); ui.svg.setAttribute("height", Hc);
     var horizon = Math.min(CALC.MAX_MONTHS, Math.max((g || 180), Math.min(gw, 240), po.m + 1, 24) + 8), H = sim.hist.slice(0, horizon), maxV = 0;
     H.forEach(function (q, i) { maxV = Math.max(maxV, q.value, p.first + p.monthly * (i + 1)); });
-    maxV = Math.max(maxV, T * 1.08);
+    maxV = Math.max(maxV, T * 1.12);
     var stepV = maxV > 6e6 ? 2e6 : maxV > 3e6 ? 1e6 : maxV > 1.2e6 ? 5e5 : 2.5e5;
+    if ((Hc - padT - padB) / (maxV / stepV) < fs * 2.2) stepV *= 2;
     var X = function (i) { return padL + (i / (horizon - 1)) * (Wc - padL - padR); }, Y = function (v) { return padT + (1 - v / maxV) * (Hc - padT - padB); };
-    var s = "", base = Y(0);
+    var s = "", base = Y(0), ff = ' font-size="' + fs + '"';
     s += '<line x1="' + padL + '" x2="' + (Wc - padR) + '" y1="' + base + '" y2="' + base + '" stroke="var(--line-2)"/>';
-    for (var v = stepV; v <= maxV; v += stepV) s += '<line x1="' + padL + '" x2="' + (Wc - padR) + '" y1="' + Y(v) + '" y2="' + Y(v) + '" stroke="var(--line)"/><text x="' + (padL - 8) + '" y="' + (Y(v) + 4) + '" text-anchor="end" font-size="11" fill="var(--faint)">' + shortRub(v) + '</text>';
-    var yearsEvery = horizon > 200 ? 4 : horizon > 100 ? 2 : 1;
-    for (var mth = 0; mth < horizon; mth++) { var cal = p.startMonth + mth; if (cal % 12 === 0 && ((cal / 12) % yearsEvery === 0)) s += '<text x="' + X(mth) + '" y="' + (Hc - 8) + '" text-anchor="middle" font-size="11" fill="var(--faint)">' + (startYear + cal / 12) + '</text>'; }
-    s += '<line x1="' + padL + '" x2="' + (Wc - padR) + '" y1="' + Y(T) + '" y2="' + Y(T) + '" stroke="var(--warm)" stroke-width="1.25" stroke-dasharray="4 5"/><text x="' + (padL + 6) + '" y="' + (Y(T) - 7) + '" font-size="11" font-weight="600" fill="var(--warm)">Цель — ' + shortRub(T) + '</text>';
+    for (var v = stepV; v <= maxV; v += stepV) s += '<line x1="' + padL + '" x2="' + (Wc - padR) + '" y1="' + Y(v) + '" y2="' + Y(v) + '" stroke="var(--line)"/><text x="' + (padL - 8) + '" y="' + (Y(v) + fs * 0.35) + '" text-anchor="end"' + ff + ' fill="var(--muted)">' + shortRub(v) + '</text>';
+    /* подписи лет: не чаще, чем помещается по ширине */
+    var perYear = (Wc - padL - padR) / (horizon / 12), yearsEvery = [1, 2, 3, 4, 5, 10].filter(function (k) { return perYear * k >= fs * 3.6; })[0] || 10;
+    for (var mth = 0; mth < horizon; mth++) { var cal = p.startMonth + mth; if (cal % 12 === 0 && ((cal / 12) % yearsEvery === 0) && X(mth) > padL + fs && X(mth) < Wc - padR - fs) s += '<text x="' + X(mth) + '" y="' + (Hc - 10) + '" text-anchor="middle"' + ff + ' fill="var(--muted)">' + (startYear + cal / 12) + '</text>'; }
+    s += '<line x1="' + padL + '" x2="' + (Wc - padR) + '" y1="' + Y(T) + '" y2="' + Y(T) + '" stroke="var(--warm)" stroke-width="1.5" stroke-dasharray="5 5"/><text x="' + (padL + 6) + '" y="' + (Y(T) - 8) + '"' + ff + ' font-weight="600" fill="var(--warm)">Цель: ' + shortRub(T) + '</text>';
     var pA = "", pB = "";
     H.forEach(function (q, i) { pA += (i ? "L" : "M") + X(i).toFixed(1) + " " + Y(Math.min(maxV, q.value)).toFixed(1); pB += (i ? "L" : "M") + X(i).toFixed(1) + " " + Y(Math.min(maxV, p.first + p.monthly * (i + 1))).toFixed(1); });
     s += '<defs><linearGradient id="gA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--accent)" stop-opacity=".18"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></linearGradient></defs>';
     s += '<path d="' + pA + 'L' + X(horizon - 1).toFixed(1) + ' ' + base + 'L' + X(0) + ' ' + base + 'Z" fill="url(#gA)"/>';
-    s += '<path d="' + pB + '" fill="none" stroke="var(--faint)" stroke-width="1.75" stroke-linejoin="round" stroke-dasharray="2 4"/><path class="lnA" d="' + pA + '" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>';
-    if (po.basis !== "now" && po.m < horizon) s += '<line x1="' + X(po.m) + '" x2="' + X(po.m) + '" y1="' + padT + '" y2="' + base + '" stroke="var(--green)" stroke-width="1.25" stroke-dasharray="3 4"/><text x="' + X(po.m) + '" y="' + (padT - 9) + '" text-anchor="' + (po.m > horizon * 0.8 ? "end" : "middle") + '" font-size="11" font-weight="600" fill="var(--green)">выплаты доступны · ' + calYear(po.m) + '</text>';
-    var anc = function (i) { return i > horizon * 0.88 ? "end" : i < horizon * 0.08 ? "start" : "middle"; };
-    if (g && g <= horizon) s += '<circle cx="' + X(g - 1) + '" cy="' + Y(T) + '" r="5.5" fill="var(--accent)" stroke="var(--card)" stroke-width="2.5"/><text x="' + X(g - 1) + '" y="' + (Y(T) - 13) + '" text-anchor="' + anc(g - 1) + '" font-size="11" font-weight="600" fill="var(--accent)">' + termRound(g) + '</text>';
-    if (gw <= horizon) s += '<circle cx="' + X(gw - 1) + '" cy="' + Y(T) + '" r="4.5" fill="var(--faint)" stroke="var(--card)" stroke-width="2.5"/><text x="' + X(gw - 1) + '" y="' + (Y(T) + 19) + '" text-anchor="' + anc(gw - 1) + '" font-size="11" fill="var(--muted)">копилка: ' + termRound(gw) + '</text>';
-    s += '<g id="scrub" style="opacity:0"><line id="scrubLine" y1="' + padT + '" y2="' + base + '" stroke="var(--ink)" opacity=".25"/><circle id="scrubA" r="5" fill="var(--accent)" stroke="var(--card)" stroke-width="2"/><circle id="scrubB" r="4" fill="var(--faint)" stroke="var(--card)" stroke-width="2"/></g>';
+    s += '<path d="' + pB + '" fill="none" stroke="var(--faint)" stroke-width="2" stroke-linejoin="round" stroke-dasharray="2 4"/><path class="lnA" d="' + pA + '" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>';
+    if (po.basis !== "now" && po.m < horizon) s += '<line x1="' + X(po.m) + '" x2="' + X(po.m) + '" y1="' + padT + '" y2="' + base + '" stroke="var(--green)" stroke-width="1.5" stroke-dasharray="4 4"/><text x="' + X(po.m) + '" y="' + (padT - 12) + '" text-anchor="' + (X(po.m) > Wc * 0.7 ? "end" : X(po.m) < Wc * 0.3 ? "start" : "middle") + '"' + ff + ' font-weight="600" fill="var(--green)">выплаты с ' + calYear(po.m) + '</text>';
+    var anc = function (x) { return x > Wc * 0.82 ? "end" : x < padL + 60 ? "start" : "middle"; };
+    if (g && g <= horizon) s += '<circle cx="' + X(g - 1) + '" cy="' + Y(T) + '" r="6.5" fill="var(--accent)" stroke="var(--card)" stroke-width="3"/><text x="' + X(g - 1) + '" y="' + (Y(T) - 16) + '" text-anchor="' + anc(X(g - 1)) + '" font-size="' + fsB + '" font-weight="700" fill="var(--accent)">' + termRound(g) + '</text>';
+    if (gw <= horizon) s += '<circle cx="' + X(gw - 1) + '" cy="' + Y(T) + '" r="5" fill="var(--faint)" stroke="var(--card)" stroke-width="2.5"/><text x="' + X(gw - 1) + '" y="' + (Y(T) + fs + 12) + '" text-anchor="' + anc(X(gw - 1)) + '"' + ff + ' fill="var(--muted)">копилка: ' + termRound(gw) + '</text>';
+    s += '<g id="scrub" style="opacity:0"><line id="scrubLine" y1="' + padT + '" y2="' + base + '" stroke="var(--ink)" opacity=".25"/><circle id="scrubA" r="6" fill="var(--accent)" stroke="var(--card)" stroke-width="2"/><circle id="scrubB" r="5" fill="var(--faint)" stroke="var(--card)" stroke-width="2"/></g>';
     ui.svg.innerHTML = s;
-    chartMeta = { X: X, Y: Y, horizon: horizon, H: H, padL: padL, padR: padR, Wc: Wc, p: p, maxV: maxV };
+    chartMeta = { X: X, Y: Y, horizon: horizon, H: H, padL: padL, padR: padR, Wc: Wc, p: p, maxV: maxV, args: [sim, g, gw, p, po] };
     if (animate && !reduce) { var ln = $(".lnA", ui.svg); if (ln) { var L = ln.getTotalLength(); ln.style.strokeDasharray = L; ln.style.strokeDashoffset = L; ln.getBoundingClientRect(); ln.style.transition = "stroke-dashoffset 1.2s cubic-bezier(.22,1,.36,1)"; ln.style.strokeDashoffset = 0; } }
   }
+  /* перерисовка при изменении ширины (поворот телефона, окно браузера) */
+  (function () {
+    var lastW = 0, t = 0;
+    function re() { var w = Math.round(ui.svg.parentNode.clientWidth); if (!chartMeta || !w || Math.abs(w - lastW) < 2) return; lastW = w; var a = chartMeta.args; drawChart(a[0], a[1], a[2], a[3], a[4], false); }
+    if ("ResizeObserver" in window) new ResizeObserver(function () { clearTimeout(t); t = setTimeout(re, 60); }).observe(ui.svg.parentNode);
+  })();
   /* подсказка следует за пальцем 1:1, без задержек */
   function scrub(clientX) {
     if (!chartMeta) return;
@@ -1505,7 +1541,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = CALC;
     var b = $("#scrubB", ui.svg); b.setAttribute("cx", X); b.setAttribute("cy", chartMeta.Y(Math.min(chartMeta.maxV, vb)));
     ui.tip.innerHTML = '<span>' + calDate(i) + " · " + termRound(i + 1) + '</span><b class="num">' + rub(q.value) + '</b><span>в копилке: <span class="num">' + rub(vb) + '</span></span>';
     var px = X / chartMeta.Wc * r.width;
-    ui.tip.style.left = clamp(px + 14, 0, r.width - 160) + "px";
+    ui.tip.style.left = clamp(px + 14, 0, r.width - ui.tip.offsetWidth) + "px";
     ui.tip.style.top = "0px";
   }
   var tipT = 0;
@@ -1592,11 +1628,30 @@ if (typeof module !== "undefined" && module.exports) module.exports = CALC;
   })();
   $$(".qa summary").forEach(function (s) { s.addEventListener("click", function () { if (s.parentElement.classList.contains("open")) track("faq_open", { q: s.textContent.trim().slice(0, 60) }); }); });
 
-  /* ---------------- ДЕДЛАЙН 31 ДЕКАБРЯ ---------------- */
+  /* ---------------- ДЕДЛАЙН 31 ДЕКАБРЯ: живой счётчик до конца года ----------------
+     Считаем до 23:59:59 31 декабря по времени посетителя. Обновляем раз в секунду,
+     только пока счётчик на экране, чтобы не тратить батарею. */
   (function () {
-    var end = new Date(startYear, 11, 31, 23, 59, 59), days = Math.max(0, Math.ceil((end - now) / 864e5));
     $$(".yr").forEach(function (el) { el.textContent = startYear; });
-    $$(".dl-left").forEach(function (el) { el.textContent = days > 0 ? "Осталось " + days + " " + plural(days, ["день", "дня", "дней"]) + "." : "Последний день."; });
+    var end = new Date(startYear, 11, 31, 23, 59, 59, 999), boxes = $$(".cd"), visible = new Set(), timer = 0;
+    var pad = function (n) { return (n < 10 ? "0" : "") + n; };
+    function paint() {
+      var ms = Math.max(0, end - Date.now()), s = Math.floor(ms / 1000);
+      var d = Math.floor(s / 86400), h = Math.floor(s % 86400 / 3600), m = Math.floor(s % 3600 / 60), sec = s % 60;
+      boxes.forEach(function (b) {
+        $(".cd-d", b).textContent = d; $(".cd-h", b).textContent = pad(h); $(".cd-m", b).textContent = pad(m); $(".cd-s", b).textContent = pad(sec);
+        $("i", b).textContent = plural(d, ["день", "дня", "дней"]);
+      });
+    }
+    function tick() { paint(); timer = setTimeout(tick, 1000 - (Date.now() % 1000) + 5); }
+    paint();
+    if ("IntersectionObserver" in window) {
+      var io2 = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) visible.add(e.target); else visible.delete(e.target); });
+        clearTimeout(timer); if (visible.size) tick();
+      });
+      boxes.forEach(function (b) { io2.observe(b); });
+    } else tick();
   })();
 
   /* ---------------- ПЕРСОНАЛИЗАЦИЯ ДЛЯ КЛИЕНТОВ ОПС: ?seg=ops или u=…ops… ---------------- */
@@ -1610,10 +1665,10 @@ if (typeof module !== "undefined" && module.exports) module.exports = CALC;
   function say(t) { $("#toastT").textContent = t; toast.classList.add("show"); clearTimeout(toastT); toastT = setTimeout(function () { toast.classList.remove("show"); }, 2400); }
   function planText() {
     var L = last; if (!L) return "";
-    return "Мой план «Цель — миллион» (ПДС): по " + rub(L.p.monthly) + " в месяц" + (L.p.first ? ", старт " + rub(L.p.first) : "") + ".\n" +
-      (L.po.basis === "now" ? "Через 15 лет" : "К " + calDate(L.pm, "d") + ", когда откроются выплаты,") + " на счёте около " + rub(L.hp.value) + ", из них " + rub(L.hp.value - L.hp.contrib) + " — господдержка, вычет и доход фонда.\n" +
-      rub(L.p.target) + " на счёте — " + (L.g ? approx(L.g) : "более чем через 40 лет") + ".\n" +
-      "Взносы до 31 декабря дают господдержку и вычет за " + startYear + " год.\n" +
+    return "Мой план «Цель миллион» (ПДС): по " + rub(L.p.monthly) + " в месяц" + (L.p.first ? ", старт " + rub(L.p.first) : "") + ".\n" +
+      "На счёте " + (L.po.basis === "now" ? "через 15 лет" : yearsTxt(L.pm) + ", когда станут доступны выплаты,") + " около " + rub(L.hp.value) + ". Из них " + rub(L.hp.value - L.hp.contrib) + " добавят господдержка, вычет и доход фонда.\n" +
+      rub(L.p.target) + " на счёте: " + (L.g ? approx(L.g) : "более чем через 40 лет") + ".\n" +
+      "Взносы до 31 декабря дают право на господдержку и вычет за " + startYear + " год.\n" +
       "Предварительный расчёт: доходность 10 % годовых для примера, доход не гарантирован. АО «НПФ ГАЗФОНД пенсионные накопления».";
   }
   function pageUrl() { return location.href.split("#")[0]; }
@@ -1638,7 +1693,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = CALC;
     return d;
   }
   var MONTHS_R = MONTHS_G;
-  function evTitle() { return "Взнос в ПДС до 31 декабря — господдержка и вычет за " + startYear; }
+  function evTitle() { return "Взнос в ПДС до 31 декабря: господдержка и вычет за " + startYear + " год"; }
   function evText() { return planText() + "\n\nОформить договор через Госуслуги: " + pageUrl(); }
   function utc(d) { return d.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z"; }
   var cmSpring = new Spring({ from: 0, precision: 0.002, onUpdate: function (p) {
@@ -1649,7 +1704,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = CALC;
   function cmShow(btn) {
     cmOpen = true; cmFrom = btn; cmPos = btn.getAttribute("data-pos") || "";
     var d = remindDate();
-    $("#cmWhen").textContent = d.getDate() + " " + MONTHS_R[d.getMonth()] + ", 10:00" + (d.getMonth() === 11 && d.getDate() === 1 ? " — за месяц до конца года" : "");
+    $("#cmWhen").textContent = d.getDate() + " " + MONTHS_R[d.getMonth()] + ", 10:00" + (d.getMonth() === 11 && d.getDate() === 1 ? ", за месяц до конца года" : "");
     calMenu.hidden = false;
     if (!mqCm.matches) {
       /* на компьютере меню появляется у кнопки и растёт из неё */
@@ -1697,15 +1752,76 @@ if (typeof module !== "undefined" && module.exports) module.exports = CALC;
         if (staticOk) location.href = "media/napominanie-pds-2026.ics"; else icsDownload(d);
       } else icsDownload(d);
       cmHide(); haptic(10);
-      if (kind === "ics") say("Файл календаря сохранён — откройте его");
+      if (kind === "ics") say("Файл календаря сохранён, откройте его");
     });
   });
-  $$("[data-share]").forEach(function (b) {
+  /* =====================================================================
+     ПЛАН В PDF — библиотека и шрифты грузятся только по нажатию.
+     Телефон получает узкие страницы под экран и системное «Поделиться»
+     (сохранить в «Файлы», отправить в мессенджер); компьютер — A4 и скачивание.
+     ===================================================================== */
+  var PDF_BASE = "media/pdf/", pdfReady = null;
+  function loadScript(src) { return new Promise(function (res, rej) { var s = doc.createElement("script"); s.src = src; s.onload = res; s.onerror = rej; doc.head.appendChild(s); }); }
+  function loadPdfLib() {
+    if (!pdfReady) pdfReady = Promise.all(["jspdf.umd.min.js", "font-inter-500.js", "font-inter-700.js", "qr.js", "plan-pdf.js"].map(function (f) { return loadScript(PDF_BASE + f); }));
+    return pdfReady;
+  }
+  function toPng(src, maxW) {
+    return new Promise(function (res) {
+      if (!src) return res(null);
+      var im = new Image(); im.onload = function () {
+        var k = Math.min(1, (maxW || 600) / im.naturalWidth), c = doc.createElement("canvas");
+        c.width = Math.round(im.naturalWidth * k); c.height = Math.round(im.naturalHeight * k);
+        c.getContext("2d").drawImage(im, 0, 0, c.width, c.height);
+        try { res({ url: c.toDataURL("image/png"), ratio: c.width / c.height }); } catch (e) { res(null); }
+      }; im.onerror = function () { res(null); }; im.src = src;
+    });
+  }
+  function planData() {
+    var L = last, p = L.p, hp = L.hp, po = L.po, g = L.g;
+    var horizon = Math.min(CALC.MAX_MONTHS, Math.max(L.pm + 1, g || 0, 24) + 8), series = [];
+    for (var i = 0; i < horizon; i++) series.push({ v: L.sim.hist[i].value, b: p.first + p.monthly * (i + 1) });
+    var inc = Math.max(0, hp.value - hp.contrib - hp.cofin - hp.dedRe);
+    var end = new Date(startYear, 11, 31, 23, 59, 59), dl = Math.max(0, Math.ceil((end - Date.now()) / 864e5));
+    var incomeTxt = { "1": "доход до 80 тыс. ₽", "0.5": "доход 80–150 тыс. ₽", "0.25": "доход от 150 тыс. ₽" }[String(state.k)] || "";
+    var yrs = po.basis === "now" ? "через 15 лет" : yearsTxt(L.pm);
+    return {
+      rub: rub, shortRub: shortRub, monthly: p.monthly, first: p.first, target: p.target, goalTxt: rub(p.target),
+      hp: { value: hp.value, contrib: hp.contrib, cofin: hp.cofin, ded: hp.dedRe, inc: inc, add: hp.value - hp.contrib },
+      whenTxt: po.basis === "now" ? "На счёте через 15 лет" : "На счёте " + yrs + ", когда станут доступны выплаты",
+      yearsCap: yrs.charAt(0).toUpperCase() + yrs.slice(1),
+      gYears: g ? approx(g) : "более чем через 40 лет", gShort: g ? termRound(g) : "",
+      payTxt: po.basis === "now" ? "основание по возрасту уже есть" : yrs + " (с " + calYear(po.m) + " года)", payYear: calYear(po.m),
+      paramsTxt: "Расчёт для " + state.age + " " + plural(state.age, ["года", "лет", "лет"]) + ", " + (state.sex === "m" ? "мужчина" : "женщина") + (incomeTxt ? ", " + incomeTxt : "") + (state.reinvest ? ", налоговый вычет возвращается на счёт" : ", без возврата вычета на счёт") + ". Доходность 10 % годовых взята для примера.",
+      series: series, startYear: startYear, startMonth: startMonth, g: g, pm: po.basis === "now" ? 9999 : L.pm,
+      year: startYear, daysLeft: dl + " " + plural(dl, ["день", "дня", "дней"]),
+      dateTxt: "Расчёт от " + now.getDate() + " " + MONTHS_G[now.getMonth()] + " " + now.getFullYear(),
+      contractUrl: "https://contract-pds.gazfond-pn.ru/?u=nakopimillion&utm_source=landing_million&utm_medium=pdf&utm_campaign=pds_million_v5",
+      img: {}
+    };
+  }
+  var pdfBusy = false, mqPhone = window.matchMedia("(max-width: 48rem), (pointer: coarse) and (max-width: 64rem)");
+  $$("[data-pdf]").forEach(function (b) {
     b.addEventListener("click", function () {
-      track("share_plan", { pos: b.getAttribute("data-pos") });
-      var txt = planText(), url = pageUrl();
-      if (navigator.share) { navigator.share({ title: "Мой план ПДС", text: txt, url: url }).catch(function () {}); return; }
-      location.href = "mailto:?subject=" + encodeURIComponent("Мой план ПДС «Цель — миллион»") + "&body=" + encodeURIComponent(txt + "\n\n" + url);
+      if (pdfBusy || !last) return; pdfBusy = true;
+      var label = $("span", b), was = label.textContent; label.textContent = "Готовим PDF…"; b.setAttribute("aria-busy", "true");
+      var phone = mqPhone.matches, D = planData(), colIdx = Math.round(colSpring.target || 0), colSrc = $$("#hCol img")[colIdx];
+      track("plan_pdf", { pos: b.getAttribute("data-pos"), layout: phone ? "phone" : "a4" });
+      Promise.all([loadPdfLib(), toPng($(".logo .l-light").src, 360), toPng(colSrc && colSrc.src, 420)].concat($$(".src img").map(function (im) { return toPng(im.getAttribute("src"), 240); })))
+        .then(function (r) {
+          D.img.logo = r[1] && r[1].url; D.img.logoRatio = r[1] ? r[1].ratio : 1.7; D.img.column = r[2] && r[2].url;
+          D.img.src = [r[3], r[4], r[5], r[6]].map(function (x) { return x && x.url; });
+          var blob = window.buildPlanPdf(D, phone ? "phone" : "a4"), name = "plan-pds-gazfond.pdf";
+          var file = null; try { file = new File([blob], name, { type: "application/pdf" }); } catch (e) {}
+          if (phone && file && navigator.canShare && navigator.canShare({ files: [file] })) {
+            return navigator.share({ files: [file], title: "Мой план ПДС" }).catch(function () {});
+          }
+          var a = doc.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name; doc.body.appendChild(a); a.click();
+          setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 4000);
+          say("План сохранён в PDF");
+        })
+        .catch(function () { say("Не получилось собрать PDF, попробуйте ещё раз"); pdfReady = null; })
+        .then(function () { pdfBusy = false; label.textContent = was; b.removeAttribute("aria-busy"); });
     });
   });
 
