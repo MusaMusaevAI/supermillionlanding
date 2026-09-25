@@ -692,6 +692,14 @@ input[type=range]:active::-webkit-slider-thumb{transform:scale(1.08)}
 @media (min-width:64.0625rem){
   .calc .panel{position:sticky;top:var(--st,calc(var(--header-h) + 1.25rem))}
 }
+/* живая колонна — крупно: на компьютере справа от заголовка, на телефоне отдельной сценой под ним */
+.src-head{grid-template-columns:minmax(0,1fr) clamp(15rem,30vw,24rem);align-items:center}
+.loop{width:100%;margin-block:-2rem -1rem}
+.loop-dark{inset:6% 18%;width:64%;height:88%}
+@media (max-width:48rem){
+  .src-head{grid-template-columns:minmax(0,1fr);align-items:start;gap:0}
+  .loop{width:min(19rem,86vw);margin:.5rem auto -1rem}
+}
 </style>
 </head>
 <body>
@@ -1584,14 +1592,18 @@ if (typeof module !== "undefined" && module.exports) module.exports = CALC;
   var colImgs = $$("#hCol img"), colFirst = true;
   var colSpring = new Spring({ precision: 0.002, onUpdate: function (L) {
     colImgs.forEach(function (im, i) {
-      var o = clamp(1 - Math.abs(L - i), 0, 1);
+      var d = Math.abs(L - i), o = clamp(d < 0.5 ? 1 : 2 - 2 * d, 0, 1);
+      im.style.zIndex = String(Math.round(10 - d * 10));
       im.style.opacity = o.toFixed(3);
       im.style.transform = "scale(" + (0.97 + 0.03 * o).toFixed(3) + ")";
     });
   } });
   function colTo(v) {
-    var L = v <= 1.2e6 ? 0 : v <= 2.6e6 ? (v - 1.2e6) / 1.4e6 : v <= 5e6 ? 1 + (v - 2.6e6) / 2.4e6 : 2;
-    if (colFirst) { colFirst = false; colSpring.set(L); } else colSpring.to(L, { damping: 1, response: 0.5 });
+    /* три устойчивых состояния: колонна всегда останавливается на одном целом рендере,
+       промежуточная прозрачность бывает только во время перехода */
+    var L = v < 1.9e6 ? 0 : v < 3.8e6 ? 1 : 2;
+    if (!colFirst && L === colSpring.target) return;
+    if (colFirst) { colFirst = false; colSpring.set(L); } else colSpring.to(L, { damping: 1, response: 0.32 });
   }
 
   /* ---------------- ЖИВАЯ КОЛОННА В «ЧЕТЫРЁХ ИСТОЧНИКАХ»: играет только в зоне видимости ---------------- */
