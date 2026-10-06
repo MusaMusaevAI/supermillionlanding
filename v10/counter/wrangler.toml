@@ -1,0 +1,12 @@
+name = "million-counter"
+main = "cloudflare-worker.js"
+compatibility_date = "2026-10-01"
+
+# Маршрут на вашем домене (сайт должен идти через Cloudflare, «оранжевое облако»).
+# Замените million.example.ru на свой адрес.
+routes = [{ pattern = "million.example.ru/api/million/*", zone_name = "example.ru" }]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "million-counter"
+database_id = "ВСТАВЬТЕ_ID_ПОСЛЕ_wrangler_d1_create"
