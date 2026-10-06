@@ -1,0 +1,18 @@
+name = "million-counter"
+main = "cloudflare-worker.js"
+compatibility_date = "2026-10-01"
+
+# Способ 1 (проще): воркер на workers.dev — ничего не меняем в DNS сайта.
+workers_dev = true
+
+# Способ 2: маршрут на своём домене (нужно «оранжевое облако» у записи million в DNS Cloudflare).
+# routes = [{ pattern = "million.gazfond-pn.com/api/million/*", zone_name = "gazfond-pn.com" }]
+
+[vars]
+# С каких сайтов можно обращаться к счётчику (через запятую)
+ALLOW_ORIGIN = "https://million.gazfond-pn.com"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "million-counter"
+database_id = "ВСТАВЬТЕ_ID_ПОСЛЕ_wrangler_d1_create"
