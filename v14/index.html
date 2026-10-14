@@ -33,6 +33,21 @@ b, strong { font-weight: 600; }
 .gf-medium.gf-medium { font-weight: 500; }
 .gf-semibold.gf-semibold { font-weight: 600; }
 
+/* ── Типографика для аудитории старшего возраста (EDITORIAL: основной текст не мельче 16/22) ──
+   Кегли только из шкалы кита. Отступления: поля 16 вместо 14 (иначе iPhone увеличивает страницу при нажатии),
+   кнопки lg 16 вместо 12/14, подписи полей 14 вместо 12, единица у крупной цифры строчными. */
+.gf-calc__value, .gf-input__control { font: 500 16px/22px var(--gf-font); }
+.gf-calc__label { font: var(--gf-type-body); }
+.gf-btn--lg { font: 600 16px/22px var(--gf-font); }
+@media (max-width: 767.98px) { .gf-btn--lg { height: 52px; font: 600 16px/22px var(--gf-font); } }
+.m-field .gf-caption, .m-stat .gf-caption, .m-trust, .m-legend { font: var(--gf-type-body); }
+.gf-faq__q { font: 500 16px/22px var(--gf-font); }
+.gf-faq__a { font: var(--gf-type-body-big); }
+@media (max-width: 767.98px) { .gf-card--instruction .gf-card__title { font: 500 16px/22px var(--gf-font); } }
+.m-key .gf-calc__label, #mxJarT, #mxCap { font: var(--gf-type-caption-1); }
+.m-stat .gf-card__stat-unit { font: var(--gf-type-title-2); text-transform: none; }
+@media (max-width: 767.98px) { .m-title > span:first-child { font: var(--gf-type-headline-2); } }
+
 /* Воздух: между блоками 96 (мобайл 64), под заголовком секции 48 (мобайл 32) */
 .gf-main { gap: var(--gf-space-2400); padding-bottom: var(--gf-space-2400); }
 .gf-hero + .gf-main { padding-top: var(--gf-space-2400); }
