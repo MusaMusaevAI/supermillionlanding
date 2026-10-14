@@ -1,0 +1,106 @@
+{
+ "3d/primary/scale.webp": [
+  640,
+  640
+ ],
+ "3d/primary/document.webp": [
+  640,
+  640
+ ],
+ "3d/primary/percent.webp": [
+  640,
+  640
+ ],
+ "3d/primary/cubes.webp": [
+  640,
+  640
+ ],
+ "3d/primary/safe.webp": [
+  640,
+  640
+ ],
+ "3d/primary/hourglass.webp": [
+  640,
+  640
+ ],
+ "3d/primary/people.webp": [
+  640,
+  640
+ ],
+ "3d/primary/monitor.webp": [
+  640,
+  640
+ ],
+ "3d/primary/balance.webp": [
+  640,
+  640
+ ],
+ "3d/primary/conservatism.webp": [
+  640,
+  640
+ ],
+ "3d/primary/pin.webp": [
+  640,
+  640
+ ],
+ "3d/secondary/people.webp": [
+  800,
+  800
+ ],
+ "3d/secondary/documents.webp": [
+  800,
+  800
+ ],
+ "3d/secondary/circles.webp": [
+  800,
+  800
+ ],
+ "3d/secondary/flame.webp": [
+  800,
+  800
+ ],
+ "illustrations/dachnitsa.webp": [
+  675,
+  900
+ ],
+ "illustrations/puteshestvennik.webp": [
+  675,
+  900
+ ],
+ "illustrations/lezheboka.webp": [
+  675,
+  900
+ ],
+ "illustrations/family-garden.webp": [
+  900,
+  900
+ ],
+ "illustrations/family-garden-alt.webp": [
+  900,
+  900
+ ],
+ "illustrations/father-son.webp": [
+  900,
+  900
+ ],
+ "bg/quiz.webp": [
+  895,
+  586
+ ],
+ "bg/banner-blue.webp": [
+  1372,
+  1600
+ ],
+ "bg/abstract-light.webp": [
+  673,
+  481
+ ],
+ "bg/abstract-waves.webp": [
+  736,
+  736
+ ],
+ "bg/abstract-wide.webp": [
+  1344,
+  896
+ ]
+}
