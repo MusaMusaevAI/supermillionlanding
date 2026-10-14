@@ -25,6 +25,14 @@
 /* «Клей» раскладки v13. Только сетка, порядок, позиционирование и отступы через токены кита.
    Цвета ниже — только токены kit/gazfond.css: им размечены полосы диаграммы и линии графика (вопрос к дизайнеру №1). */
 [hidden][hidden] { display: none; }
+/* Поправки к киту до его обновления (вопрос к дизайнеру №8):
+   1) в мобильной сетке героя колонка 1fr распирается содержимым — ограничиваем, как minmax(0, 1fr);
+   2) жирный текст по дизайн-коду 600, а не 700 браузера; 3) .gf-medium/.gf-semibold в ките объявлены раньше
+      .gf-lead/.gf-text и перебиваются ими — повторяем с большей специфичностью. */
+.gf-hero__grid > * { min-width: 0; }
+b, strong { font-weight: 600; }
+.gf-medium.gf-medium { font-weight: 500; }
+.gf-semibold.gf-semibold { font-weight: 600; }
 
 /* Первый экран */
 .m-deadline { display: flex; align-items: center; gap: var(--gf-space-400); }
@@ -122,7 +130,7 @@
         <p class="gf-hero__lead gf-semibold">Быстро. С&nbsp;поддержкой государства</p>
         <div class="m-deadline">
           <img src="kit/assets/3d/primary/hourglass.webp" alt="" width="64" height="64">
-          <p class="gf-hero__lead"><b>Успейте до&nbsp;31&nbsp;декабря.</b> Взносы от&nbsp;2&nbsp;000&nbsp;₽ в&nbsp;<span class="yr">2026</span>&nbsp;году дают право на&nbsp;господдержку и&nbsp;налоговый вычет за&nbsp;этот год</p>
+          <p class="gf-hero__lead"><b class="gf-semibold">Успейте до&nbsp;31&nbsp;декабря.</b> Взносы от&nbsp;2&nbsp;000&nbsp;₽ в&nbsp;<span class="yr">2026</span>&nbsp;году дают право на&nbsp;господдержку и&nbsp;налоговый вычет за&nbsp;этот год</p>
         </div>
         <ul class="m-trust gf-caption">
           <li><svg class="gf-icon gf-icon--20" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M11.46 20.846a12 12 0 0 1 -7.96 -14.846a12 12 0 0 0 8.5 -3a12 12 0 0 0 8.5 3a12 12 0 0 1 -.09 7.06" /><path d="M15 19l2 2l4 -4" /></svg>Застраховано АСВ до&nbsp;2,8&nbsp;млн&nbsp;₽</li>
@@ -133,7 +141,7 @@
       </div>
 
       <div class="gf-panel gf-bg-page gf-stack m-hcalc" id="hcalc">
-        <p class="gf-card__text m-row"><svg class="gf-icon gf-icon--20" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" /><path d="M12 9h.01" /><path d="M11 12h1v4h1" /></svg><span><b>Пример расчёта</b> для&nbsp;женщины 35&nbsp;лет с&nbsp;доходом 100&nbsp;тыс.&nbsp;₽ в&nbsp;месяц</span></p>
+        <p class="gf-card__text m-row"><svg class="gf-icon gf-icon--20" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" /><path d="M12 9h.01" /><path d="M11 12h1v4h1" /></svg><span><b class="gf-semibold">Пример расчёта</b> для&nbsp;женщины 35&nbsp;лет с&nbsp;доходом 100&nbsp;тыс.&nbsp;₽ в&nbsp;месяц</span></p>
         <div class="gf-calc">
           <label class="gf-calc__label" for="hOwn">Сколько комфортно копить в&nbsp;месяц</label>
           <span class="gf-calc__field">
@@ -150,28 +158,28 @@
         </div>
         <div class="m-hres" aria-live="polite">
           <p class="gf-calc__label">1&nbsp;000&nbsp;000&nbsp;₽ на&nbsp;счёте</p>
-          <p class="gf-h3 gf-c-accent" id="hValue">через 9&nbsp;лет<a class="gf-c-accent" href="#legal" aria-label="Условия расчёта">*</a></p>
-          <p class="gf-lead gf-medium gf-c-dark-blue" id="hPlus">на&nbsp;8&nbsp;лет раньше, чем в&nbsp;копилке без&nbsp;процентов</p>
+          <p class="gf-h3 gf-c-accent" id="hValue">через 8&nbsp;лет<a class="gf-c-accent" href="#legal" aria-label="Условия расчёта">*</a></p>
+          <p class="gf-lead gf-medium gf-c-dark-blue" id="hPlus">на&nbsp;9&nbsp;лет раньше, чем в&nbsp;копилке без&nbsp;процентов</p>
         </div>
         <!-- ваши взносы + скобка над тем, что добавляет ПДС; рядом та же сумма в копилке без процентов -->
         <div class="m-mx" id="mx">
           <div class="m-mx-lab"><span class="gf-text gf-semibold">С&nbsp;ПДС</span></div>
           <div class="m-mx-track m-mx-track--brace">
-            <div class="m-brace" id="mxBrace" aria-hidden="true"><span class="gf-caption-1 gf-semibold" id="mxBraceT">+ 460&nbsp;000&nbsp;₽ добавит ПДС</span><svg id="mxBraceS" preserveAspectRatio="none"><path id="mxBraceP" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            <div class="m-bar"><i class="m-c-you" id="mxYou"><span class="gf-caption-1 gf-semibold" id="mxYouV">540&nbsp;000&nbsp;₽</span></i><i class="m-c-gov" id="mxGov"></i><i class="m-c-tax" id="mxTax"></i><i class="m-c-fund" id="mxFund"></i></div>
+            <div class="m-brace" id="mxBrace" aria-hidden="true"><span class="gf-caption-1 gf-semibold" id="mxBraceT">+ 554&nbsp;986&nbsp;₽ добавит ПДС</span><svg id="mxBraceS" preserveAspectRatio="none"><path id="mxBraceP" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="m-bar"><i class="m-c-you" id="mxYou"><span class="gf-caption-1 gf-semibold" id="mxYouV">455&nbsp;000&nbsp;₽</span></i><i class="m-c-gov" id="mxGov"></i><i class="m-c-tax" id="mxTax"></i><i class="m-c-fund" id="mxFund"></i></div>
           </div>
           <div class="m-mx-lab"><span class="gf-text gf-semibold">Копилка без&nbsp;процентов</span><span class="gf-calc__label" id="mxJarT">через 17&nbsp;лет</span></div>
           <div class="m-mx-track">
-            <div class="m-bar"><i class="m-c-jar" id="mxJar"><span class="gf-caption-1 gf-semibold" id="mxJarV">540&nbsp;000&nbsp;₽</span></i><i class="m-c-gap" id="mxGap"><span class="gf-caption-1" id="mxGapT">не&nbsp;хватает 460&nbsp;000&nbsp;₽</span></i></div>
+            <div class="m-bar"><i class="m-c-jar" id="mxJar"><span class="gf-caption-1 gf-semibold" id="mxJarV">455&nbsp;000&nbsp;₽</span></i><i class="m-c-gap" id="mxGap"><span class="gf-caption-1" id="mxGapT">не&nbsp;хватает 545&nbsp;000&nbsp;₽</span></i></div>
           </div>
           <div class="m-key">
-            <div><span class="gf-calc__label"><span class="m-dot m-c-gov"></span>Господдержка</span><b class="gf-text gf-semibold" id="mkGov">+ 100&nbsp;000&nbsp;₽</b></div>
-            <div><span class="gf-calc__label"><span class="m-dot m-c-tax"></span>Налоговый вычет</span><b class="gf-text gf-semibold" id="mkTax">+ 60&nbsp;000&nbsp;₽</b></div>
-            <div><span class="gf-calc__label"><span class="m-dot m-c-fund"></span>Доход от&nbsp;фонда</span><b class="gf-text gf-semibold" id="mkInc">+ 300&nbsp;000&nbsp;₽</b></div>
+            <div><span class="gf-calc__label"><span class="m-dot m-c-gov"></span>Господдержка</span><b class="gf-text gf-semibold" id="mkGov">+ 187&nbsp;500&nbsp;₽</b></div>
+            <div><span class="gf-calc__label"><span class="m-dot m-c-tax"></span>Вычет</span><b class="gf-text gf-semibold" id="mkTax">+ 56&nbsp;550&nbsp;₽</b></div>
+            <div><span class="gf-calc__label"><span class="m-dot m-c-fund"></span>Доход от&nbsp;фонда</span><b class="gf-text gf-semibold" id="mkInc">+ 310&nbsp;936&nbsp;₽</b></div>
           </div>
-          <p class="gf-calc__label" id="mxCap">Обе полосы через 9&nbsp;лет, когда в&nbsp;ПДС миллион.</p>
+          <p class="gf-calc__label" id="mxCap">Обе полосы через 8&nbsp;лет, когда в&nbsp;ПДС миллион.</p>
         </div>
-        <a class="gf-btn gf-btn--primary gf-btn--lg gf-btn--block" href="https://contract-pds.gazfond-pn.ru/?u=nakopimillion&amp;utm_source=landing_million&amp;utm_medium=hero&amp;utm_campaign=pds_million_v13" target="_blank" rel="noopener" data-goal="cta_contract" data-pos="hero">Оформить через Госуслуги</a>
+        <a class="gf-btn gf-btn--primary gf-btn--lg gf-btn--block" href="https://contract-pds.gazfond-pn.ru/?u=nakopimillion&amp;utm_source=landing_million&amp;utm_medium=hero&amp;utm_campaign=pds_million_v13" target="_blank" rel="noopener" data-goal="cta_contract" data-pos="hero" id="heroCta">Оформить через Госуслуги</a>
         <div class="gf-btn-row">
           <button class="gf-btn gf-btn--tertiary" type="button" data-remind data-pos="hero"><svg class="gf-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" /><path d="M9 17v1a3 3 0 0 0 6 0v-1" /></svg>Не&nbsp;готовы? Напомнить до&nbsp;31&nbsp;декабря</button>
           <a class="gf-btn gf-btn--tertiary" href="#calc" data-goal="calc_detail_open" data-pos="hero">Рассчитать свой план <svg class="gf-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7.58594 6L13.5859 12L7.58594 18L9 19.4141L16.4141 12L9 4.58594L7.58594 6Z"/></svg></a>
@@ -264,10 +272,10 @@
           </div>
         </div>
         <label class="gf-field-toggle">
-          <span class="gf-field-toggle__text"><span class="gf-field-toggle__label">Возвращать налог на&nbsp;счёт долгосрочных сбережений</span><span class="gf-field-toggle__caption">Вычет оформляете сами в&nbsp;ФНС. В&nbsp;расчёте 13&nbsp;%</span></span>
+          <span class="gf-field-toggle__text"><span class="gf-field-toggle__label">Возвращать налог на&nbsp;счёт долгосрочных сбережений</span><span class="gf-field-toggle__caption">Вычет оформляете сами в&nbsp;ФНС. В&nbsp;расчёте&nbsp;13&nbsp;%</span></span>
           <input class="gf-switch" type="checkbox" id="reinvest" checked>
         </label>
-        <a class="gf-btn gf-btn--primary gf-btn--lg gf-btn--block m-only-stacked" id="calcGo" href="#pResult">Показать результат</a>
+        <a class="gf-btn gf-btn--tertiary m-only-stacked" id="calcGo" href="#pResult">Показать результат</a>
       </div>
 
       <div class="gf-panel m-result gf-stack gf-stack--24" id="pResult">
@@ -307,7 +315,7 @@
           <div class="gf-stack gf-stack--8"><span class="gf-caption"><span class="m-dot m-c-tax"></span>Налоговый вычет</span><span class="gf-h5" id="bDed">0&nbsp;₽</span></div>
           <div class="gf-stack gf-stack--8"><span class="gf-caption"><span class="m-dot m-c-fund"></span>Доход от&nbsp;фонда</span><span class="gf-h5" id="bInc">0&nbsp;₽</span></div>
         </div>
-        <div class="m-note gf-bg-page"><svg class="gf-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 12v-3a3 3 0 0 1 3 -3h13m-3 -3l3 3l-3 3" /><path d="M20 12v3a3 3 0 0 1 -3 3h-13m3 3l-3 -3l3 -3" /></svg><p class="gf-text">Удобнее <b>автоплатежом: <span id="apSum">5&nbsp;000&nbsp;₽</span> в&nbsp;месяц</b>, без&nbsp;ручных переводов</p></div>
+        <div class="m-note gf-bg-page"><svg class="gf-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 12v-3a3 3 0 0 1 3 -3h13m-3 -3l3 3l-3 3" /><path d="M20 12v3a3 3 0 0 1 -3 3h-13m3 3l-3 -3l3 -3" /></svg><p class="gf-text">Удобнее <b class="gf-semibold">автоплатежом: <span id="apSum">5&nbsp;000&nbsp;₽</span> в&nbsp;месяц</b>, без&nbsp;ручных переводов</p></div>
         <div class="gf-stack gf-stack--8">
           <a class="gf-btn gf-btn--primary gf-btn--lg gf-btn--block" href="https://contract-pds.gazfond-pn.ru/?u=nakopimillion&amp;utm_source=landing_million&amp;utm_medium=calc&amp;utm_campaign=pds_million_v13" target="_blank" rel="noopener" data-goal="cta_contract" data-pos="calc">Оформить через Госуслуги</a>
           <button class="gf-btn gf-btn--lg gf-btn--block" type="button" data-pdf data-pos="calc"><svg class="gf-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" /><path d="M12 17v-6" /><path d="M9.5 14.5l2.5 2.5l2.5 -2.5" /></svg><span class="pdf-t">Скачать план в&nbsp;PDF</span></button>
@@ -350,7 +358,6 @@
       <div class="gf-stack gf-stack--8">
         <a class="gf-btn gf-btn--orange gf-btn--lg" id="goBtn" href="https://contract-pds.gazfond-pn.ru/?u=nakopimillion&amp;utm_source=landing_million&amp;utm_medium=go&amp;utm_campaign=pds_million_v13" target="_blank" rel="noopener" data-goal="cta_contract" data-pos="go">Оформить через Госуслуги</a>
         <button class="gf-btn gf-btn--lg" type="button" data-pdf data-pos="go"><svg class="gf-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" /><path d="M12 17v-6" /><path d="M9.5 14.5l2.5 2.5l2.5 -2.5" /></svg><span class="pdf-t">Скачать план в&nbsp;PDF</span></button>
-        <button class="gf-btn gf-btn--lg" type="button" data-remind data-pos="go"><svg class="gf-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" /><path d="M9 17v1a3 3 0 0 0 6 0v-1" /></svg>Напомнить до&nbsp;31&nbsp;декабря</button>
       </div>
     </div>
   </section>
@@ -364,7 +371,7 @@
       <div class="gf-cols-2">
         <div class="gf-card gf-card--number">
           <div class="gf-card__body"><span class="gf-card__overline">Защита АСВ</span><h3 class="gf-card__title">Взносы и&nbsp;начисленный доход застрахованы государством</h3></div>
-          <div class="gf-card__numbers"><span class="gf-card__figure">2,8<span class="gf-card__unit">млн&nbsp;₽</span></span><p class="gf-card__text">Агентство по&nbsp;страхованию вкладов гарантирует сбережения до&nbsp;этой суммы</p></div>
+          <div class="gf-card__numbers"><span class="gf-card__figure">2,8<span class="gf-card__unit">млн&nbsp;₽</span></span><p class="gf-card__text">Агентство по&nbsp;страхованию вкладов гарантирует сбережения до&nbsp;этой&nbsp;суммы</p></div>
         </div>
         <div class="gf-card gf-card--number">
           <div class="gf-card__body"><span class="gf-card__overline">Клиенты</span><h3 class="gf-card__title">Доверяют фонду свои накопления</h3></div>
@@ -373,7 +380,7 @@
       </div>
       <div class="gf-cols-3">
         <div class="gf-card gf-card--icon"><svg class="gf-icon gf-card__icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 15a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /><path d="M13 17.5v4.5l2 -1.5l2 1.5v-4.5" /><path d="M10 19h-5a2 2 0 0 1 -2 -2v-10c0 -1.1 .9 -2 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -1 1.73" /><path d="M6 9l12 0" /><path d="M6 12l3 0" /><path d="M6 15l2 0" /></svg><div class="gf-stack"><h3 class="gf-card__title">Лицензия №&nbsp;430</h3><p class="gf-card__text">Бессрочная лицензия Банка России с&nbsp;2014&nbsp;года</p></div></div>
-        <div class="gf-card gf-card--icon"><svg class="gf-icon gf-card__icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M6 9a6 6 0 1 0 12 0a6 6 0 1 0 -12 0" /><path d="M12 15l3.4 5.89l1.598 -3.233l3.598 .232l-3.4 -5.889" /><path d="M6.802 12l-3.4 5.89l3.598 -.233l1.598 3.232l3.4 -5.889" /></svg><div class="gf-stack"><h3 class="gf-card__title">«Финансовая элита России»</h3><p class="gf-card__text">Премия 2025&nbsp;года</p></div></div>
+        <div class="gf-card gf-card--icon"><svg class="gf-icon gf-card__icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M6 9a6 6 0 1 0 12 0a6 6 0 1 0 -12 0" /><path d="M12 15l3.4 5.89l1.598 -3.233l3.598 .232l-3.4 -5.889" /><path d="M6.802 12l-3.4 5.89l3.598 -.233l1.598 3.232l3.4 -5.889" /></svg><div class="gf-stack"><h3 class="gf-card__title">«Финансовая элита&nbsp;России»</h3><p class="gf-card__text">Премия 2025&nbsp;года</p></div></div>
         <div class="gf-card gf-card--icon"><svg class="gf-icon gf-card__icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 21l18 0" /><path d="M3 10l18 0" /><path d="M5 6l7 -3l7 3" /><path d="M4 10l0 11" /><path d="M20 10l0 11" /><path d="M8 14l0 3" /><path d="M12 14l0 3" /><path d="M16 14l0 3" /></svg><div class="gf-stack"><h3 class="gf-card__title">Госуслуги</h3><p class="gf-card__text">Договор онлайн, без&nbsp;визита в&nbsp;офис</p></div></div>
       </div>
     </div>
@@ -386,7 +393,7 @@
       <details class="gf-faq"><summary class="gf-faq__q">Что такое ПДС?<span class="gf-faq__icon"></span></summary><div class="gf-faq__a"><p>Программа долгосрочных сбережений (ПДС) помогает копить с&nbsp;поддержкой государства. Её&nbsp;запустили Минфин и&nbsp;Банк России в&nbsp;2024&nbsp;году. Вы&nbsp;делаете взносы, государство добавляет софинансирование, фонд инвестирует средства и&nbsp;начисляет доход, а&nbsp;со&nbsp;взносов можно получить налоговый вычет.</p></div></details>
       <details class="gf-faq"><summary class="gf-faq__q">Почему важно успеть до&nbsp;31&nbsp;декабря?<span class="gf-faq__icon"></span></summary><div class="gf-faq__a"><p>Господдержка и&nbsp;налоговый вычет считаются по&nbsp;календарному году. Чтобы получить господдержку за&nbsp;<span class="yr">2026</span>&nbsp;год, взносы в&nbsp;этом году должны составить не&nbsp;менее 2&nbsp;000&nbsp;₽. Государство перечислит её в&nbsp;следующем году. Вычет за&nbsp;<span class="yr">2026</span>&nbsp;год тоже считается от&nbsp;взносов, сделанных до&nbsp;31&nbsp;декабря.</p></div></details>
       <details class="gf-faq"><summary class="gf-faq__q">Можно ли перевести пенсионные накопления (ОПС) в&nbsp;ПДС?<span class="gf-faq__icon"></span></summary><div class="gf-faq__a"><p>Да, накопления обязательного пенсионного страхования можно перевести в&nbsp;программу долгосрочных сбережений, они будут учтены как ваш взнос. Условия и&nbsp;порядок перевода уточните у&nbsp;специалистов фонда по&nbsp;телефону 8&nbsp;800&nbsp;700-75-50.</p></div></details>
-      <details class="gf-faq"><summary class="gf-faq__q">Когда можно забрать деньги?<span class="gf-faq__icon"></span></summary><div class="gf-faq__a"><p>По&nbsp;общему правилу через 15&nbsp;лет действия договора либо с&nbsp;55&nbsp;лет (женщины) и&nbsp;60&nbsp;лет (мужчины). В&nbsp;особых жизненных ситуациях (дорогостоящее лечение, потеря кормильца) можно получить до&nbsp;100&nbsp;% средств без&nbsp;потери условий. При&nbsp;досрочном расторжении выплачивается выкупная сумма, которая может быть меньше взносов; теряются льготы и&nbsp;господдержка.</p><p><b>Миллион может появиться на&nbsp;счёте раньше, чем откроется доступ к&nbsp;выплатам</b>: до&nbsp;этого деньги остаются на&nbsp;счёте и&nbsp;продолжают расти.</p></div></details>
+      <details class="gf-faq"><summary class="gf-faq__q">Когда можно забрать деньги?<span class="gf-faq__icon"></span></summary><div class="gf-faq__a"><p>По&nbsp;общему правилу через 15&nbsp;лет действия договора либо с&nbsp;55&nbsp;лет (женщины) и&nbsp;60&nbsp;лет (мужчины). В&nbsp;особых жизненных ситуациях (дорогостоящее лечение, потеря кормильца) можно получить до&nbsp;100&nbsp;% средств без&nbsp;потери условий. При&nbsp;досрочном расторжении выплачивается выкупная сумма, которая может быть меньше взносов; теряются льготы и&nbsp;господдержка.</p><p><b class="gf-semibold">Миллион может появиться на&nbsp;счёте раньше, чем откроется доступ к&nbsp;выплатам</b>: до&nbsp;этого деньги остаются на&nbsp;счёте и&nbsp;продолжают расти.</p></div></details>
       <details class="gf-faq"><summary class="gf-faq__q">Обязательно ли вносить одну и&nbsp;ту&nbsp;же сумму каждый месяц?<span class="gf-faq__icon"></span></summary><div class="gf-faq__a"><p>Нет. Размер и&nbsp;периодичность взносов вы&nbsp;определяете сами: можно увеличить, уменьшить или&nbsp;пропустить месяц. Договор от&nbsp;этого не&nbsp;расторгается. Господдержка начисляется за&nbsp;те&nbsp;годы, в&nbsp;которых взносы составили не&nbsp;менее 2&nbsp;000&nbsp;₽. Автоплатёж удобен, но&nbsp;не&nbsp;обязателен.</p></div></details>
       <details class="gf-faq"><summary class="gf-faq__q">Как считается господдержка?<span class="gf-faq__icon"></span></summary><div class="gf-faq__a"><p>До&nbsp;36&nbsp;000&nbsp;₽ в&nbsp;год первые 10&nbsp;лет при&nbsp;взносах от&nbsp;2&nbsp;000&nbsp;₽ в&nbsp;год. При&nbsp;доходе до&nbsp;80&nbsp;000&nbsp;₽ в&nbsp;месяц государство добавляет 1&nbsp;₽ на&nbsp;каждый ваш рубль, от&nbsp;80&nbsp;000 до&nbsp;150&nbsp;000&nbsp;₽ 1&nbsp;₽ на&nbsp;каждые 2&nbsp;₽, выше 150&nbsp;000&nbsp;₽ 1&nbsp;₽ на&nbsp;каждые 4&nbsp;₽. Зачисляется в&nbsp;году, следующем за&nbsp;годом взносов; размер определяет администратор по&nbsp;данным ФНС.</p></div></details>
       <details class="gf-faq"><summary class="gf-faq__q">Налоговый вычет приходит на&nbsp;счёт сам?<span class="gf-faq__icon"></span></summary><div class="gf-faq__a"><p>Нет. Вычет возвращает ФНС по&nbsp;вашему заявлению на&nbsp;ваш банковский счёт. Это от&nbsp;13 до&nbsp;22&nbsp;% от&nbsp;взносов, в&nbsp;зависимости от&nbsp;ставки НДФЛ, но&nbsp;не&nbsp;более чем с&nbsp;400&nbsp;000&nbsp;₽ взносов в&nbsp;год. Фонд эту сумму не&nbsp;начисляет. В&nbsp;расчёте на&nbsp;странице мы&nbsp;берём 13&nbsp;% и&nbsp;предполагаем, что вы&nbsp;вносите возвращённый налог на&nbsp;счёт ПДС. Это можно отключить в&nbsp;расчёте «Ваш план».</p></div></details>
@@ -399,7 +406,7 @@
   <section class="gf-section gf-container" id="legal">
     <div class="gf-narrow gf-stack gf-stack--8">
       <h2 class="gf-h5">Условия расчёта и&nbsp;правовая информация</h2>
-      <p class="gf-caption"><b>* Все расчёты на&nbsp;странице предварительные и&nbsp;не&nbsp;являются гарантией дохода.</b> Пример в&nbsp;калькуляторе первого экрана: женщина 35&nbsp;лет, официальный доход 100&nbsp;000&nbsp;₽ в&nbsp;месяц, без&nbsp;стартового взноса, налоговый вычет 13&nbsp;% вносится на&nbsp;счёт. Ставка 10&nbsp;% годовых взята для&nbsp;примера, доход от&nbsp;фонда не&nbsp;гарантирован. Господдержка составляет до&nbsp;36&nbsp;000&nbsp;₽ в&nbsp;год в&nbsp;первые 10&nbsp;лет при&nbsp;взносах от&nbsp;2&nbsp;000&nbsp;₽ в&nbsp;год, размер зависит от&nbsp;официального дохода. Налоговый вычет фонд не&nbsp;начисляет: вы&nbsp;возвращаете от&nbsp;13 до&nbsp;22&nbsp;% через ФНС сами и&nbsp;при&nbsp;желании вносите на&nbsp;счёт. В&nbsp;расчётах взято 13&nbsp;%. Если выплаты по&nbsp;возрасту открываются раньше чем через 5&nbsp;лет, вычет в&nbsp;расчёт не&nbsp;включается. Копилка без&nbsp;процентов в&nbsp;сравнениях означает те&nbsp;же взносы без&nbsp;господдержки, вычета и&nbsp;дохода.</p>
+      <p class="gf-caption"><b class="gf-semibold">* Все расчёты на&nbsp;странице предварительные и&nbsp;не&nbsp;являются гарантией дохода.</b> Пример в&nbsp;калькуляторе первого экрана: женщина 35&nbsp;лет, официальный доход 100&nbsp;000&nbsp;₽ в&nbsp;месяц, без&nbsp;стартового взноса, налоговый вычет 13&nbsp;% вносится на&nbsp;счёт. Ставка 10&nbsp;% годовых взята для&nbsp;примера, доход от&nbsp;фонда не&nbsp;гарантирован. Господдержка составляет до&nbsp;36&nbsp;000&nbsp;₽ в&nbsp;год в&nbsp;первые 10&nbsp;лет при&nbsp;взносах от&nbsp;2&nbsp;000&nbsp;₽ в&nbsp;год, размер зависит от&nbsp;официального дохода. Налоговый вычет фонд не&nbsp;начисляет: вы&nbsp;возвращаете от&nbsp;13 до&nbsp;22&nbsp;% через ФНС сами и&nbsp;при&nbsp;желании вносите на&nbsp;счёт. В&nbsp;расчётах взято 13&nbsp;%. Если выплаты по&nbsp;возрасту открываются раньше чем через 5&nbsp;лет, вычет в&nbsp;расчёт не&nbsp;включается. Копилка без&nbsp;процентов в&nbsp;сравнениях означает те&nbsp;же взносы без&nbsp;господдержки, вычета и&nbsp;дохода.</p>
       <p class="gf-caption">¹ Государственная поддержка предоставляется при&nbsp;соблюдении условий, установленных Федеральным законом от&nbsp;07.05.1998 №&nbsp;75-ФЗ «О&nbsp;негосударственных пенсионных фондах»: при&nbsp;уплате сберегательных взносов от&nbsp;2&nbsp;000&nbsp;₽ в&nbsp;год, в&nbsp;течение первых 10&nbsp;лет уплаты взносов; максимальный размер составляет 36&nbsp;000&nbsp;₽ в&nbsp;год. Размер дополнительных стимулирующих взносов определяется администратором софинансирования на&nbsp;основании данных ФНС России о&nbsp;среднемесячном доходе вкладчика.</p>
       <p class="gf-caption">² Возможно увеличение или&nbsp;уменьшение дохода от&nbsp;размещения пенсионных резервов. Результаты инвестирования в&nbsp;прошлом не&nbsp;определяют доходов в&nbsp;будущем. Государство не&nbsp;гарантирует доходности размещения пенсионных резервов. В&nbsp;расчётах использована ставка 10&nbsp;% годовых исключительно для&nbsp;наглядности примеров; она не&nbsp;является прогнозом результатов инвестиционной деятельности фонда.</p>
       <p class="gf-caption">³ Налоговый вычет предоставляется с&nbsp;суммы уплаченных сберегательных взносов (не&nbsp;более 400&nbsp;000&nbsp;₽ в&nbsp;год) по&nbsp;применимой ставке НДФЛ; для&nbsp;получения вычета необходимо обратиться в&nbsp;налоговый орган. Полученную сумму вы&nbsp;можете самостоятельно внести на&nbsp;счёт.</p>
@@ -517,56 +524,15 @@ if (typeof module !== "undefined" && module.exports) module.exports = CALC;
   /* :active на iOS Safari срабатывает только при наличии touch-обработчика — отклик на нажатии */
   doc.addEventListener("touchstart", function () {}, { passive: true });
 
-  /* =====================================================================
-     SPRING — параметры Apple: damping ratio (1 = без перелёта) и response
-     (скорость, в секундах; не длительность). Всегда стартует с текущего
-     значения и текущей скорости — поэтому любое движение можно перехватить.
-     ===================================================================== */
-  var active = new Set(), ticking = false, lastT = 0;
-  function frame(t) {
-    var dt = Math.min(0.064, (t - lastT) / 1000 || 0.016); lastT = t;
-    active.forEach(function (s) { s._step(dt); });
-    if (active.size) requestAnimationFrame(frame); else ticking = false;
-  }
-  function wake() { if (!ticking) { ticking = true; lastT = performance.now(); requestAnimationFrame(frame); } }
-  function Spring(o) {
-    this.x = o.from || 0; this.v = 0; this.target = this.x;
-    this.precision = o.precision || 0.5; this.onUpdate = o.onUpdate || function () {}; this.onRest = o.onRest || null;
-    this.params(o.damping == null ? 1 : o.damping, o.response || 0.4);
-  }
-  Spring.prototype.params = function (z, r) { this.z = z; this.r = r; this.k = Math.pow(2 * Math.PI / r, 2); this.c = 4 * Math.PI * z / r; return this; };
-  Spring.prototype.to = function (target, o) {
-    o = o || {};
-    if (o.damping != null || o.response != null) this.params(o.damping == null ? this.z : o.damping, o.response || this.r);
-    if (o.velocity != null) this.v = o.velocity;
-    this.target = target;
-    if (reduce) { this.set(target); if (this.onRest) this.onRest(this.x); return this; }
-    active.add(this); wake(); return this;
-  };
-  Spring.prototype.set = function (x) { this.x = x; this.target = x; this.v = 0; active.delete(this); this.onUpdate(x); return this; };
-  Spring.prototype.stop = function () { active.delete(this); this.v = 0; return this; };
-  Spring.prototype.isMoving = function () { return active.has(this); };
-  Spring.prototype._step = function (dt) {
-    var n = Math.ceil(dt / (1 / 240)), h = dt / n;
-    for (var i = 0; i < n; i++) { var a = -this.k * (this.x - this.target) - this.c * this.v; this.v += a * h; this.x += this.v * h; }
-    if (Math.abs(this.v) < this.precision && Math.abs(this.x - this.target) < this.precision) { this.x = this.target; this.v = 0; active.delete(this); this.onUpdate(this.x); if (this.onRest) this.onRest(this.x); return; }
-    this.onUpdate(this.x);
-  };
-  /* проекция импульса — формула Apple (затухание как у прокрутки) */
-  function project(v, d) { d = d || 0.998; return (v / 1000) * d / (1 - d); }
-  /* резинка на границах */
-  function rubber(over, dim, c) { c = c || 0.55; return (over * dim * c) / (dim + c * Math.abs(over)); }
-  /* скорость по истории последних pointermove */
-  function Tracker() { this.h = []; }
-  Tracker.prototype.add = function (x) { var t = performance.now(); this.h.push({ x: x, t: t }); while (this.h.length > 2 && t - this.h[0].t > 100) this.h.shift(); };
-  Tracker.prototype.v = function () { var h = this.h; if (h.length < 2) return 0; var a = h[0], b = h[h.length - 1], dt = (b.t - a.t) / 1000; if (performance.now() - b.t > 80) return 0; return dt > 0 ? (b.x - a.x) / dt : 0; };
   function haptic(ms) { try { if (navigator.vibrate && !reduce) navigator.vibrate(ms || 8); } catch (e) {} }
 
+  function cmOpenNow() { var m = doc.getElementById("calmenu"); return !!(m && !m.hidden); }
   /* ---------------- КНОПКА ВНИЗУ ЭКРАНА НА ТЕЛЕФОНЕ: появляется, когда калькулятор первого экрана ушёл вверх ---------------- */
-  var hcalc = $("#hcalc"), mbar = $("#mbar"), mbBtn = $("#mbBtn"), mbShown = false;
+  /* на телефоне главная кнопка видна всегда: когда кнопка калькулятора первого экрана не в окне, показываем её внизу */
+  var heroCta = $("#heroCta"), mbar = $("#mbar"), mbBtn = $("#mbBtn"), mbShown = false;
   function onScroll() {
-    var y = window.scrollY, vh = window.innerHeight;
-    var nearEnd = y > root.scrollHeight - vh - 260, show = hcalc.getBoundingClientRect().bottom < 0 && !nearEnd;
+    var y = window.scrollY, vh = window.innerHeight, r = heroCta.getBoundingClientRect();
+    var nearEnd = y > root.scrollHeight - vh - 260, show = (r.bottom < 0 || r.top > vh) && !nearEnd && !cmOpenNow();
     if (show !== mbShown) { mbShown = show; mbar.classList.toggle("is-shown", show); mbar.setAttribute("aria-hidden", show ? "false" : "true"); mbBtn.tabIndex = show ? 0 : -1; }
   }
   window.addEventListener("scroll", onScroll, { passive: true });
@@ -579,8 +545,9 @@ if (typeof module !== "undefined" && module.exports) module.exports = CALC;
   $$(".gf-segmented").forEach(segPaint);
 
   /* ---------------- NUMBERS: значения доезжают пружиной от текущего ---------------- */
-  function numSpring(el, pre) { pre = pre || ""; var s = new Spring({ precision: 0.5, onUpdate: function (x) { el.textContent = pre + rub(x); } }); s.first = true; return s; }
-  function numTo(s, v) { s.first = false; s.set(v); }
+  /* суммы выводятся сразу, без анимации счёта */
+  function numSpring(el, pre) { pre = pre || ""; return { set: function (x) { el.textContent = pre + rub(x); } }; }
+  function numTo(s, v) { s.set(v); }
 
   /* =====================================================================
      CALCULATOR
@@ -756,7 +723,6 @@ if (typeof module !== "undefined" && module.exports) module.exports = CALC;
   }
   if ("ResizeObserver" in window) new ResizeObserver(function () { fitBars(); }).observe($("#mxBrace"));
   window.addEventListener("resize", fitBars);
-  $("#mxBrace").addEventListener("transitionend", drawBrace);
 
   /* ---------------- ГРАФИК индивидуального плана: путь к цели в ПДС и в копилке ---------------- */
   var chartMeta = null;
