@@ -46,7 +46,8 @@ b, strong { font-weight: 600; }
 @media (max-width: 767.98px) { .gf-card--instruction .gf-card__title { font: 500 16px/22px var(--gf-font); } }
 .m-key .gf-calc__label { font: var(--gf-type-body); }
 .m-stat .gf-card__stat-unit { font: var(--gf-type-title-2); text-transform: none; }
-@media (max-width: 767.98px) { .m-title > span:not(.m-mega) { font: var(--gf-type-headline-3); } }
+@media (max-width: 767.98px) { .m-title > span:not(.m-mega) { font: var(--gf-type-headline-3); } .m-title > span.m-tag { font: var(--gf-type-title-2); } }
+@media (max-width: 359.98px) { .m-title > span.m-tag { font: var(--gf-type-title-3); } }
 
 /* Воздух: между блоками 96 (мобайл 64), под заголовком секции 48 (мобайл 32) */
 .gf-main { gap: var(--gf-space-2400); padding-bottom: var(--gf-space-2400); }
@@ -75,6 +76,7 @@ b, strong { font-weight: 600; }
 .m-deadline svg { flex: none; margin-top: var(--gf-space-50); color: var(--gf-color-light-blue); }
 .m-deadline { display: flex; align-items: flex-start; gap: var(--gf-space-200); max-width: 520px; }
 .m-trust { display: flex; flex-wrap: wrap; gap: var(--gf-space-300) var(--gf-space-600); margin: 0; padding: 0; list-style: none; }
+.m-trust--list { flex-direction: column; flex-wrap: nowrap; gap: var(--gf-space-200); }
 .m-trust li { display: flex; align-items: center; gap: var(--gf-space-200); }
 .m-hcalc { display: flex; flex-direction: column; gap: var(--gf-space-400); color: var(--gf-color-dark); }
 @media (min-width: 768px) { .m-hcalc { padding: var(--gf-space-600) var(--gf-space-800); } }
@@ -178,6 +180,10 @@ b, strong { font-weight: 600; }
 .m-motion .m-bar > i { transition: width .5s cubic-bezier(.22, 1, .36, 1); }
 .m-motion .m-brace { transition: left .5s cubic-bezier(.22, 1, .36, 1), width .5s cubic-bezier(.22, 1, .36, 1); }
 .m-motion .gf-faq { overflow: hidden; }
+
+/* шапка: «Цель / 1 000 000 / Быстрее. С поддержкой государства» — размеры по экранам */
+@media (max-width: 767.98px) { .gf-hero .m-title > span:not(.m-mega) { font: var(--gf-type-headline-3); } .gf-hero .m-title > span.m-tag { font: var(--gf-type-title-2); } }
+@media (max-width: 359.98px) { .gf-hero .m-title > span.m-tag { font: var(--gf-type-title-3); } }
 </style>
 </head>
 <body>
@@ -196,17 +202,16 @@ b, strong { font-weight: 600; }
     <div class="gf-hero__grid m-hero-grid">
       <!-- Левая колонка: одна мысль и одно действие (замечания 7, 9, 10) -->
       <div class="gf-hero__body m-hero-body">
-        <span class="gf-overline gf-overline--big">Цель миллион · Программа долгосрочных сбережений</span>
-        <h1 class="gf-hero__title m-title"><span>Свой миллион</span><span class="m-mega" id="heroMega" aria-hidden="true">1&nbsp;000&nbsp;000</span><span>копите вчетвером</span></h1>
-        <p class="gf-lead m-hero-lead"><b>Вы</b> копите в&nbsp;своём темпе, а&nbsp;<b>государство</b>, <b>налоговый вычет</b> и&nbsp;<b>доход фонда</b> добавляют к&nbsp;вашим взносам. Поэтому миллион приходит на&nbsp;годы&nbsp;раньше</p>
+        <span class="gf-overline gf-overline--big">Программа долгосрочных сбережений</span>
+        <h1 class="gf-hero__title m-title"><span>Цель</span><span class="m-mega" id="heroMega">1&nbsp;000&nbsp;000</span><span class="m-tag">Быстрее.<br><span class="gf-nowrap">С&nbsp;поддержкой государства</span></span></h1>
         <div class="m-hero-cta">
           <div class="gf-btn-row gf-btn-row--stack">
             <a class="gf-btn gf-btn--orange gf-btn--lg" id="heroCta" href="https://contract-pds.gazfond-pn.ru/?u=nakopimillion&amp;utm_source=landing_million&amp;utm_medium=hero&amp;utm_campaign=pds_million_v15" target="_blank" rel="noopener" data-goal="cta_contract" data-pos="hero">Оформить через Госуслуги</a>
             <a class="gf-btn gf-btn--lg" href="#calc" data-goal="calc_detail_open" data-pos="hero">Рассчитать свой план</a>
           </div>
-          <p class="m-deadline gf-text"><svg class="gf-icon gf-icon--20" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M12 12l3 2" /><path d="M12 7v5" /></svg><span><b>Успейте до&nbsp;31&nbsp;декабря:</b> взносы от&nbsp;2&nbsp;000&nbsp;₽ в&nbsp;<span class="yr">2026</span>&nbsp;году дают право на&nbsp;господдержку и&nbsp;вычет за&nbsp;этот год</span></p>
+          <p class="m-deadline gf-lead"><svg class="gf-icon gf-icon--20" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M12 12l3 2" /><path d="M12 7v5" /></svg><span><b>Успейте до&nbsp;31&nbsp;декабря</b> сделать взнос, чтобы получить софинансирование</span></p>
         </div>
-        <ul class="m-trust">
+        <ul class="m-trust m-trust--list">
           <li><svg class="gf-icon gf-icon--20" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M11.46 20.846a12 12 0 0 1 -7.96 -14.846a12 12 0 0 0 8.5 -3a12 12 0 0 0 8.5 3a12 12 0 0 1 -.09 7.06" /><path d="M15 19l2 2l4 -4" /></svg>Застраховано АСВ до&nbsp;2,8&nbsp;млн&nbsp;₽</li>
           <li><svg class="gf-icon gf-icon--20" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 7a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /><path d="M21 21v-2a4 4 0 0 0 -3 -3.85" /></svg>6,7&nbsp;млн клиентов</li>
           <li><svg class="gf-icon gf-icon--20" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 15a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /><path d="M13 17.5v4.5l2 -1.5l2 1.5v-4.5" /><path d="M10 19h-5a2 2 0 0 1 -2 -2v-10c0 -1.1 .9 -2 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -1 1.73" /><path d="M6 9l12 0" /><path d="M6 12l3 0" /><path d="M6 15l2 0" /></svg>Лицензия Банка России №&nbsp;430</li>
