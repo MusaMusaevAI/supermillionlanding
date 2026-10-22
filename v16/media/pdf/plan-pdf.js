@@ -1,6 +1,6 @@
 /* =====================================================================
    «Цель миллион» · личный план ПДС в PDF, v16 — в дизайн-коде ГАЗФОНД ПН.
-   ТЗ-v16, раздел 7: цвета только из токенов кита, шрифт Inter, радиусы кита,
+   ТЗ-v16.md, раздел 7: цвета только из токенов кита, шрифт Inter, радиусы кита,
    3D-картинки из kit/assets/3d, поля 48 pt, фон страниц чередуется
    (обложка — синий градиент героя, дальше белый и fill_1).
    Два макета из одних данных (planData() в странице):
@@ -139,23 +139,11 @@
     /* ---------- общие данные ---------- */
     var hp = D.hp, V = D.V, hg = D.hg || hp, goal = !!D.g, Y0 = D.startYear, Y1 = Y0 + 1;
     var goalWord = D.mil ? "Миллион" : "Цель";
-    var disclaimer = "Расчёт предварительный и не является гарантией дохода. Доходность 10 % годовых взята для примера, доход от фонда не гарантирован. Господдержка до 36 000 ₽ в год в первые 10 лет при взносах от 2 000 ₽ в год, размер зависит от официального дохода. Налоговый вычет от 13 до 22 % от взносов (не более чем с 400 000 ₽ в год) возвращает ФНС по вашему заявлению, в расчёте взято 13 %. Выплаты по общему правилу доступны через 15 лет действия договора либо с 55 лет женщинам и 60 лет мужчинам. При досрочном расторжении выплачивается выкупная сумма, она может быть меньше внесённого. Средства застрахованы АСВ на сумму до 2,8 млн ₽. " + String(D.paramsTxt).replace(" Доходность 10 % годовых взята для примера.", "");
+    var disclaimer = "Расчёт предварительный и не является гарантией дохода. Доходность 10 % годовых взята для примера, доход от фонда не гарантирован. Господдержка до 36 000 ₽ в год в первые 10 лет при взносах от 2 000 ₽ в год, размер зависит от официального дохода. Налоговый вычет от 13 до 22 % от взносов (не более чем с 400 000 ₽ в год) возвращает ФНС по вашему заявлению, в расчёте взято 13 %. Выплаты по общему правилу доступны через 15 лет действия договора либо с 55 лет женщинам и 60 лет мужчинам. При досрочном расторжении выплачивается выкупная сумма, она может быть меньше внесённого. Средства застрахованы АСВ на сумму до 2,8 млн ₽.";
     var src = [
       ["Ваши взносы", hg.contrib, C.dblue, ""], ["Господдержка", hg.cofin, C.blue, "+ "],
       ["Налоговый вычет", hg.ded, C.blue3, "+ "], ["Доход от фонда", hg.inc, C.lblue, "+ "]
     ];
-    function coinSplit(h) {
-      var tot = h.value || 1, you = Math.max(1, Math.min(10, Math.round(h.contrib / tot * 10))), rest = 10 - you;
-      var parts = [[h.cofin, C.blue], [h.ded, C.blue3], [h.inc, C.lblue]], sum = h.cofin + h.ded + h.inc || 1;
-      parts.forEach(function (p) { p.ex = p[0] / sum * rest; p.n = Math.floor(p.ex); });
-      var left = rest - parts.reduce(function (a, p) { return a + p.n; }, 0);
-      parts.slice().sort(function (a, b) { return (b.ex - b.n) - (a.ex - a.n); }).forEach(function (p) { if (left > 0 && p[0] > 0) { p.n++; left--; } });
-      var out = []; for (var i = 0; i < you; i++) out.push(C.dblue);
-      parts.forEach(function (p) { for (var j = 0; j < p.n; j++) out.push(p[1]); });
-      while (out.length < 10) out.push(C.blue);
-      return { you: you, rest: rest, cols: out };
-    }
-
     /* ======================= 1. ОБЛОЖКА: синий градиент героя ======================= */
     newDocPage(); bg = C.blue; curBg = C.blue;
     img(heroImg(G.w, G.h, 0), 0, 0, G.w, G.h, "JPEG");
@@ -176,9 +164,8 @@
     T(legal0, G.m, G.h - (phone ? 28 : 36) - TH(legal0, lo) + 8, lo);
 
     /* ======================= 2. ИЗ ЧЕГО СЛОЖИТСЯ ЦЕЛЬ: три числа ======================= */
-    var co = coinSplit({ value: hg.value, contrib: hg.contrib, cofin: hg.cofin, ded: hg.ded, inc: hg.inc });
     page(C.f2, "Из чего сложится " + (goal ? (D.mil ? "миллион" : "цель") : "сумма"), goal ? "Откуда возьмётся " + D.goalTxt : "Откуда возьмётся " + rub(V),
-      goal ? "Главное о вашем плане в трёх числах" : "Главное о вашем плане к моменту выплат");
+      null);
     var pills = goal
       ? [["Ваши взносы до " + (D.mil ? "миллиона" : "цели"), rub(hg.contrib), C.dark], ["Программа добавит", "+ " + rub(hg.value - hg.contrib), C.blue], [goalWord + " на счёте", D.gIn, C.dblue]]
       : [["Ваши взносы", rub(hp.contrib), C.dark], ["Программа добавит", "+ " + rub(hp.add), C.blue], ["К выплатам в " + D.payYear, rub(V), C.dblue]];
@@ -195,33 +182,20 @@
       return yy + (phone ? 3 * ph + 20 : ph);
     }
     place(pillsBlock, W);
-    function coinsBlock(x, yy, w) {
-      var n = 10, cg = phone ? 5 : 10, cd = Math.min(phone ? 26 : 34, (w - cg * 9) / n);
-      yy = T("Из каждых 10 ₽ на счёте", x, yy, { size: phone ? 13 : 14, color: C.dark }) + 10;
-      co.cols.forEach(function (c, i) {
-        var ccx = x + i * (cd + cg) + cd / 2, ccy = yy + cd / 2; dot(ccx, ccy, cd / 2, c);
-        T("₽", ccx, ccy - cd * 0.2, { size: cd * 0.4, bold: true, color: c === C.lblue ? C.dblue : C.f2, align: "center" });
-      });
-      yy += cd + 10;
-      yy = RT([[String(co.you), 1], [" " + "внесёте вы, ", 0], [String(co.rest), 1], [" добавит программа: господдержка, налоговый вычет и доход фонда", 0]], x, yy, { size: phone ? 11 : 11.5, maxW: w, color: C.gray1, bcolor: C.dark }) + 14;
+    /* разбивка по источникам одной строкой: полоса и суммы, без пояснений */
+    function srcBlock(x, yy, w) {
+      var tot = hg.value || 1, cx2 = x, bh = 12, gap = 2, parts = src.filter(function (q) { return q[1] > 0; }), usable = w - gap * (parts.length - 1);
+      parts.forEach(function (q) { var pw = q[1] / tot * usable; rr(cx2, yy, pw, bh, 4, q[2]); cx2 += pw + gap; });
+      yy += bh + 16;
       var sn = phone ? 2 : 4, sw = (w - GAP * (sn - 1)) / sn;
-      src.forEach(function (s, i) {
-        var sx = x + (i % sn) * (sw + GAP), sy = yy + Math.floor(i / sn) * 42;
-        dot(sx + 4, sy + 6, 4, s[2]); T(s[0], sx + 14, sy, { size: 10, color: C.gray1 });
-        T(s[3] + rub(s[1]), sx, sy + 16, { size: phone ? 15 : 16, bold: true, color: C.dark });
+      src.forEach(function (q, i) {
+        var sx = x + (i % sn) * (sw + GAP), sy = yy + Math.floor(i / sn) * 44;
+        dot(sx + 4, sy + 6, 4, q[2]); T(q[0], sx + 14, sy, { size: 10, color: C.gray1 });
+        T(q[3] + rub(q[1]), sx, sy + 16, { size: phone ? 15 : 16, bold: true, color: C.dark });
       });
-      return yy + Math.ceil(4 / sn) * 42 - 8;
+      return yy + Math.ceil(4 / sn) * 44 - 8;
     }
-    y += phone ? 6 : 12; place(coinsBlock, W);
-    function afterBlock(x, yy, w) {
-      var h = phone ? 92 : 60, tx = x + 20, tw2 = w - 40 - (phone ? 0 : 220);
-      rr(x, yy, w, h, 16, C.f1);
-      T(goal ? "Дальше счёт продолжает расти" : "Сумма к выплатам", tx, yy + 14, { size: 12.5, bold: true, color: C.dark, maxW: tw2 });
-      T(D.now15 ? "Через 15 лет на счёте будет около" : "Когда станут доступны выплаты, в " + D.payYear + " году, на счёте будет около", tx, yy + 32, { size: 10.5, color: C.gray1, maxW: phone ? w - 40 : tw2 });
-      T(rub(V), phone ? tx : x + w - 20, phone ? yy + 62 : yy + h / 2 - 12, { size: phone ? 18 : 24, bold: true, color: C.blue, align: phone ? "left" : "right" });
-      return yy + h;
-    }
-    if (goal) place(afterBlock, W);
+    y += phone ? 6 : 16; place(srcBlock, W);
 
     /* ======================= 3. ГОД ЗА ГОДОМ: таблица на одной сетке ======================= */
     page(C.f1, "Дорожная карта", D.now15 ? "Год за годом" : "Год за годом до выплат", "Сумма на счёте в конце каждого года" + (D.now15 ? "" : " и в момент, когда станут доступны выплаты") + ". Господдержка за год приходит в следующем году. Отмечайте пройденные годы");
@@ -374,10 +348,10 @@
     yTop = y;
     function goBlock(x, yy, w) {
       var ib = phone ? 72 : 88, tw4 = w - 40 - ib - 8;
-      var h = Math.max(ib + 24, 18 + 14 + 4 + TH("Успейте до 31 декабря", { size: phone ? 16 : 18, bold: true, maxW: tw4, lh: 1.15 }) + 6 + TH("Взносы от 2 000 ₽ в " + Y0 + " году дают право на господдержку и вычет за этот год", { size: 9.5, maxW: tw4, lh: 1.35 }) + 18);
+      var h = Math.max(ib + 24, 18 + TH("Успейте до 31 декабря", { size: phone ? 16 : 18, bold: true, maxW: tw4, lh: 1.15 }) + 6 + TH("Взносы от 2 000 ₽ в " + Y0 + " году дают право на господдержку и вычет за этот год", { size: 9.5, maxW: tw4, lh: 1.35 }) + 18);
       img(heroImg(w, h, 20), x, yy, w, h);
       fit("hourglass", x + w - ib - 12, yy + (h - ib) / 2, ib);
-      var gb = T(D.daysLeft > 0 ? "До конца года " + D.daysLeft + NB + plural(D.daysLeft, ["день", "дня", "дней"]) : "До 31 декабря", x + 20, yy + 18, { size: 10, color: C.lblue }) + 4;
+      var gb = yy + 18;
       gb = T("Успейте до 31" + NB + "декабря", x + 20, gb, { size: phone ? 16 : 18, bold: true, color: C.f2, maxW: tw4, lh: 1.15 }) + 6;
       T("Взносы от 2 000 ₽ в " + Y0 + " году дают право на господдержку и вычет за этот год", x + 20, gb, { size: 9.5, color: C.f2, alpha: 0.7, maxW: tw4, lh: 1.35 });
       yy += h + 12;
