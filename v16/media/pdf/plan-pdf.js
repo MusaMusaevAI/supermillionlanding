@@ -14,12 +14,19 @@
   var C = {
     dark: "#1C1F35", gray1: "#7D7D7D", gray2: "#BEBEBE", blue: "#0051FF", blue2: "#006FFF", blue3: "#67A9FF",
     blueQ: "#11428F", dblue: "#283069", lblue: "#94E6FF", orange: "#FF7D4A", f1: "#F4F5FF", f2: "#FFFFFF", f3: "#EBECF7",
-    line: "#E6E6E6", heroA: "#0063FF", heroB: "#52A8FF"
+    heroA: "#0063FF", heroB: "#52A8FF"
   };
   function hex(h) { h = h.replace("#", ""); return [parseInt(h.substr(0, 2), 16), parseInt(h.substr(2, 2), 16), parseInt(h.substr(4, 2), 16)]; }
   function mix(a, b, t) { var x = hex(a), y = hex(b); return "#" + [0, 1, 2].map(function (i) { return ("0" + Math.round(x[i] + (y[i] - x[i]) * t).toString(16)).slice(-2); }).join(""); }
-  /* white_70 и white_50 кита на синем фоне героя */
-  C.w70 = mix(C.f2, "#2A86FF", 0.3); C.w50 = mix(C.f2, "#2A86FF", 0.5);
+  /* типограф как на странице: предлоги и короткие слова не висят в конце строки, число не отрывается от единицы */
+  var NBS = "\u00a0";
+  var RX_SHORT = /(^|[\s(«„"])(в|во|и|с|со|к|ко|о|об|у|а|на|по|за|до|от|из|не|ни|но|для|без|при|под|над|про|или|что|как|через|около|после)\s+/gi;
+  var RX_UNIT = /(\d)\s+(?=(₽|%|лет|года|год|млн|тыс|месяц|месяца|месяцев|дня|дней|день|минут|человек|клиентов)(?![а-яё]))/gi;
+  function typo(t) {
+    t = String(t); if (t.length < 3) return t;
+    return t.replace(RX_SHORT, "$1$2" + NBS).replace(RX_SHORT, "$1$2" + NBS).replace(RX_UNIT, "$1" + NBS)
+      .replace(/(\d) (\d{3})(?!\d)/g, "$1" + NBS + "$2").replace(/(№) +/g, "$1" + NBS);
+  }
 
   /* градиент героя кита (#0063FF → #52A8FF по диагонали) — картинкой через canvas */
   function heroImg(w, h, r) {
@@ -52,15 +59,19 @@
     function tw(s, size, bold) { font(size, bold); return doc.getTextWidth(String(s)); }
     function lines(str, size, bold, maxW) { font(size, bold); return maxW ? doc.splitTextToSize(String(str), maxW) : [String(str)]; }
     function T(str, x, y, o) {
-      o = o || {}; var size = o.size || 11, lh = size * (o.lh || 1.3), ls = lines(str, size, o.bold, o.maxW);
-      if (DRAW) { color(o.color || C.dark); ls.forEach(function (ln, i) { doc.text(ln, x, y + size * 0.8 + i * lh, { align: o.align || "left" }); }); }
+      o = o || {}; var size = o.size || 11, lh = size * (o.lh || 1.3), ls = lines(typo(str), size, o.bold, o.maxW);
+      if (DRAW) {
+        if (o.alpha) { doc.saveGraphicsState(); doc.setGState(new doc.GState({ opacity: o.alpha })); }
+        color(o.color || C.dark); ls.forEach(function (ln, i) { doc.text(ln, x, y + size * 0.8 + i * lh, { align: o.align || "left" }); });
+        if (o.alpha) doc.restoreGraphicsState();
+      }
       return y + ls.length * lh;
     }
     function TH(str, o) { var d = DRAW; DRAW = false; var h = T(str, 0, 0, o); DRAW = d; return h; }
     /* текст с жирными кусками: [[«обычный», 0], [«жирный», 1]] */
     function RT(runs, x, y, o) {
       var size = o.size || 11, lh = size * (o.lh || 1.35), maxW = o.maxW, toks = [];
-      runs.forEach(function (r) { String(r[0]).split(/( +)/).forEach(function (t) { if (t) toks.push([t, !!r[1]]); }); });
+      runs.forEach(function (r) { typo(r[0]).split(/( +)/).forEach(function (t) { if (t) toks.push([t, !!r[1]]); }); });
       var ls = [[]], cw = 0;
       toks.forEach(function (t) { var w = tw(t[0], size, t[1]); if (cw + w > maxW && ls[ls.length - 1].length && t[0].trim()) { ls.push([]); cw = 0; if (!t[0].trim()) return; } ls[ls.length - 1].push([t[0], t[1], w]); cw += w; });
       if (DRAW) ls.forEach(function (ln, i) { var cx = x; ln.forEach(function (t) { font(size, t[1]); color(t[1] ? (o.bcolor || C.dark) : (o.color || C.gray1)); doc.text(t[0], cx, y + size * 0.8 + i * lh); cx += t[2]; }); });
@@ -69,7 +80,10 @@
     function RTH(runs, o) { var d = DRAW; DRAW = false; var h = RT(runs, 0, 0, o); DRAW = d; return h; }
     function rr(x, y, w, h, r, c) { if (!DRAW) return; fill(c); var k = Math.min(r, h / 2, w / 2); doc.roundedRect(x, y, w, h, k, k, "F"); }
     function rrS(x, y, w, h, r, c, lw) { if (!DRAW) return; stroke(c); doc.setLineWidth(lw || 1); var k = Math.min(r, h / 2, w / 2); doc.roundedRect(x, y, w, h, k, k, "S"); }
-    function hr(x1, x2, y, c) { if (!DRAW) return; stroke(c || C.line); doc.setLineWidth(0.75); doc.line(x1, y, x2, y); }
+    function hr(x1, x2, y, c) {
+      if (!DRAW) return; if (!c) { doc.saveGraphicsState(); doc.setGState(new doc.GState({ "stroke-opacity": 0.1 })); stroke("#000000"); } else stroke(c);
+      doc.setLineWidth(0.75); doc.line(x1, y, x2, y); if (!c) doc.restoreGraphicsState();
+    }
     function dot(x, y, r, c) { if (!DRAW) return; fill(c); doc.circle(x, y, r, "F"); }
     function img(url, x, y, w, h, fmt) { if (DRAW && url) try { doc.addImage(url, fmt || "PNG", x, y, w, h, undefined, "FAST"); } catch (e) {} }
     function fit(name, x, y, box) { var u = D.img[name], r = D.img[name + "Ratio"] || 1; if (!u) return; var w = box, h = box; if (r > 1) h = box / r; else w = box * r; img(u, x + (box - w) / 2, y + (box - h) / 2, w, h); }
@@ -96,7 +110,7 @@
         doc.setPage(n);
         var y = G.h - (phone ? 24 : 36);
         hr(G.m, G.w - G.m, y - 8);
-        T(n === TOTAL ? "АО «НПФ ГАЗФОНД пенсионные накопления» · лицензия Банка России № 430" : "Цель миллион · личный план", G.m, y - 2, { size: 8, color: C.gray1 });
+        T(n === TOTAL ? (phone ? "АО «НПФ ГАЗФОНД ПН» · лицензия № 430" : "АО «НПФ ГАЗФОНД пенсионные накопления» · лицензия Банка России № 430") : "Цель миллион · личный план", G.m, y - 2, { size: 8, color: C.gray1, maxW: W - 50 });
         T(n + " / " + TOTAL, G.w - G.m, y - 2, { size: 8, color: C.gray1, align: "right" });
       });
     }
@@ -125,7 +139,7 @@
     /* ---------- общие данные ---------- */
     var hp = D.hp, V = D.V, hg = D.hg || hp, goal = !!D.g, Y0 = D.startYear, Y1 = Y0 + 1;
     var goalWord = D.mil ? "Миллион" : "Цель";
-    var disclaimer = "Расчёт предварительный и не является гарантией дохода. Доходность 10 % годовых взята для примера, доход от фонда не гарантирован. Господдержка до 36 000 ₽ в год в первые 10 лет при взносах от 2 000 ₽ в год, размер зависит от официального дохода. Налоговый вычет от 13 до 22 % от взносов (не более чем с 400 000 ₽ в год) возвращает ФНС по вашему заявлению, в расчёте взято 13 %. Выплаты по общему правилу доступны через 15 лет действия договора либо с 55 лет женщинам и 60 лет мужчинам. При досрочном расторжении выплачивается выкупная сумма, она может быть меньше внесённого. Средства застрахованы АСВ на сумму до 2,8 млн ₽. " + D.paramsTxt;
+    var disclaimer = "Расчёт предварительный и не является гарантией дохода. Доходность 10 % годовых взята для примера, доход от фонда не гарантирован. Господдержка до 36 000 ₽ в год в первые 10 лет при взносах от 2 000 ₽ в год, размер зависит от официального дохода. Налоговый вычет от 13 до 22 % от взносов (не более чем с 400 000 ₽ в год) возвращает ФНС по вашему заявлению, в расчёте взято 13 %. Выплаты по общему правилу доступны через 15 лет действия договора либо с 55 лет женщинам и 60 лет мужчинам. При досрочном расторжении выплачивается выкупная сумма, она может быть меньше внесённого. Средства застрахованы АСВ на сумму до 2,8 млн ₽. " + String(D.paramsTxt).replace(" Доходность 10 % годовых взята для примера.", "");
     var src = [
       ["Ваши взносы", hg.contrib, C.dblue, ""], ["Господдержка", hg.cofin, C.blue, "+ "],
       ["Налоговый вычет", hg.ded, C.blue3, "+ "], ["Доход от фонда", hg.inc, C.lblue, "+ "]
@@ -146,7 +160,7 @@
     newDocPage(); bg = C.blue; curBg = C.blue;
     img(heroImg(G.w, G.h, 0), 0, 0, G.w, G.h, "JPEG");
     if (D.img.logo) { var lh0 = phone ? 40 : 48; img(D.img.logo, G.m, G.m - 8, lh0 * (D.img.logoRatio || 1.54), lh0); }
-    T(D.dateTxt, G.w - G.m, G.m + 6, { size: 9.5, color: C.w70, align: "right" });
+    T(D.dateTxt, G.w - G.m, G.m + 6, { size: 9.5, color: C.f2, alpha: 0.7, align: "right" });
     var imgBox = phone ? 200 : 300;
     if (phone) { fit("cover", G.w - G.m - imgBox + 20, 92, imgBox); y = 92 + imgBox + 8; }
     else { fit("cover", G.w - G.m - imgBox, (G.h - imgBox) / 2 - 10, imgBox); y = 168; }
@@ -155,10 +169,11 @@
     var big = goal ? rub(D.target) : rub(V), bs = phone ? 44 : 64; while (tw(big, bs, true) > cw && bs > 30) bs -= 1;
     y = T(big, G.m, y, { size: bs, bold: true, color: C.f2, lh: 1.05 }) + 6;
     y = T(goal ? "на счёте " + D.gIn + ", в " + D.gYear + " году" : D.whenTxt, G.m, y, { size: phone ? 18 : 22, color: C.f2, maxW: cw, lh: 1.2 }) + 12;
-    y = T("При взносе " + rub(D.monthly) + " в месяц" + (D.first ? " и стартовом взносе " + rub(D.first) : "") + ". " + (D.now15 ? "Через 15 лет" : "Когда станут доступны выплаты, в " + D.payYear + " году,") + " на счёте будет около " + rub(V), G.m, y, { size: phone ? 11 : 12, color: C.w70, maxW: Math.min(cw, 400), lh: 1.45 }) + 20;
+    y = T("При взносе " + rub(D.monthly) + " в месяц" + (D.first ? " и стартовом взносе " + rub(D.first) : "") + ". " + (D.now15 ? "Через 15 лет" : "Когда станут доступны выплаты, в " + D.payYear + " году,") + " на счёте будет около " + rub(V), G.m, y, { size: phone ? 11 : 12, color: C.f2, alpha: 0.7, maxW: Math.min(cw, 400), lh: 1.45 }) + 20;
     var cx = G.m, cy = y, chH = phone ? 26 : 28;
     D.chips.forEach(function (c) { var w = tw(c, 10, true) + 28; if (cx + w > G.m + cw) { cx = G.m; cy += chH + 8; } rr(cx, cy, w, chH, chH / 2, C.f2); T(c, cx + 14, cy + chH / 2 - 6, { size: 10, bold: true, color: C.dblue }); cx += w + 8; });
-    T("Расчёт предварительный, доход от фонда не гарантирован · АО «НПФ ГАЗФОНД пенсионные накопления», лицензия № 430", G.m, G.h - G.m + (phone ? 4 : 8), { size: 8, color: C.w70, maxW: W });
+    var legal0 = "Расчёт предварительный, доход от фонда не гарантирован · АО «НПФ ГАЗФОНД пенсионные накопления», лицензия № 430", lo = { size: 8, color: C.f2, alpha: 0.7, maxW: W };
+    T(legal0, G.m, G.h - (phone ? 28 : 36) - TH(legal0, lo) + 8, lo);
 
     /* ======================= 2. ИЗ ЧЕГО СЛОЖИТСЯ ЦЕЛЬ: три числа ======================= */
     var co = coinSplit({ value: hg.value, contrib: hg.contrib, cofin: hg.cofin, ded: hg.ded, inc: hg.inc });
@@ -300,7 +315,7 @@
       var rows = D.yields.map(function (q, i) { return [String(q.r * 100).replace(".", ",") + " % годовых", i === 0 ? "как в плане" : "", q.v, [C.blue, C.blue3, C.lblue][i]]; })
         .concat([["Без дохода фонда", "", D.noInc, C.gray2]]);
       var h = 20 + rows.length * 40; rr(x, yy, w, h, 16, C.f2);
-      var lw = phone ? 92 : 110, vw = phone ? 82 : 96, bx = x + 20 + lw, bw0 = w - 40 - lw - vw - 8, mx = D.yields[0].v || 1, ry = yy + 10;
+      var lw = phone ? 104 : 116, vw = phone ? 78 : 96, bx = x + 20 + lw, bw0 = w - 40 - lw - vw - 8, mx = D.yields[0].v || 1, ry = yy + 10;
       rows.forEach(function (r) {
         T(r[0], x + 20, ry + (r[1] ? 6 : 12), { size: 10, bold: true }); if (r[1]) T(r[1], x + 20, ry + 20, { size: 8.5, color: C.gray1 });
         rr(bx, ry + 11, bw0, 14, 7, C.f1); rr(bx, ry + 11, Math.max(10, r[2] / mx * bw0), 14, 7, r[3]);
@@ -319,10 +334,10 @@
     yTop = y;
     function payBlock(x, yy, w) {
       var h1 = 104; img(heroImg(w, h1, 20), x, yy, w, h1);
-      T("Ежемесячно 10 лет", x + 20, yy + 18, { size: 10, color: C.w70 });
+      T("Ежемесячно 10 лет", x + 20, yy + 18, { size: 10, color: C.f2, alpha: 0.7 });
       var pv = "около " + rub(D.pay10) + " в месяц", vs = phone ? 20 : 24; while (tw(pv, vs, true) > w - 40 && vs > 13) vs -= 0.5;
       T(pv, x + 20, yy + 36, { size: vs, bold: true, color: C.f2 });
-      T("Срок выбираете сами, от 5 лет. Остаток наследуется", x + 20, yy + h1 - 28, { size: 9.5, color: C.w70, maxW: w - 40 });
+      T("Срок выбираете сами, от 5 лет. Остаток наследуется", x + 20, yy + h1 - 28, { size: 9.5, color: C.f2, alpha: 0.7, maxW: w - 40 });
       yy += h1 + 10;
       var cw2 = (w - 10) / 2, h2 = phone ? 96 : 84;
       [["Ежемесячно 5 лет", "около " + rub(D.pay5), "в месяц, самый короткий срок"], ["Пожизненно", "каждый месяц", "размер рассчитает фонд при назначении"]].forEach(function (c, i) {
@@ -358,12 +373,13 @@
     page(C.f1, "Следующий шаг", "Начните в этом году");
     yTop = y;
     function goBlock(x, yy, w) {
-      var h = 112; img(heroImg(w, h, 20), x, yy, w, h);
-      var ib = 88; fit("hourglass", x + w - ib - 12, yy + (h - ib) / 2, ib);
-      var tw4 = w - 40 - ib - 8;
+      var ib = phone ? 72 : 88, tw4 = w - 40 - ib - 8;
+      var h = Math.max(ib + 24, 18 + 14 + 4 + TH("Успейте до 31 декабря", { size: phone ? 16 : 18, bold: true, maxW: tw4, lh: 1.15 }) + 6 + TH("Взносы от 2 000 ₽ в " + Y0 + " году дают право на господдержку и вычет за этот год", { size: 9.5, maxW: tw4, lh: 1.35 }) + 18);
+      img(heroImg(w, h, 20), x, yy, w, h);
+      fit("hourglass", x + w - ib - 12, yy + (h - ib) / 2, ib);
       var gb = T(D.daysLeft > 0 ? "До конца года " + D.daysLeft + NB + plural(D.daysLeft, ["день", "дня", "дней"]) : "До 31 декабря", x + 20, yy + 18, { size: 10, color: C.lblue }) + 4;
       gb = T("Успейте до 31" + NB + "декабря", x + 20, gb, { size: phone ? 16 : 18, bold: true, color: C.f2, maxW: tw4, lh: 1.15 }) + 6;
-      T("Взносы от 2 000 ₽ в " + Y0 + " году дают право на господдержку и вычет за этот год", x + 20, gb, { size: 9.5, color: C.w70, maxW: tw4, lh: 1.35 });
+      T("Взносы от 2 000 ₽ в " + Y0 + " году дают право на господдержку и вычет за этот год", x + 20, gb, { size: 9.5, color: C.f2, alpha: 0.7, maxW: tw4, lh: 1.35 });
       yy += h + 12;
       var bh = 52; rr(x, yy, w, bh, 12, C.blue);
       T("Оформить через Госуслуги", x + w / 2, yy + bh / 2 - 8, { size: 14, bold: true, color: C.f2, align: "center" });

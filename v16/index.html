@@ -40,7 +40,8 @@ b, strong { font-weight: 600; }
 .gf-calc__label { font: var(--gf-type-body); }
 .gf-btn--lg { font: 600 16px/22px var(--gf-font); }
 @media (max-width: 767.98px) { .gf-btn--lg { height: 52px; font: 600 16px/22px var(--gf-font); } }
-.m-field .gf-caption, .m-stat .gf-caption, .m-trust, .gf-faq__q { font: 500 16px/22px var(--gf-font); }
+.m-field .gf-caption, .m-stat .gf-caption, .m-trust { font: var(--gf-type-body); }
+.gf-faq__q { font: 500 16px/22px var(--gf-font); }
 .gf-faq__a { font: var(--gf-type-body-big); }
 @media (max-width: 767.98px) { .gf-card--instruction .gf-card__title { font: 500 16px/22px var(--gf-font); } }
 .m-key .gf-calc__label { font: var(--gf-type-body); }
@@ -206,7 +207,7 @@ b, strong { font-weight: 600; }
 .m-bd { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gf-space-400); }
 @media (max-width: 1139.98px) { .m-bd { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .m-bd-i { display: flex; flex-direction: column; gap: var(--gf-space-100); }
-.m-acts { display: flex; flex-direction: column; gap: var(--gf-space-300); }
+.m-acts { display: flex; flex-direction: column; gap: var(--gf-space-400); }
 .m-center { display: flex; justify-content: center; text-align: center; }
 a.m-center { align-self: center; }
 /* ТЗ 3.10: план в PDF — карточка файла кита (Cards/File) с 3D документа */
@@ -226,7 +227,7 @@ a.m-center { align-self: center; }
 .m-go-acts { display: flex; flex-direction: column; align-items: flex-start; gap: var(--gf-space-300); margin-top: auto; }
 .m-go .gf-btn--tertiary { color: var(--gf-color-white); }
 .m-go .gf-btn--tertiary:hover { color: var(--gf-white-70); }
-@media (max-width: 1139.98px) { .m-go-img { width: 200px; height: 200px; right: var(--gf-space-400); } }
+@media (max-width: 1139.98px) and (min-width: 768px) { .m-go { padding-right: 232px; } .m-go-img { width: 200px; height: 200px; right: var(--gf-space-400); } }
 @media (max-width: 767.98px) {
   .m-go { min-height: 0; padding: var(--gf-space-600) var(--gf-space-400); }
   .m-go .gf-banner__body { padding: 0; max-width: none; }
@@ -477,7 +478,7 @@ a.m-center { align-self: center; }
         <div class="m-acts">
           <a class="gf-btn gf-btn--primary gf-btn--lg gf-btn--block" href="https://contract-pds.gazfond-pn.ru/?u=nakopimillion&amp;utm_source=landing_million&amp;utm_medium=calc&amp;utm_campaign=pds_million_v16" target="_blank" rel="noopener" data-goal="cta_contract" data-pos="calc">Оформить через Госуслуги</a>
           <button class="gf-file m-file" type="button" data-pdf data-pos="calc">
-            <span class="m-file-txt"><span class="gf-file__title">Заберите план с&nbsp;собой</span><span class="gf-caption">7&nbsp;страниц: что сделать в&nbsp;первый год и&nbsp;что будет на&nbsp;счёте год за&nbsp;годом</span><span class="gf-file__link"><svg class="gf-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 19L5.00488 19.0986C5.02757 19.3276 5.12883 19.5429 5.29297 19.707C5.48051 19.8946 5.73478 20 6 20H18C18.2652 20 18.5195 19.8946 18.707 19.707C18.8946 19.5195 19 19.2652 19 19V16H21V19C21 19.7957 20.6837 20.5585 20.1211 21.1211C19.5585 21.6837 18.7957 22 18 22H6C5.20435 22 4.44152 21.6837 3.87891 21.1211C3.3163 20.5585 3 19.7957 3 19V16H5V19ZM13 13.5859L17 9.58594L18.4141 11L12 17.4141L5.58594 11L7 9.58594L11 13.5859V3H13V13.5859Z"/></svg><span class="pdf-t">Скачать план в&nbsp;PDF</span></span></span>
+            <span class="m-file-txt"><span class="gf-file__title">Заберите план с&nbsp;собой</span><span class="gf-caption">7&nbsp;страниц: что сделать в&nbsp;первый год и&nbsp;год за&nbsp;годом до&nbsp;выплат</span><span class="gf-file__link"><svg class="gf-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 19L5.00488 19.0986C5.02757 19.3276 5.12883 19.5429 5.29297 19.707C5.48051 19.8946 5.73478 20 6 20H18C18.2652 20 18.5195 19.8946 18.707 19.707C18.8946 19.5195 19 19.2652 19 19V16H21V19C21 19.7957 20.6837 20.5585 20.1211 21.1211C19.5585 21.6837 18.7957 22 18 22H6C5.20435 22 4.44152 21.6837 3.87891 21.1211C3.3163 20.5585 3 19.7957 3 19V16H5V19ZM13 13.5859L17 9.58594L18.4141 11L12 17.4141L5.58594 11L7 9.58594L11 13.5859V3H13V13.5859Z"/></svg><span class="pdf-t">Скачать план в&nbsp;PDF</span></span></span>
             <img src="kit/assets/3d/primary/document.webp" alt="" width="88" height="88">
           </button>
           <div class="m-center"><button class="gf-btn gf-btn--tertiary" type="button" data-remind data-pos="calc"><svg class="gf-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" /><path d="M9 17v1a3 3 0 0 0 6 0v-1" /></svg>Напомнить о&nbsp;взносе до&nbsp;31&nbsp;декабря</button></div>
@@ -907,7 +908,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = CALC;
     var hg = g ? sim.hist[g - 1] : hp, gInc = Math.max(0, hg.value - hg.contrib - hg.cofin - hg.dedRe), gAdd = hg.value - hg.contrib, gt = hg.value || 1;
     numTo(nums.c, hg.contrib); numTo(nums.g, hg.cofin); numTo(nums.d, hg.dedRe); numTo(nums.i, gInc);
     $("#bdHead").textContent = g ? "Из чего сложится " + goalTxt + " " + approx(g).replace("около ", "через ") : "Из чего сложится сумма к " + calDate(pm, "d") + ", когда станут доступны выплаты";
-    $("#bAdd").textContent = "+ " + rub(gAdd) + " добавит ПДС";
+    $("#bAdd").textContent = "+ " + rub(gAdd) + " добавит" + NB + "ПДС";
     drawCoins(hg, gInc, animate);
     last = { sim: sim, g: g, gw: gw, p: p, h: hg, po: po, poVal: poVal, hp: hp, pm: pm };
   }
@@ -981,7 +982,7 @@ if (typeof module !== "undefined" && module.exports) module.exports = CALC;
       ui.coins.innerHTML = html; ui.coins.__last = html;
       if (animate && motionOn()) { ui.coins.classList.remove("m-pop-in"); void ui.coins.offsetWidth; ui.coins.classList.add("m-pop-in"); }
     }
-    ui.coinsT.innerHTML = "Из каждых 10 ₽ на счёте <b>" + you + "</b> " + plural(you, ["внесёте", "внесёте", "внесёте"]) + " вы, <b>" + rest + "</b> добавит ПДС";
+    ui.coinsT.innerHTML = "Из каждых 10 ₽ на счёте <b>" + you + "</b> " + plural(you, ["внесёте", "внесёте", "внесёте"]) + " вы, <b>" + rest + "</b> добавит" + NB + "ПДС";
     ui.coins.setAttribute("aria-label", "Из каждых 10 рублей на счёте " + you + " ваши, " + rest + " добавит ПДС");
   }
 
