@@ -183,12 +183,7 @@ b, strong { font-weight: 600; }
 /* 2: одна ширина поля заголовка у всех секций; абзац под заголовком в мере кита */
 .gf-section__head { max-width: none; }
 .gf-section__head > p { max-width: var(--gf-measure); }
-/* 1.6: на десктопе первый экран не выше 1080 px, левый блок по центру карточки расчёта */
-@media (min-width: 1140px) {
-  .gf-hero:has(.m-hero-grid) { display: flex; min-height: min(100svh, 1080px); padding-bottom: var(--gf-space-1000); }
-  .gf-hero:has(.m-hero-grid) > .gf-container { display: flex; flex-direction: column; width: 100%; }
-  .m-hero-grid { align-items: center; margin-block: auto; }
-}
+/* 1.6: левый блок по центру карточки расчёта — это align-items: center сетки героя кита, как в v15 */
 /* 1.2: иконка «i» вместо звёздочки, ведёт к условиям */
 .m-lab-i { display: inline-flex; align-items: center; gap: var(--gf-space-100); }
 .m-info { display: inline-flex; color: var(--gf-color-gray-1); }
@@ -211,24 +206,13 @@ b, strong { font-weight: 600; }
 .m-file .gf-file__link > svg { color: var(--gf-color-blue-primary); }
 .m-file img { flex: none; width: 88px; height: 88px; }
 @media (max-width: 767.98px) { .m-file img { width: 64px; height: 64px; } }
-/* 4.4: баннер «Успейте до 31 декабря» — синий баннер кита */
-.m-go { min-height: 0; margin-top: var(--gf-gutter); }
-.m-go .gf-banner__body { max-width: 560px; }
-.m-go .gf-lead { color: var(--gf-color-white); }
-.m-go-img { top: 50%; right: var(--gf-space-800); width: 280px; height: 280px; transform: translateY(-50%); object-position: center; }
-.m-go-acts { display: flex; flex-direction: column; align-items: flex-start; gap: var(--gf-space-300); margin-top: auto; }
+/* 4.4: баннер «Успейте до 31 декабря»: сетка v15, синяя панель кита */
+.m-go { display: grid; grid-template-columns: auto minmax(0, 6fr) minmax(0, 5fr); gap: var(--gf-space-1000); align-items: center; margin-top: var(--gf-gutter); }
+.m-go img { width: 160px; height: 160px; }
+@media (max-width: 1139.98px) { .m-go { grid-template-columns: auto minmax(0, 1fr); } .m-go > :last-child { grid-column: 1 / -1; } }
+@media (max-width: 767.98px) { .m-go { grid-template-columns: minmax(0, 1fr); gap: var(--gf-space-600); } .m-go img { width: 120px; height: 120px; } }
 .m-go .gf-btn--tertiary { color: var(--gf-color-white); }
 .m-go .gf-btn--tertiary:hover { color: var(--gf-white-70); }
-@media (max-width: 1139.98px) and (min-width: 768px) { .m-go { padding-right: 232px; } .m-go-img { width: 200px; height: 200px; right: var(--gf-space-400); } }
-@media (max-width: 767.98px) {
-  .m-go { padding: var(--gf-space-600) var(--gf-space-400); }
-  .m-go .gf-banner__body { padding: 0; max-width: none; }
-  .m-go-img { position: static; transform: none; width: 140px; height: 140px; align-self: center; }
-  .m-go-acts { align-items: stretch; width: 100%; }
-  .m-go .gf-btn-row { flex-direction: column; }
-  .m-go .gf-btn-row > .gf-btn { flex: none; font: 600 16px/22px var(--gf-font); }
-  .m-go-acts > .gf-btn--tertiary { align-self: center; }
-}
 /* 6: проверка телефона — на 320 px ссылка точного расчёта переносится, а не вылезает за карточку */
 .m-hcalc-foot .gf-btn--tertiary { height: auto; min-height: 32px; white-space: normal; text-align: left; }
 /* 5: варианты блока доверия */
@@ -244,16 +228,12 @@ b, strong { font-weight: 600; }
 .m-tv-num { font: var(--gf-type-headline-3); color: var(--gf-color-dark-blue); white-space: nowrap; }
 @media (max-width: 1139.98px) { .m-tv-b { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: var(--gf-space-600); padding: var(--gf-space-600) 0; } .m-tv-b > div:nth-child(odd) { border-left: 0; } }
 @media (max-width: 767.98px) { .m-tv-b { grid-template-columns: minmax(0, 1fr); padding: var(--gf-space-200) var(--gf-space-400); row-gap: 0; } .m-tv-b > div { padding: var(--gf-space-400) 0; border-left: 0; border-top: 1px solid var(--gf-stroke-black-10); } .m-tv-b > div:first-child { border-top: 0; } }
-.m-tv-c { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--gf-gutter); }
-.m-tv-c-main { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gf-gutter); }
-.m-tv-c-stat { justify-content: flex-end; gap: var(--gf-space-300); min-height: 0; padding: var(--gf-space-800); }
-.m-tv-list { display: flex; flex-direction: column; margin: 0; padding: var(--gf-space-200) var(--gf-space-800); list-style: none; background: var(--gf-fill-2); }
-.m-tv-list li { display: flex; align-items: flex-start; gap: var(--gf-space-400); padding: var(--gf-space-400) 0; border-top: 1px solid var(--gf-stroke-black-10); }
-.m-tv-list li:first-child { border-top: 0; }
-.m-tv-list li > svg { flex: none; margin-top: var(--gf-space-50); color: var(--gf-color-blue-primary); }
-.m-tv-list li > div { display: flex; flex-direction: column; gap: var(--gf-space-50); }
-@media (max-width: 1139.98px) { .m-tv-c { grid-template-columns: minmax(0, 1fr); } }
-@media (max-width: 767.98px) { .m-tv-c-main { grid-template-columns: minmax(0, 1fr); } .m-tv-c-stat { padding: var(--gf-space-600) var(--gf-space-400); } .m-tv-list { padding: var(--gf-space-100) var(--gf-space-400); } }
+.m-tv-c { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 var(--gf-space-1000); margin: 0; padding: var(--gf-space-400) var(--gf-space-800); list-style: none; background: var(--gf-fill-2); }
+.m-tv-c li { display: flex; align-items: flex-start; gap: var(--gf-space-400); padding: var(--gf-space-400) 0; border-top: 1px solid var(--gf-stroke-black-10); }
+.m-tv-c li:nth-child(-n+2) { border-top: 0; }
+.m-tv-c li > svg { flex: none; margin-top: var(--gf-space-50); color: var(--gf-color-blue-primary); }
+.m-tv-c li > div { display: flex; flex-direction: column; gap: var(--gf-space-50); }
+@media (max-width: 767.98px) { .m-tv-c { grid-template-columns: minmax(0, 1fr); padding: var(--gf-space-100) var(--gf-space-400); } .m-tv-c li:nth-child(2) { border-top: 1px solid var(--gf-stroke-black-10); } }
 </style>
 </head>
 <body>
@@ -353,7 +333,7 @@ b, strong { font-weight: 600; }
           <button class="gf-segmented__item" type="button" data-mode="term" aria-pressed="false">Знаю срок</button>
         </div>
         <div class="m-field">
-          <span class="gf-calc__label">Хочу накопить</span>
+          <span class="gf-calc__label">Цель</span>
           <div class="gf-segmented" id="goalSeg" role="group" aria-label="Сумма цели">
             <button class="gf-segmented__item" type="button" data-v="500000" aria-pressed="false">500&nbsp;тыс.</button>
             <button class="gf-segmented__item is-active" type="button" data-v="1000000" aria-pressed="true">1&nbsp;млн</button>
@@ -380,7 +360,7 @@ b, strong { font-weight: 600; }
         </div>
         <div class="m-field" id="fieldTerm" hidden>
           <div class="gf-calc">
-            <label class="gf-calc__label" for="years">Срок накопления</label>
+            <label class="gf-calc__label" for="years">Хочу накопить за</label>
             <span class="gf-calc__field">
               <output class="gf-calc__value" id="yearsOut" for="years">5&nbsp;лет</output>
               <input class="gf-calc__range" type="range" id="years" min="2" max="15" step="1" value="5" aria-label="Срок накопления, лет">
@@ -419,7 +399,7 @@ b, strong { font-weight: 600; }
           </div>
           <!-- ТЗ 3.5: господдержка короткими соотношениями под кнопками дохода -->
           <div class="m-ratio" aria-hidden="true"><span>1&nbsp;:&nbsp;1</span><span>1&nbsp;:&nbsp;2</span><span>1&nbsp;:&nbsp;4</span></div>
-          <p class="gf-caption">Господдержка на&nbsp;ваш рубль взносов. До&nbsp;36&nbsp;000&nbsp;₽ в&nbsp;год, первые 10&nbsp;лет</p>
+          <p class="gf-caption">Господдержка : ваши взносы. До&nbsp;36&nbsp;000&nbsp;₽ в&nbsp;год, первые 10&nbsp;лет</p>
         </div>
         <label class="gf-field-toggle">
           <span class="gf-field-toggle__text"><span class="gf-field-toggle__label">Возвращать налог на&nbsp;счёт долгосрочных сбережений</span><span class="gf-field-toggle__caption">Вычет оформляете сами в&nbsp;ФНС. В&nbsp;расчёте&nbsp;13&nbsp;%</span></span>
@@ -502,19 +482,17 @@ b, strong { font-weight: 600; }
         <span class="gf-card__arrow"></span>
       </a>
     </div>
-    <!-- ТЗ 4.4: баннер насыщенным синим кита (Cards_programm, синий); картинка временная, ждём новую от Мусы -->
-    <div class="gf-banner gf-banner--blue gf-on-accent m-go">
-      <div class="gf-banner__body">
-        <h3 class="gf-banner__title">Успейте до&nbsp;31&nbsp;декабря</h3>
-        <p class="gf-lead">Чтобы получить право на&nbsp;господдержку и&nbsp;вычет за&nbsp;<span class="yr">2026</span>&nbsp;год</p>
+    <!-- ТЗ 4.4: разметка v15, меняется только цвет — синяя панель кита (gf-panel gf-bg-hero gf-on-accent). Картинка временная -->
+    <div class="gf-panel gf-bg-hero gf-on-accent m-go">
+      <img src="kit/assets/3d/primary/hourglass.webp" alt="" width="160" height="160">
+      <div class="gf-stack gf-stack--8">
+        <h3 class="gf-h2">Успейте до&nbsp;31&nbsp;декабря</h3>
+        <p class="gf-lead gf-c-secondary">Чтобы получить право на&nbsp;господдержку и&nbsp;вычет за&nbsp;<span class="yr">2026</span>&nbsp;год</p>
       </div>
-      <img class="gf-banner__img m-go-img" src="kit/assets/3d/primary/hourglass.webp" alt="">
-      <div class="m-go-acts">
-        <div class="gf-btn-row">
-          <a class="gf-btn gf-btn--orange gf-btn--lg" id="goBtn" href="https://contract-pds.gazfond-pn.ru/?u=nakopimillion&amp;utm_source=landing_million&amp;utm_medium=go&amp;utm_campaign=pds_million_v16" target="_blank" rel="noopener" data-goal="cta_contract" data-pos="go">Оформить через Госуслуги</a>
-          <button class="gf-btn gf-btn--lg" type="button" data-pdf data-pos="go"><svg class="gf-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" /><path d="M12 17v-6" /><path d="M9.5 14.5l2.5 2.5l2.5 -2.5" /></svg><span class="pdf-t">Скачать план в&nbsp;PDF</span></button>
-        </div>
-        <button class="gf-btn gf-btn--tertiary" type="button" data-remind data-pos="go"><svg class="gf-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" /><path d="M9 17v1a3 3 0 0 0 6 0v-1" /></svg>Напомнить о&nbsp;взносе до&nbsp;31&nbsp;декабря</button>
+      <div class="gf-stack gf-stack--8">
+        <a class="gf-btn gf-btn--orange gf-btn--lg gf-btn--block" id="goBtn" href="https://contract-pds.gazfond-pn.ru/?u=nakopimillion&amp;utm_source=landing_million&amp;utm_medium=go&amp;utm_campaign=pds_million_v16" target="_blank" rel="noopener" data-goal="cta_contract" data-pos="go">Оформить через Госуслуги</a>
+        <button class="gf-btn gf-btn--lg gf-btn--block" type="button" data-pdf data-pos="go"><svg class="gf-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" /><path d="M12 17v-6" /><path d="M9.5 14.5l2.5 2.5l2.5 -2.5" /></svg><span class="pdf-t">Скачать план в&nbsp;PDF</span></button>
+        <div class="m-center"><button class="gf-btn gf-btn--tertiary" type="button" data-remind data-pos="go"><svg class="gf-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" /><path d="M9 17v1a3 3 0 0 0 6 0v-1" /></svg>Напомнить о&nbsp;взносе до&nbsp;31&nbsp;декабря</button></div>
       </div>
     </div>
   </section>
@@ -526,7 +504,7 @@ b, strong { font-weight: 600; }
     </div>
     <!-- ТЗ 5: три компоновки на выбор, информация та же; переключатель временный -->
     <div class="m-variant" id="trustPick">
-      <span class="gf-caption">Вариант блока для&nbsp;согласования: A&nbsp;карточки, B&nbsp;строка, C&nbsp;список. Переключатель уберём после выбора</span>
+      <span class="gf-caption">Вариант блока для&nbsp;согласования: A&nbsp;карточки, B&nbsp;строка цифр, C&nbsp;список. Переключатель уберём после выбора</span>
       <div class="gf-segmented m-fit" id="trustSeg" role="group" aria-label="Вариант блока доверия">
         <button class="gf-segmented__item is-active" type="button" data-tv="a" aria-pressed="true">Вариант A</button>
         <button class="gf-segmented__item" type="button" data-tv="b" aria-pressed="false">Вариант B</button>
@@ -535,7 +513,7 @@ b, strong { font-weight: 600; }
     </div>
     <!-- A: пять одинаковых компактных карточек Cards/GF_Icon -->
     <div class="m-tv m-tv-a" data-tv="a">
-      <div class="gf-card gf-card--icon"><svg class="gf-icon gf-card__icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M11.46 20.846a12 12 0 0 1 -7.96 -14.846a12 12 0 0 0 8.5 -3a12 12 0 0 0 8.5 3a12 12 0 0 1 -.09 7.06" /><path d="M15 19l2 2l4 -4" /></svg><div class="gf-stack gf-stack--8"><h3 class="gf-card__title">2,8&nbsp;млн&nbsp;₽</h3><p class="gf-card__text">Защита АСВ: взносы и&nbsp;начисленный доход застрахованы государством</p></div></div>
+      <div class="gf-card gf-card--icon"><svg class="gf-icon gf-card__icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M11.46 20.846a12 12 0 0 1 -7.96 -14.846a12 12 0 0 0 8.5 -3a12 12 0 0 0 8.5 3a12 12 0 0 1 -.09 7.06" /><path d="M15 19l2 2l4 -4" /></svg><div class="gf-stack gf-stack--8"><h3 class="gf-card__title">2,8&nbsp;млн&nbsp;₽</h3><p class="gf-card__text">Защита АСВ. Взносы и&nbsp;начисленный доход застрахованы государством в&nbsp;лице Агентства по&nbsp;страхованию вкладов</p></div></div>
       <div class="gf-card gf-card--icon"><svg class="gf-icon gf-card__icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 7a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /><path d="M21 21v-2a4 4 0 0 0 -3 -3.85" /></svg><div class="gf-stack gf-stack--8"><h3 class="gf-card__title">6,7&nbsp;млн</h3><p class="gf-card__text">клиентов доверяют фонду свои накопления</p></div></div>
       <div class="gf-card gf-card--icon"><svg class="gf-icon gf-card__icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 15a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /><path d="M13 17.5v4.5l2 -1.5l2 1.5v-4.5" /><path d="M10 19h-5a2 2 0 0 1 -2 -2v-10c0 -1.1 .9 -2 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -1 1.73" /><path d="M6 9l12 0" /><path d="M6 12l3 0" /><path d="M6 15l2 0" /></svg><div class="gf-stack gf-stack--8"><h3 class="gf-card__title">Лицензия №&nbsp;430</h3><p class="gf-card__text">Бессрочная лицензия Банка России с&nbsp;2014&nbsp;года</p></div></div>
       <div class="gf-card gf-card--icon"><svg class="gf-icon gf-card__icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M6 9a6 6 0 1 0 12 0a6 6 0 1 0 -12 0" /><path d="M12 15l3.4 5.89l1.598 -3.233l3.598 .232l-3.4 -5.889" /><path d="M6.802 12l-3.4 5.89l3.598 -.233l1.598 3.232l3.4 -5.889" /></svg><div class="gf-stack gf-stack--8"><h3 class="gf-card__title">«Финансовая элита России»</h3><p class="gf-card__text">Премия 2025&nbsp;года</p></div></div>
@@ -543,24 +521,20 @@ b, strong { font-weight: 600; }
     </div>
     <!-- B: одна белая панель, пять фактов в ряд через разделители -->
     <div class="gf-panel m-tv m-tv-b" data-tv="b" hidden>
-      <div><span class="m-tv-num">2,8&nbsp;млн&nbsp;₽</span><span class="gf-text gf-c-secondary">Защита АСВ: взносы и&nbsp;доход застрахованы государством</span></div>
+      <div><span class="m-tv-num">2,8&nbsp;млн&nbsp;₽</span><span class="gf-text gf-c-secondary">Защита АСВ. Взносы и&nbsp;начисленный доход застрахованы государством в&nbsp;лице Агентства по&nbsp;страхованию вкладов</span></div>
       <div><span class="m-tv-num">6,7&nbsp;млн</span><span class="gf-text gf-c-secondary">клиентов доверяют фонду свои накопления</span></div>
       <div><span class="m-tv-num">№&nbsp;430</span><span class="gf-text gf-c-secondary">Бессрочная лицензия Банка России с&nbsp;2014&nbsp;года</span></div>
       <div><span class="m-tv-num">2025</span><span class="gf-text gf-c-secondary">Премия «Финансовая элита России»</span></div>
       <div><span class="m-tv-num">Госуслуги</span><span class="gf-text gf-c-secondary">Договор онлайн, без&nbsp;визита в&nbsp;офис</span></div>
     </div>
-    <!-- C: два главных факта крупно (Cards/Main уменьшенные), рядом список остальных -->
-    <div class="m-tv m-tv-c" data-tv="c" hidden>
-      <div class="m-tv-c-main">
-        <div class="gf-card m-tv-c-stat"><div class="gf-card__stat"><span class="gf-card__stat-num">2,8</span><span class="gf-card__stat-unit">млн&nbsp;₽</span></div><p class="gf-text gf-c-secondary">Защита АСВ: взносы и&nbsp;начисленный доход застрахованы государством</p></div>
-        <div class="gf-card m-tv-c-stat"><div class="gf-card__stat"><span class="gf-card__stat-num">6,7</span><span class="gf-card__stat-unit">млн</span></div><p class="gf-text gf-c-secondary">клиентов доверяют фонду свои накопления</p></div>
-      </div>
-      <ul class="gf-panel m-tv-list">
-        <li><svg class="gf-icon gf-icon--20" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 15a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /><path d="M13 17.5v4.5l2 -1.5l2 1.5v-4.5" /><path d="M10 19h-5a2 2 0 0 1 -2 -2v-10c0 -1.1 .9 -2 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -1 1.73" /><path d="M6 9l12 0" /><path d="M6 12l3 0" /><path d="M6 15l2 0" /></svg><div><b class="gf-lead gf-semibold">Лицензия №&nbsp;430</b><span class="gf-text gf-c-secondary">Бессрочная лицензия Банка России с&nbsp;2014&nbsp;года</span></div></li>
-        <li><svg class="gf-icon gf-icon--20" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M6 9a6 6 0 1 0 12 0a6 6 0 1 0 -12 0" /><path d="M12 15l3.4 5.89l1.598 -3.233l3.598 .232l-3.4 -5.889" /><path d="M6.802 12l-3.4 5.89l3.598 -.233l1.598 3.232l3.4 -5.889" /></svg><div><b class="gf-lead gf-semibold">«Финансовая элита России»</b><span class="gf-text gf-c-secondary">Премия 2025&nbsp;года</span></div></li>
-        <li><svg class="gf-icon gf-icon--20" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 21l18 0" /><path d="M3 10l18 0" /><path d="M5 6l7 -3l7 3" /><path d="M4 10l0 11" /><path d="M20 10l0 11" /><path d="M8 14l0 3" /><path d="M12 14l0 3" /><path d="M16 14l0 3" /></svg><div><b class="gf-lead gf-semibold">Госуслуги</b><span class="gf-text gf-c-secondary">Договор онлайн, без&nbsp;визита в&nbsp;офис</span></div></li>
-      </ul>
-    </div>
+    <!-- C: одна панель, пять равных строк в две колонки -->
+    <ul class="gf-panel m-tv m-tv-c" data-tv="c" hidden>
+      <li><svg class="gf-icon gf-icon--20" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M11.46 20.846a12 12 0 0 1 -7.96 -14.846a12 12 0 0 0 8.5 -3a12 12 0 0 0 8.5 3a12 12 0 0 1 -.09 7.06" /><path d="M15 19l2 2l4 -4" /></svg><div><b class="gf-lead gf-semibold">2,8&nbsp;млн&nbsp;₽ · Защита АСВ</b><span class="gf-text gf-c-secondary">Взносы и&nbsp;начисленный доход застрахованы государством в&nbsp;лице Агентства по&nbsp;страхованию вкладов</span></div></li>
+      <li><svg class="gf-icon gf-icon--20" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 7a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /><path d="M21 21v-2a4 4 0 0 0 -3 -3.85" /></svg><div><b class="gf-lead gf-semibold">6,7&nbsp;млн клиентов</b><span class="gf-text gf-c-secondary">доверяют фонду свои накопления</span></div></li>
+      <li><svg class="gf-icon gf-icon--20" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 15a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /><path d="M13 17.5v4.5l2 -1.5l2 1.5v-4.5" /><path d="M10 19h-5a2 2 0 0 1 -2 -2v-10c0 -1.1 .9 -2 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -1 1.73" /><path d="M6 9l12 0" /><path d="M6 12l3 0" /><path d="M6 15l2 0" /></svg><div><b class="gf-lead gf-semibold">Лицензия №&nbsp;430</b><span class="gf-text gf-c-secondary">Бессрочная лицензия Банка России с&nbsp;2014&nbsp;года</span></div></li>
+      <li><svg class="gf-icon gf-icon--20" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M6 9a6 6 0 1 0 12 0a6 6 0 1 0 -12 0" /><path d="M12 15l3.4 5.89l1.598 -3.233l3.598 .232l-3.4 -5.889" /><path d="M6.802 12l-3.4 5.89l3.598 -.233l1.598 3.232l3.4 -5.889" /></svg><div><b class="gf-lead gf-semibold">«Финансовая элита России»</b><span class="gf-text gf-c-secondary">Премия 2025&nbsp;года</span></div></li>
+      <li><svg class="gf-icon gf-icon--20" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M3 21l18 0" /><path d="M3 10l18 0" /><path d="M5 6l7 -3l7 3" /><path d="M4 10l0 11" /><path d="M20 10l0 11" /><path d="M8 14l0 3" /><path d="M12 14l0 3" /><path d="M16 14l0 3" /></svg><div><b class="gf-lead gf-semibold">Госуслуги</b><span class="gf-text gf-c-secondary">Договор онлайн, без&nbsp;визита в&nbsp;офис</span></div></li>
+    </ul>
   </section>
 
   <!-- ═══ Вопросы: Cards/FAQ ═══ -->

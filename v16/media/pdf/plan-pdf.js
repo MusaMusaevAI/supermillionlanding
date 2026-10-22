@@ -59,7 +59,7 @@
     function tw(s, size, bold) { font(size, bold); return doc.getTextWidth(String(s)); }
     function lines(str, size, bold, maxW) { font(size, bold); return maxW ? doc.splitTextToSize(String(str), maxW) : [String(str)]; }
     function T(str, x, y, o) {
-      o = o || {}; var size = o.size || 11, lh = size * (o.lh || 1.3), ls = lines(typo(str), size, o.bold, o.maxW);
+      o = o || {}; var size = o.size || 11, lh = size * (o.lh || 1.3), ls = lines(o.raw ? str : typo(str), size, o.bold, o.maxW);
       if (DRAW) {
         if (o.alpha) { doc.saveGraphicsState(); doc.setGState(new doc.GState({ opacity: o.alpha })); }
         color(o.color || C.dark); ls.forEach(function (ln, i) { doc.text(ln, x, y + size * 0.8 + i * lh, { align: o.align || "left" }); });
@@ -149,17 +149,32 @@
     img(heroImg(G.w, G.h, 0), 0, 0, G.w, G.h, "JPEG");
     if (D.img.logo) { var lh0 = phone ? 40 : 48; img(D.img.logo, G.m, G.m - 8, lh0 * (D.img.logoRatio || 1.54), lh0); }
     T(D.dateTxt, G.w - G.m, G.m + 6, { size: 9.5, color: C.f2, alpha: 0.7, align: "right" });
-    var imgBox = phone ? 200 : 300;
-    if (phone) { fit("cover", G.w - G.m - imgBox + 20, 92, imgBox); y = 92 + imgBox + 8; }
-    else { fit("cover", G.w - G.m - imgBox, (G.h - imgBox) / 2 - 10, imgBox); y = 168; }
+    var imgBox = phone ? 180 : 260;
+    if (phone) { fit("cover", G.w - G.m - imgBox + 20, 80, imgBox); y = 80 + imgBox; }
+    else { fit("cover", G.w - G.m - imgBox, 90, imgBox); y = 118; }
     var cw = phone ? W : W - imgBox - 24;
-    y = T("Ваш план «Цель миллион»", G.m, y, { size: phone ? 12 : 13, color: C.lblue }) + 10;
-    var big = goal ? rub(D.target) : rub(V), bs = phone ? 44 : 64; while (tw(big, bs, true) > cw && bs > 30) bs -= 1;
-    y = T(big, G.m, y, { size: bs, bold: true, color: C.f2, lh: 1.05 }) + 6;
-    y = T(goal ? "на счёте " + D.gIn + ", в " + D.gYear + " году" : D.whenTxt, G.m, y, { size: phone ? 18 : 22, color: C.f2, maxW: cw, lh: 1.2 }) + 12;
-    y = T("При взносе " + rub(D.monthly) + " в месяц" + (D.first ? " и стартовом взносе " + rub(D.first) : "") + ". " + (D.now15 ? "Через 15 лет" : "Когда станут доступны выплаты, в " + D.payYear + " году,") + " на счёте будет около " + rub(V), G.m, y, { size: phone ? 11 : 12, color: C.f2, alpha: 0.7, maxW: Math.min(cw, 400), lh: 1.45 }) + 20;
-    var cx = G.m, cy = y, chH = phone ? 26 : 28;
-    D.chips.forEach(function (c) { var w = tw(c, 10, true) + 28; if (cx + w > G.m + cw) { cx = G.m; cy += chH + 8; } rr(cx, cy, w, chH, chH / 2, C.f2); T(c, cx + 14, cy + chH / 2 - 6, { size: 10, bold: true, color: C.dblue }); cx += w + 8; });
+    y = T("Ваш план «Цель миллион»", G.m, y, { size: phone ? 12 : 13, color: C.lblue }) + 8;
+    var big = goal ? rub(D.target) : rub(V), bs = phone ? 40 : 56; while (tw(big, bs, true) > cw && bs > 28) bs -= 1;
+    y = T(big, G.m, y, { size: bs, bold: true, color: C.f2, lh: 1.05 }) + 4;
+    y = T(goal ? "на счёте " + D.gIn + ", в " + D.gYear + " году" : D.whenTxt, G.m, y, { size: phone ? 17 : 20, color: C.f2, maxW: cw, lh: 1.2 }) + 8;
+    y = T((D.now15 ? "Через 15 лет" : "Когда станут доступны выплаты, в " + D.payYear + " году,") + " на счёте будет около " + rub(V), G.m, y, { size: phone ? 11 : 12, color: C.f2, alpha: 0.7, maxW: Math.min(cw, 420), lh: 1.45 }) + 14;
+    var cx = G.m, cy = y, chH = phone ? 24 : 26;
+    D.chips.forEach(function (c) { var w = tw(c, 9.5, true) + 26; if (cx + w > G.m + cw) { cx = G.m; cy += chH + 8; } rr(cx, cy, w, chH, chH / 2, C.f2); T(c, cx + 13, cy + chH / 2 - 5.5, { size: 9.5, bold: true, color: C.dblue }); cx += w + 8; });
+    /* три факта, как на обложке v15 */
+    var facts = [
+      ["Ваши взносы за " + D.pmYears + " " + D.plural(D.pmYears, ["год", "года", "лет"]), rub(hp.contrib), "остальное добавят государство, вычет и доход от фонда"],
+      [D.mil ? "Первый миллион" : "Цель " + rub(D.target), goal ? D.gIn : "позже 40 лет", D.gYear ? "в " + D.gYear + " году" : "при таком взносе"],
+      ["Если получать 10 лет", "около " + rub(D.pay10), "в месяц, без учёта дохода в период выплат"]
+    ];
+    var fn = phone ? 1 : 3, fw = (W - 12 * (fn - 1)) / fn, fh = phone ? 64 : 80, fy0 = G.h - (phone ? 52 : 70) - (phone ? 3 * fh + 16 : fh);
+    facts.forEach(function (f, i) {
+      var fx = phone ? G.m : G.m + i * (fw + 12), fy = phone ? fy0 + i * (fh + 8) : fy0;
+      rr(fx, fy, fw, fh, 16, C.f2);
+      T(f[0], fx + 16, fy + 12, { size: 9, color: C.gray1, maxW: fw - 32 });
+      var vs = phone ? 15 : 17; while (tw(f[1], vs, true) > fw - 32 && vs > 11) vs -= 0.5;
+      T(f[1], fx + 16, fy + (phone ? 26 : 28), { size: vs, bold: true, color: C.dblue });
+      if (!phone) T(f[2], fx + 16, fy + 52, { size: 8.5, color: C.gray1, maxW: fw - 32, lh: 1.3 });
+    });
     var legal0 = "Расчёт предварительный, доход от фонда не гарантирован · АО «НПФ ГАЗФОНД пенсионные накопления», лицензия № 430", lo = { size: 8, color: C.f2, alpha: 0.7, maxW: W };
     T(legal0, G.m, G.h - (phone ? 28 : 36) - TH(legal0, lo) + 8, lo);
 
@@ -167,7 +182,7 @@
     page(C.f2, "Из чего сложится " + (goal ? (D.mil ? "миллион" : "цель") : "сумма"), goal ? "Откуда возьмётся " + D.goalTxt : "Откуда возьмётся " + rub(V),
       null);
     var pills = goal
-      ? [["Ваши взносы до " + (D.mil ? "миллиона" : "цели"), rub(hg.contrib), C.dark], ["Программа добавит", "+ " + rub(hg.value - hg.contrib), C.blue], [goalWord + " на счёте", D.gIn, C.dblue]]
+      ? [["Ваши взносы до " + (D.mil ? "миллиона" : "цели"), rub(hg.contrib), C.dark], [goalWord + " на счёте", D.gIn + (D.gYear ? ", в " + D.gYear : ""), C.blue], [D.now15 ? "Через 15 лет" : "Выплаты станут доступны", D.now15 ? "около " + D.shortRub(V) + NB + "₽" : "в " + D.payYear + " году", C.dblue]]
       : [["Ваши взносы", rub(hp.contrib), C.dark], ["Программа добавит", "+ " + rub(hp.add), C.blue], ["К выплатам в " + D.payYear, rub(V), C.dblue]];
     var pn = phone ? 1 : 3, pw = (W - GAP * (pn - 1)) / pn, ph = phone ? 68 : 80, pp = phone ? 24 : 32;
     function pillsBlock(x, yy, w) {
@@ -197,37 +212,47 @@
     }
     y += phone ? 6 : 16; place(srcBlock, W);
 
-    /* ======================= 3. ГОД ЗА ГОДОМ: таблица на одной сетке ======================= */
-    page(C.f1, "Дорожная карта", D.now15 ? "Год за годом" : "Год за годом до выплат", "Сумма на счёте в конце каждого года" + (D.now15 ? "" : " и в момент, когда станут доступны выплаты") + ". Господдержка за год приходит в следующем году. Отмечайте пройденные годы");
-    var Yr = D.years, avail = BOTTOM - y - 46, rowH = phone ? 34 : Math.max(16, Math.min(26, avail / Math.max(1, Yr.length)));
-    function yearsBlock(x, yy, w, from, to) {
-      var rows = Yr.slice(from, to), h = 14 + 22 + rows.length * rowH + 8;
-      rr(x, yy, w, h, 20, C.f2);
-      var c1 = x + 20, c2 = x + (phone ? 64 : 96), c3 = x + w - (phone ? 40 : 64), ck = x + w - (phone ? 30 : 44);
-      T("Год", c1, yy + 14, { size: 9, color: C.gray1 }); T("Что происходит", c2, yy + 14, { size: 9, color: C.gray1 }); T("На счёте", c3, yy + 14, { size: 9, color: C.gray1, align: "right" });
-      var ry = yy + 14 + 22;
-      rows.forEach(function (r) {
-        var hl = r.cls && r.cls !== "gov", fin = r.cls && r.cls.indexOf("fin") >= 0;
-        if (hl) rr(x + 8, ry + 1, w - 16, rowH - 2, 8, fin ? C.f3 : C.f1); else hr(c1, x + w - 20, ry, C.f3);
-        var mid = ry + rowH / 2;
-        T(String(r.y), c1, mid - 6, { size: 10.5, bold: true, color: C.dark });
-        var ev = (r.evB || "") + (r.ev || "");
-        if (ev) T(ev.replace(/\.\s*$/, ""), c2, mid - (phone ? 11 : 6), { size: phone ? 9.5 : 10, bold: hl, color: hl ? C.dark : C.gray1, maxW: c3 - c2 - (phone ? 70 : 110), lh: 1.15 });
-        T(rub(r.v), c3, mid - 6.5, { size: hl ? 12 : 10.5, bold: true, color: hl ? C.blue : C.dark, align: "right" });
-        rrS(ck, mid - 6, 12, 12, 3, C.gray2, 0.9);
-        ry += rowH;
+    /* ======================= 3. ГОД ЗА ГОДОМ: раскладка v15 (две колонки, линия времени), выровнена ======================= */
+    page(C.f1, "Дорожная карта", D.now15 ? "Год за годом" : "Год за годом до выплат", "Сумма на счёте в конце каждого года. Отмечайте пройденные годы");
+    var Yr = D.years;
+    function colBlock(rows, x, yy, w, rowN, rowH) {
+      var lx = x + 52, ex = x + 66, ax = x + w - 30, ck = x + w - 14, ry = yy, top0 = yy;
+      var hs = rows.map(function (r) { return r.cls && r.cls !== "gov" ? rowH : rowN; }), tot = hs.reduce(function (a, b) { return a + b; }, 0);
+      if (DRAW) { stroke(C.blue3); doc.setLineWidth(1.5); doc.line(lx, top0 + hs[0] / 2, lx, top0 + tot - hs[hs.length - 1] / 2); }
+      rows.forEach(function (r, i) {
+        var h = hs[i], mid = ry + h / 2, hl = r.cls && r.cls !== "gov", fin = r.cls && r.cls.indexOf("fin") >= 0;
+        if (hl) rr(x, ry + 2, w, h - 4, 12, C.f2);
+        T(String(r.y), x + 10, mid - 6, { size: 10, bold: true, color: C.dark });
+        if (hl) { dot(lx, mid, 6, fin ? C.dblue : C.blue); } else { dot(lx, mid, 4, r.cls === "gov" ? C.blue : C.blue3); dot(lx, mid, 2.2, C.f1); }
+        var ev = [[r.evB || "", 1], [r.ev || "", 0]];
+        if (r.evB || r.ev) RT(ev, ex, mid - (hl ? 6.5 : 6), { size: hl ? 10 : 9, maxW: ax - ex - 86, color: C.gray1, bcolor: C.dark, lh: 1.2 });
+        T(rub(r.v), ax, mid - (hl ? 7 : 6), { size: hl ? 12 : 10, bold: true, color: hl ? C.blue : C.dark, align: "right" });
+        rrS(ck - 5, mid - 5.5, 11, 11, 3, C.gray2, 0.9);
+        ry += h;
       });
-      return yy + h;
+      return yy + tot;
     }
-    if (phone) {
-      var yi = 0;
+    var note3 = (D.now15 ? "" : "Последняя сумма указана на момент, когда станут доступны выплаты. ") + "Господдержка за год поступает на счёт в следующем году";
+    if (!phone) {
+      var half = Math.ceil(Yr.length / 2), cols3 = [Yr.slice(0, half), Yr.slice(half)], CW = (W - 32) / 2;
+      var availH = BOTTOM - y - 30, rowN = 26, rowH = 34;
+      var need3 = Math.max.apply(null, cols3.map(function (c) { return c.reduce(function (a, r) { return a + (r.cls && r.cls !== "gov" ? rowH : rowN); }, 0); }));
+      if (need3 > availH) { rowN *= availH / need3; rowH *= availH / need3; }
+      var yEnd = y;
+      cols3.forEach(function (c, ci) { if (c.length) yEnd = Math.max(yEnd, colBlock(c, G.m + ci * (CW + 32), y, CW, rowN, rowH)); });
+      y = T(note3, G.m, yEnd + 10, { size: 9, color: C.gray1, maxW: W });
+    } else {
+      /* на телефоне строки делятся по экранам поровну, без хвостов из двух-трёх лет */
+      var rowNp = 34, rowHp = 42, firstAvail = BOTTOM - y, fullAvail = BOTTOM - (G.m + 34 + 24 + 30);
+      var perFirst = Math.floor(firstAvail / rowHp), perFull = Math.floor(fullAvail / rowHp);
+      var screens = Yr.length <= perFirst ? 1 : 1 + Math.ceil((Yr.length - perFirst) / perFull), each = Math.ceil(Yr.length / screens), yi = 0;
       while (yi < Yr.length) {
-        var per = Math.max(3, Math.floor((BOTTOM - y - 64) / rowH)), ya = yi, yb = Math.min(Yr.length, yi + per);
-        place(function (x, yy, w) { return yearsBlock(x, yy, w, ya, yb); }, W); yi = yb;
-        if (yi < Yr.length) { newDocPage(); paintBg(curBg); footer(); y = header() + 24; }
+        var rows3 = Yr.slice(yi, yi + each); yi += each;
+        y = colBlock(rows3, G.m, y, W, rowNp, rowHp) + 10;
+        if (yi < Yr.length) { newDocPage(); paintBg(curBg); footer(); y = header() + 24; y = T("Год за годом · продолжение", G.m, y, { size: 10.5, color: C.blue }) + 16; }
       }
+      y = T(note3, G.m, y, { size: 9, color: C.gray1, maxW: W });
     }
-    else place(function (x, yy, w) { return yearsBlock(x, yy, w, 0, Yr.length); }, W);
 
     /* ======================= 4. ПЕРВЫЙ ГОД: даты текстом, по одной фразе ======================= */
     page(C.f2, "Первый год", "Что сделать и что получить", "Первые шаги, после которых план работает сам");
@@ -270,7 +295,7 @@
         T(rub(s.m), sx + scw / 2, yy + 28, { size: phone ? 10 : 11, bold: true, align: "center" });
         var v = D.shortRub(s.v) + NB + "₽", vs = phone ? 13 : 16; while (tw(v, vs, true) > scw - 10 && vs > 9) vs -= 0.5;
         T(v, sx + scw / 2, yy + (phone ? 52 : 56), { size: vs, bold: true, color: C.dblue, align: "center" });
-        T(s.gTxt, sx + scw / 2, yy + (phone ? 74 : 82), { size: 8.5, color: C.gray1, align: "center", maxW: scw - 10, lh: 1.25 });
+        T(s.gTxt, sx + scw / 2, yy + (phone ? 74 : 82), { size: phone ? 7.5 : 8.5, color: C.gray1, align: "center", maxW: scw - (phone ? 6 : 10), lh: 1.25, raw: phone });
       });
       return yy + h;
     }
@@ -307,13 +332,13 @@
     page(C.f2, D.now15 ? "Выплаты" : "Когда станут доступны выплаты", "Как получать деньги", "Форму выплаты выберете сами. Цифры для суммы " + rub(V));
     yTop = y;
     function payBlock(x, yy, w) {
-      var h1 = 104; img(heroImg(w, h1, 20), x, yy, w, h1);
+      var h1 = 92; img(heroImg(w, h1, 20), x, yy, w, h1);
       T("Ежемесячно 10 лет", x + 20, yy + 18, { size: 10, color: C.f2, alpha: 0.7 });
       var pv = "около " + rub(D.pay10) + " в месяц", vs = phone ? 20 : 24; while (tw(pv, vs, true) > w - 40 && vs > 13) vs -= 0.5;
       T(pv, x + 20, yy + 36, { size: vs, bold: true, color: C.f2 });
-      T("Срок выбираете сами, от 5 лет. Остаток наследуется", x + 20, yy + h1 - 28, { size: 9.5, color: C.f2, alpha: 0.7, maxW: w - 40 });
+      T("Срок выбираете сами, от 5 лет. Остаток наследуется", x + 20, yy + h1 - 26, { size: 9.5, color: C.f2, alpha: 0.7, maxW: w - 40 });
       yy += h1 + 10;
-      var cw2 = (w - 10) / 2, h2 = phone ? 96 : 84;
+      var cw2 = (w - 10) / 2, h2 = phone ? 96 : 76;
       [["Ежемесячно 5 лет", "около " + rub(D.pay5), "в месяц, самый короткий срок"], ["Пожизненно", "каждый месяц", "размер рассчитает фонд при назначении"]].forEach(function (c, i) {
         var px = x + i * (cw2 + 10); rr(px, yy, cw2, h2, 16, C.f1);
         T(c[0], px + 16, yy + 14, { size: 9.5, color: C.gray1, maxW: cw2 - 32 });
@@ -339,7 +364,17 @@
       });
       return yy + hh;
     }
+    /* частые вопросы из v15 остаются, визуально проще: без карточек, вопрос и ответ */
+    function faqBlock(x, yy, w) {
+      yy = T("Частые вопросы", x, yy, { size: 12, bold: true }) + 6;
+      [["Можно пропустить месяц?", "Да. Обязательных платежей нет. Для господдержки за год достаточно внести от 2 000 ₽"], ["Что если изменится доход?", "Господдержку считают по доходу за каждый год. Взнос можно увеличить или уменьшить"], ["Уже есть пенсионные накопления?", "Накопления ОПС можно перевести в ПДС и начать не с нуля"]].forEach(function (q) {
+        var t = T(q[0], x, yy, { size: 9.5, bold: true, maxW: w });
+        yy = T(q[1], x, t + 1, { size: 8.5, color: C.gray1, maxW: w, lh: 1.3 }) + 6;
+      });
+      return yy - 6;
+    }
     place(payBlock, HW);
+    place(faqBlock, HW);
     if (!phone) y = yTop;
     place(protBlock, HW, X2);
 
@@ -359,14 +394,14 @@
       T("Оформить через Госуслуги", x + w / 2, yy + bh / 2 - 8, { size: 14, bold: true, color: C.f2, align: "center" });
       link(x, yy, w, bh, D.contractUrl);
       yy += bh + 16;
-      ["Войдите через Госуслуги, часть данных подставится сама", "Проверьте анкету и поставьте согласие", "Сделайте первый взнос, и господдержка заработает"].forEach(function (s, i) {
+      ["Войдите через Госуслуги, часть данных подставится сама", "Проверьте анкету и поставьте согласие", "Сделайте первый взнос и подключите автоплатёж"].forEach(function (s, i) {
         dot(x + 12, yy + 12, 12, C.f2); T(String(i + 1), x + 12, yy + 6, { size: 10, bold: true, color: C.blue, align: "center" });
         yy = Math.max(yy + 24, T(s, x + 34, yy + 5, { size: 11, color: C.dark, maxW: w - 34 })) + 8;
       });
       return yy;
     }
     function qrBlock(x, yy, w) {
-      var pad = 20, qs = phone ? 96 : 120, h = pad * 2 + qs; rr(x, yy, w, h, 20, C.f2);
+      var pad = phone ? 16 : 20, qs = phone ? 80 : 120, h = pad * 2 + qs; rr(x, yy, w, h, 20, C.f2);
       if (window.__PDF_QR && DRAW) {
         var rows = window.__PDF_QR.rows, n = rows.length, cell = qs / n; fill(C.dark);
         rows.forEach(function (r, ry) { for (var rx = 0; rx < n; rx++) if (r.charAt(rx) === "1") doc.rect(x + pad + rx * cell, yy + pad + ry * cell, cell + 0.15, cell + 0.15, "F"); });
@@ -379,7 +414,15 @@
       T("звонок по России бесплатный", tx, b + 2, { size: 9.5, color: C.gray1 });
       return yy + h;
     }
+    /* «Покажите план близким» — как в v15 */
+    function famBlock(x, yy, w) {
+      var runs = [["Покажите план близким.", 1], [" Открыть ПДС может каждый взрослый, и у каждого своя господдержка до 36 000 ₽ в год", 0]];
+      var th = RTH(runs, { size: 10.5, maxW: w - 40, lh: 1.4 }), h = th + 32;
+      rr(x, yy, w, h, 16, C.f2); RT(runs, x + 20, yy + 16, { size: 10.5, maxW: w - 40, lh: 1.4, color: C.gray1, bcolor: C.dark });
+      return yy + h;
+    }
     place(goBlock, HW);
+    place(famBlock, HW);
     if (!phone) y = yTop;
     place(qrBlock, HW, X2);
     place(function (x, yy, w) { return T(disclaimer, x, yy, { size: 7.5, color: C.gray1, maxW: w, lh: 1.4 }); }, HW, X2);
